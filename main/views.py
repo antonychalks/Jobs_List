@@ -1,8 +1,8 @@
 from django.shortcuts import render
 
 # Create your views here.
-def home(request):
+def landing_page(request):
     return render(
         request,
-        "planners/home.html",
+        "main/index.html",
     )

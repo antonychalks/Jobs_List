@@ -18,8 +18,12 @@ from django.contrib import admin
 from django.urls import path, include
 from planners import views as planner_views
 from tradesman import views as tradesman_views
+from main import views as main_views
 
 urlpatterns = [
-    path('', planner_views.index, name='index'),
+    path('', include("main.urls"), name='main-urls'),
+    path('planners', include("planners.urls"), name='planners-urls'),
+    path('tradesman', include("tradesman.urls"), name='tradesman-urls'),
+    path("accounts/", include("allauth.urls")),
     path('admin/', admin.site.urls),
 ]
