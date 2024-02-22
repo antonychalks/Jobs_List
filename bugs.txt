@@ -1,0 +1,7 @@
+Problem:
+Cause:
+Solution:
+
+Problem: Clicking the logo directs to /tradesman.
+Cause: I set the name for the landing page of all 3 apps to be home.
+Solution: Changed the urls to home-planners and home-tradesman respectively.
