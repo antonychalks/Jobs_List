@@ -22,19 +22,32 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <header class="container-fluid">
             <a href="{% url 'home' %}"  class="col-4 navbar-brand" id="logo"><h1> Job List </h1></a>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <div class="col-4 text-center">
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link {% if request.path == logout_url %}active{% endif %}" aria-current="page"
-                        href="{% url 'account_logout' %}">Logout</a>
-                </li>
+                <h3> You are logged in as {{ user }} </h3>
                 {% else %}
-                <li class="nav-item">
-                    <a class="nav-link {% if request.path == login_url %}active{% endif %}" aria-current="page"
-                        href="{% url 'account_login' %}">Login</a>
-                </li>
+                <p class="text-end m-3">You are not logged in</p>
                 {% endif %}
-            </ul>
+            </div>
+            <div class="col-4 text-right">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == logout_url %}active{% endif %}" aria-current="page"
+                            href="{% url 'account_logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == signup_url %}active{% endif %}" aria-current="page"
+                            href="{% url 'account_signup' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == login_url %}active{% endif %}" aria-current="page"
+                            href="{% url 'account_login' %}">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
         </header>
     </nav>
     <hr>
