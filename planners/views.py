@@ -4,5 +4,5 @@ from django.shortcuts import render
 def home(request):
     return render(
         request,
-        "planners/home.html",
+        "planners/planner_home.html",
     )
