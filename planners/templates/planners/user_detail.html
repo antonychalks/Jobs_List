@@ -4,10 +4,31 @@
 {% block content %}
 <div class="masthead">
     <div class="container">
-        <div class="row g-0">
-            <div class="col-md-6 masthead-text">
+        <div class="row center">
+            <div class="col-6 text-center masthead-text">
                 <h1 class="post-title">{{user.fname}} {{user.lname}}</h2>
-                
+                <h2> Role: {{user.get_role_display}} </h2>
+                {% if user.role == 1 %}
+                <p> Trades: {{user.get_trade_display}} </p>
+                {% endif %}
+                <p> Medical Conditions: {{user.medical}} </p>
+                <p> Emergency Contact Name: {{user.emergency_name}} </p>
+                <p> Emergency Contact Phone: {{user.emergency_number}} </p>
+            </div>
+            <div class="col-6 text-center masthead-text">
+                <h1> Contact Details </h1>
+                <h2> Address: </h2>
+                <p> House name/ Number:{{user.address_ln_1}} </p>
+                <p> Street: {{user.address_ln_2}} </p>
+                <p> Town/City: {{user.address_ln_3}} </p>
+                <p> Post Code: {{user.postcode}} </p>
+                <p> Phone number: {{user.phone}} </p>
+                <p> Other phone number: {{user.other_phone}} </p>
+            </div>
+            <div>    
+                {% if user.trade is not none %}
+                <p> Certifications </p>
+                {% endif %}
             </div>
         </div>
     </div>
