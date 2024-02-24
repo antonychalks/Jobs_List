@@ -19,7 +19,6 @@ class UserList(generic.ListView):
 
 def user_detail(request, slug):
     queryset = UserProfile.objects.all()
-
     user = get_object_or_404(queryset, slug=slug)
     
     return render(
