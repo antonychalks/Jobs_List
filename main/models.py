@@ -3,10 +3,8 @@ from django.contrib.auth.models import User
 from multiselectfield import MultiSelectField
 from autoslug import AutoSlugField
 
-Planner = 0
-Tradesman = 1
+ROLE = ((0, "Planner"), (1, "Tradesman"))
 
-ROLE = ((Planner, "Planner"), (Tradesman, "Tradesman"))
 TRADES = [
     ("Ca", "Carpenter"),
     ("Pl", "Plumber"),

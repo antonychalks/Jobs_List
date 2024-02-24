@@ -13,8 +13,11 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <a href="{% url 'user_detail' UserProf.slug %}">
-                        <p class="card-text">{{UserProf.fname}} {{UserProf.lname}}</p>
-                        <p> {{UserProf.slug}}
+                        <h3 class="card-text">{{UserProf.fname}} {{UserProf.lname}}</h3>
+                        <p>Role: {{UserProf.get_role_display}}</p>
+                        {% if UserProf.role == 1 %}
+                        <p>Trades: {{UserProf.trade}} </p>
+                        {% endif %}
                     </a>
                 </div>
             </div>
