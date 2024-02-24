@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from multiselectfield import MultiSelectField
+from autoslug import AutoSlugField
 
 Planner = 0
 Tradesman = 1
@@ -17,6 +18,7 @@ TRADES = [
     ("AD", "Planner")
     ]
 
+
 # Create your models here.
 
 class UserProfile (models.Model):
@@ -27,8 +29,9 @@ class UserProfile (models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     role = models.IntegerField(choices=ROLE, default=0)
     trade = MultiSelectField(max_length=30, choices=TRADES)
-    fname = models.CharField(default="first name")
-    lname = models.CharField(default="last name")
+    fname = models.CharField(max_length=50)
+    lname = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=200, unique=True)
     
     class Meta:
         ordering = ["role"]
