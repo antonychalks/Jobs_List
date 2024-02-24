@@ -22,8 +22,8 @@ from main import views as main_views
 
 urlpatterns = [
     path('', include("main.urls"), name='main-urls'),
-    path('planners', include("planners.urls"), name='planners-urls'),
-    path('tradesman', include("tradesman.urls"), name='tradesman-urls'),
+    path('planners/', include("planners.urls"), name='planners-urls'),
+    path('tradesman/', include("tradesman.urls"), name='tradesman-urls'),
     path("accounts/", include("allauth.urls")),
     path('admin/', admin.site.urls),
 ]

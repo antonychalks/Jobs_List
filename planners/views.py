@@ -1,8 +1,29 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.views import generic
+from main.models import UserProfile as UserProfile
+from django.contrib.auth.models import User
 
 # Create your views here.
-def home(request):
+def planner_home(request):
     return render(
         request,
         "planners/planner_home.html",
+    )
+    
+class UserList(generic.ListView):
+    queryset = UserProfile.objects.all()
+    template_name = "planners/list_tradesman.html"
+    paginate_by = 6
+
+
+def user_detail(request, slug):
+    queryset = UserProfile.objects.all()
+    user = get_object_or_404(queryset, slug = slug)
+    
+    return render(
+        request,
+        "planner/user_detail.html",
+        {
+            "user": user,
+        },
     )

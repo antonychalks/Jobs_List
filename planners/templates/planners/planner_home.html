@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %} 
+
+{% url 'account_signup' as signup_url %}
+{% url 'UserList' as UserList %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 center">
+            <button class="btn" onclick="location.href='{% url 'UserList' %}';"> Click to view users </button>
+        </div>
+        <div class="col-6 center">
+            <button class="btn" onclick="location.href='{% url 'account_signup' %}';"> Click to add a user </button>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
