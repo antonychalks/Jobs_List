@@ -8,12 +8,20 @@
         <div class="col-6">
             <div class="card">
                 <img src:"" class="card-img-top" alt="profile image">
-                <div class="card-body">
-                    <h2 class="card-title">{{user.fname}} {{user.lname}}</h2>
-                    <h4 class="card-text"> Role: {{user.get_role_display}} </h4>
-                    {% if user.role == 1 %}
-                    <p class="card-text"> Trades: {{user.get_trade_display}} </p>
-                    {% endif %}
+                <div class="Row">
+                    <div class="card-body">
+                        <h2 class="card-title">{{user.fname}} {{user.lname}}</h2>
+                        <h4 class="card-text"> Role: {{user.get_role_display}} </h4>
+                        <p class="card-text"> Medical Conditions: {{user.medical}} </p>
+                        {% if user.role == 1 %}
+                        <p class="card-text"> Trades: {{user.get_trade_display}} </p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="Row">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserDetailModel">
+                        Edit
+                    </button>
                 </div>
             </div>
         </div>
@@ -25,7 +33,6 @@
                         <div class="col">
                             <p class="card-text"> Phone number: {{user.phone}} </p>
                             <p class="card-text"> Other phone number: {{user.other_phone}} </p>
-                            <p class="card-text"> Medical Conditions: {{user.medical}} </p>
                             <p class="card-text"> Emergency Contact Name: {{user.emergency_name}} </p>
                             <p class="card-text"> Emergency Contact Phone: {{user.emergency_number}} </p>
                         </div>
@@ -35,6 +42,9 @@
                             <p class="card-text"> Postcode:{{user.postcode}} </p>
                         </div>
                     </div>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editContactDetailModel">
+                        Edit
+                    </button>
                 </div>
             </div>
         </div>
@@ -54,4 +64,47 @@
     </div>
     {% endif %}
 </div>
+
+<div class="modal fade" id="editUserDetailModel" tabindex="-1" aria-labelledby="editUserDetailModel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Edit User's Details</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method="post">
+            <div class="modal-body">
+                {{ user_details_form | crispy }}
+                {% csrf_token %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-secondary" type="submit" name="update_user_details">Submit</button>
+            </div>
+        </form>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editContactDetailModel" tabindex="-1" aria-labelledby="editContactDetailModel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Edit User's Details</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method="post">
+            <div class="modal-body">
+                {{ contact_form | crispy }}
+                {% csrf_token %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-secondary" name="update_contact_details" type="submit">Submit</button>
+            </div>
+        </form>
+      </div>
+    </div>
+</div>
 {% endblock content %}
+
