@@ -5,7 +5,7 @@ from django import forms
 class UpdateContactDetailsForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('email', 'phone', 'other_phone', 'address_ln_1', 'postcode', 'emergency_name', 'emergency_number', )
+        fields = ('email', 'phone', 'other_phone', 'street', 'town_city', 'county', 'postcode', 'nok', 'nok_number', )
         
 class UpdateUserDetailsForm(forms.ModelForm):
     class Meta:
@@ -15,4 +15,4 @@ class UpdateUserDetailsForm(forms.ModelForm):
 class NewUserForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('user', 'role', 'fname', 'lname', 'slug', 'email', 'phone', 'other_phone', 'address_ln_1', 'postcode', 'medical', 'emergency_name', 'emergency_number', 'trade', 'certifications')
+        fields = ('user', 'role', 'fname', 'lname', 'slug', 'email', 'phone', 'other_phone', 'street', 'town_city', 'county', 'postcode', 'medical', 'nok', 'nok_number', 'trade', 'certifications')
