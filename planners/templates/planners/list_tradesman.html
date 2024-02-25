@@ -6,11 +6,12 @@
 {% block content %}
 
 <div class="container-fluid">
-    <h2> Users: </h2>
+    <h2> Users </h2>
     <div class="row">
         {% for UserProf in UserList %}
         <div class="col-md-4">
             <div class="card mb-4">
+                <img src:"" class="card-img-top" alt="profile image">
                 <div class="card-body">
                     <a href="{% url 'user_detail' UserProf.slug %}"><h3 class="card-title">{{UserProf.fname}} {{UserProf.lname}}</h3></a>
                     <p class="card-text"> Phone: {{UserProf.phone}}
