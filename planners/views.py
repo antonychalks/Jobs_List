@@ -64,3 +64,21 @@ def user_detail(request, slug):
             "user_details_form": update_user_details_form,
         },
     )
+
+def add_user(request):
+    if request.method == "POST":
+        new_user_form = NewUserForm(data=request.POST)
+        if new_user_form.is_valid():
+            new_user_form.save()
+            messages.success(request, 'New User Added!')
+            return redirect('planner_home')  # Redirect to a relevant page after successful form submission
+    else:
+        new_user_form = NewUserForm()
+
+    return render(
+        request,
+        "planners/add_user.html",
+        {
+            "new_user_form": new_user_form,
+        },
+    )
