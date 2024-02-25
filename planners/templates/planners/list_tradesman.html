@@ -15,8 +15,13 @@
                 <img src:"" class="card-img-top" alt="profile image">
                 <div class="card-body">
                     <a href="{% url 'user_detail' UserProf.slug %}"><h3 class="card-title">{{UserProf.fname}} {{UserProf.lname}}</h3></a>
-                    <p class="card-text"> Phone: {{UserProf.phone}}
-                    <p class="card-text">Role: {{UserProf.get_role_display}}</p>
+                    <p class="card-text"> Phone: <a href="tel:{{UserProf.phone}}"> {{UserProf.phone}} </a> </p>
+                        <p class="card-text">
+                            Role: 
+                            <span class="badge {% if UserProf.role == 0 %}bg-info{% else %}bg-warning{% endif %}">
+                                {{ UserProf.get_role_display }}
+                            </span>
+                        </p>
                     {% if UserProf.role == 1 %}
                         <p class="card-text">Trades: {{UserProf.trade}} </p>
                     {% endif %}

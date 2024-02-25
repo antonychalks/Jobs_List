@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from multiselectfield import MultiSelectField
-from autoslug import AutoSlugField
+from phonenumber_field.modelfields import PhoneNumberField
 
 ROLE = ((0, "Planner"), (1, "Tradesman"))
 
@@ -32,13 +32,15 @@ class UserProfile (models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     medical = models.TextField(blank=True)
     emergency_name = models.CharField(max_length=50, blank=True)
-    emergency_number = models.IntegerField(blank=True, default='0')
+    emergency_number = models.CharField(blank=True, default='0')
     certifications = models.TextField(blank=True)
     email = models.EmailField(blank=True)
-    address = models.TextField(blank=True)
+    address_ln_1 = models.CharField(blank=True)
+    address_ln_2 = models.CharField(blank=True)
+    address_ln_3 = models.CharField(blank=True)
     postcode = models.CharField(blank=True)
-    phone = models.IntegerField(blank=True, default='0')
-    other_phone = models.IntegerField(blank=True, default='0')
+    phone = models.CharField(blank=True)
+    other_phone = models.CharField(blank=True)
     
     class Meta:
         ordering = ["role"]

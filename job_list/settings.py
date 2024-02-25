@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'django_summernote',
+    'phonenumber_field',
     'planners',
     'tradesman',
     'main',

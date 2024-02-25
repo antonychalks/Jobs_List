@@ -11,11 +11,11 @@
                 <div class="Row">
                     <div class="card-body">
                         <h2 class="card-title">{{user.fname}} {{user.lname}}</h2>
-                        <h4 class="card-text"> Role: {{user.get_role_display}} </h4>
-                        <p class="card-text"> Medical Conditions: {{user.medical}} </p>
+                        <h4 class="card-text"> Role: <span class="{% if user.role == 0%} badge text-bg-info {% else %} badge text-bg-warning {% endif %} ">{{user.get_role_display}} </span> </h4>
                         {% if user.role == 1 %}
                         <p class="card-text"> Trades: {{user.get_trade_display}} </p>
                         {% endif %}
+                        <p class="card-text"> Medical Conditions: {{user.medical}} </p>                  
                     </div>
                 </div>
                 <div class="Row">
@@ -39,7 +39,7 @@
                         <div class="col">
                             <h4 class="card-title"> Address: </h4>
                             <p class="card-text"> {{user.address}} </p>
-                            <p class="card-text"> Postcode:{{user.postcode}} </p>
+                            <p class="card-text"> Postcode: {{user.postcode}} </p>
                         </div>
                     </div>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editContactDetailModel">

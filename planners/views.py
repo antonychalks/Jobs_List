@@ -71,7 +71,7 @@ def add_user(request):
         if new_user_form.is_valid():
             new_user_form.save()
             messages.success(request, 'New User Added!')
-            return redirect('planner_home')  # Redirect to a relevant page after successful form submission
+            return
     else:
         new_user_form = NewUserForm()
 
