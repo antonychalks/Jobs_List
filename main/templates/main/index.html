@@ -10,9 +10,9 @@
             <div class="col-4 center"> placeholder for screenshot of list of jobs </div>
             {% if user.is_authenticated %}
                 {% if UserProfile.role == 0 %}
-                    <button class="col-4 center btn btn-primary btn-lg" onclick="location.href='{% url 'planner_home' %}';"> Click here to enter as Planner </button>
+                    <button class="col-4 p-20 center btn btn-primary btn-lg" onclick="location.href='{% url 'planner_home' %}';"> Click here to enter as Planner </button>
                 {% else %}
-                    <button class="col-4 center btn btn-primary btn-lg" onclick="location.href='{% url 'tradesman_home' %}';"> Click here to enter as Planner </button>
+                    <button class="col-4 p-20 center btn btn-primary btn-lg" onclick="location.href='{% url 'tradesman_home' %}';"> Click here to enter as Tradesman </button>
                 {% endif %}
             {% else %}
             <button class="col-4 center btn btn-primary btn-lg" onclick="location.href='{% url 'account_login' %}';"> Click here to login </button>

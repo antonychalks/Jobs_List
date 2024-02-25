@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class="container-fluid">
@@ -30,10 +31,8 @@
                         </div>
                         <div class="col">
                             <h4 class="card-title"> Address: </h4>
-                            <p class="card-text"> House name/ Number:{{user.address_ln_1}} </p>
-                            <p class="card-text"> Street: {{user.address_ln_2}} </p>
-                            <p class="card-text"> Town/City: {{user.address_ln_3}} </p>
-                            <p class="card-text"> Post Code: {{user.postcode}} </p>
+                            <p class="card-text"> {{user.address}} </p>
+                            <p class="card-text"> Postcode:{{user.postcode}} </p>
                         </div>
                     </div>
                 </div>
