@@ -7,60 +7,84 @@
     <div class="row">
         <div class="col-6">
             <div class="card">
-                <img src:"" class="card-img-top" alt="profile image">
-                <div class="Row">
-                    <div class="card-body">
-                        <h2 class="card-title">{{user.fname}} {{user.lname}}</h2>
+                <div class="row">
+                    {% if "placeholder" in user.profile_image.url %}
+                    <img class="card-img-top profile_image" src="{% static 'media/nobody.jpg' %}" alt="placeholder image">
+                    {% else %}
+                    <img class="card-img-top profile_image" src="{{ user.profile_image.url }}" alt="{{ UserProf.slug }}">
+                    {% endif %}
+                </div>
+                <div class="card-header d-flex justify-content-between"> 
+                    <h2 class="card-title">{{user.fname}} {{user.lname}}</h2>
+                    <button type="button" class="btn btn-primary justify-content-end edit-button" data-bs-toggle="modal" data-bs-target="#editUserDetailModel">
+                        Edit
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row">
                         <h4 class="card-text"> Role: <span class="{% if user.role == 0%} badge text-bg-info {% else %} badge text-bg-warning {% endif %} ">{{user.get_role_display}} </span> </h4>
                         {% if user.role == 1 %}
                         <p class="card-text"> Trades: {{user.get_trade_display}} </p>
                         {% endif %}
-                        <p class="card-text"> Medical Conditions: {{user.medical}} </p>                  
+                        <p class="card-text"> Medical Conditions: {{user.medical}} </p>   
                     </div>
+
                 </div>
-                <div class="Row">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserDetailModel">
-                        Edit
-                    </button>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="card">
+                    <div class="card-header d-flex justify-content-between"> 
+                        <h2 >Contact Details</h2> 
+                        <button type="button" class="btn btn-primary edit-button" data-bs-toggle="modal" data-bs-target="#editContactDetailModel">
+                            Edit
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h4 class="card-title"> Phone numbers: </h4>
+                                <p class="card-text"> Phone number: {{user.phone}} </p>
+                                <p class="card-text"> Other phone number: {{user.other_phone}} </p>
+                                <p class="card-text"> Next Of Kin: {{user.nok}} </p>
+                                <p class="card-text"> Next Of Kin Phone: {{user.nok_phone}} </p>
+                            </div>
+                            <div class="col">
+                                <h4 class="card-title"> Address: </h4>
+                                <p class="card-text"> {{user.street}} </p>
+                                <p class="card-text"> {{user.town_city}} </p>
+                                <p class="card-text"> {{user.county}} </p>
+                                <p class="card-text"> Postcode: {{user.postcode}} </p>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    {% if user.role == 1 %}
+    <hr>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <div class="card">  
+                <div class="card-header">
+                    <h2 class="card-title"> Certifications </h1>
+                </div>
+                <div class="card-body">
+                    <p class="card-text"> {{ user.certifications }} 
                 </div>
             </div>
         </div>
         <div class="col-6">
             <div class="card">
-                <div class="card-body">
-                    <h2 class="card-title"> Contact Details </h2>
-                    <div class="row">
-                        <div class="col">
-                            <p class="card-text"> Phone number: {{user.phone}} </p>
-                            <p class="card-text"> Other phone number: {{user.other_phone}} </p>
-                            <p class="card-text"> Next Of Kin: {{user.nok}} </p>
-                            <p class="card-text"> Next Of Kin Phone: {{user.nok_phone}} </p>
-                        </div>
-                        <div class="col">
-                            <h4 class="card-title"> Address: </h4>
-                            <p class="card-text"> {{user.street}} </p>
-                            <p class="card-text"> {{user.town_city}} </p>
-                            <p class="card-text"> {{user.county}} </p>
-                            <p class="card-text"> Postcode: {{user.postcode}} </p>
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editContactDetailModel">
-                        Edit
-                    </button>
+                <div class="card-header"> 
+                    <h2 class="card-title"> Job History </h1>
                 </div>
-            </div>
-        </div>
-    </div>
-    {% if user.role == 1 %}
-    <div class="row">
-        <div class="col-6">
-            <div class="card">  
-            <h2 class="card-title"> Certifications </h1>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="card"> 
-            <h2 class="card-title"> Job History </h1>
             </div>
         </div>
     </div>

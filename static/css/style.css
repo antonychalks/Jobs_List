@@ -2,3 +2,20 @@ a{
     color: black;
     text-decoration: none;
 }
+
+#msg{
+    height: 30px;
+}
+
+#base-hr{
+    margin-top: 0;
+}
+
+.profile_image{
+    height: 200px;
+    width: auto;
+}
+
+.edit-button{
+    width: max-content
+}

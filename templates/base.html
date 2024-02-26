@@ -46,7 +46,7 @@
                             href="{% url 'account_logout' %}">Logout</a>
                     </li>
                     {% else %}
-                    <p class="text-end m-3">You are not logged in</p>
+                    <li class="nav-item"><p class="nav-link">You are not logged in</p></li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == signup_url %}active{% endif %}" aria-current="page"
                             href="{% url 'account_signup' %}">Register</a>
@@ -61,7 +61,7 @@
         </header>
     </nav>
 
-    <hr>
+    <hr id="base-hr">
     <main>
     {% block content%}
         <!-- Content Goes here -->

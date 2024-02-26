@@ -10,7 +10,7 @@ class UpdateContactDetailsForm(forms.ModelForm):
 class UpdateUserDetailsForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('role', 'trade', 'certifications', 'medical')
+        fields = ('profile_image','role', 'trade', 'certifications', 'medical')
         
 class NewUserForm(forms.ModelForm):
     class Meta:
