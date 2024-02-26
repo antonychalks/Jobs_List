@@ -106,7 +106,7 @@ WSGI_APPLICATION = 'job_list.wsgi.application'
 # }
 
 DATABASES = {
-    'default': dj_database_url.config(),
+    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
 
 CSRF_TRUSTED_ORIGINS = [
