@@ -12,13 +12,15 @@
         {% for UserProf in UserList %}
         <div class="col-md-3">
             <div class="card mb-3">
-                {% if "placeholder" in UserProf.profile_image.url %}
-                <img class="card-img-top" src="{% static 'media/nobody.jpg' %} "
-                  alt="placeholder image">
-                {% else %}
-                <img class="card-img-top img-thumbnail" src=" {{ UserProf.profile_image.url }}"
-                  alt="{{ UserProf.slug}}">
-                {% endif %}
+                <a href="{% url 'user_detail' UserProf.slug %}">
+                    {% if "placeholder" in UserProf.profile_image.url %}
+                    <img class="card-img-top" src="{% static 'media/nobody.jpg' %} "
+                    alt="placeholder image">
+                    {% else %}
+                    <img class="card-img-top" src=" {{ UserProf.profile_image.url }}"
+                    alt="{{ UserProf.slug}}">
+                    {% endif %}
+                </a>
                 <div class="card-body">
                     <a href="{% url 'user_detail' UserProf.slug %}"><h3 class="card-title">{{UserProf.fname}} {{UserProf.lname}}</h3></a>
                     <p class="card-text"> Phone: <a href="tel:{{UserProf.phone}}"> {{UserProf.phone}} </a> </p>
