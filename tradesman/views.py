@@ -1,8 +1,18 @@
 from django.shortcuts import render
+from django.views import generic
+from .models import Job
+from django.contrib import messages
+
 
 # Create your views here.
-def tradesman_home(request):
-    return render(
+class tradesman_home(generic.ListView):
+    queryset = Job.objects.all()
+    context_object_name = 'joblist'
+    template_name = "planners/tradesman_home.html"
+    paginate_by = 6
+    
+def view_job(request):
+        return render(
         request,
-        "tradesman/home.html",
+        "tradesman/job_detail.html",
     )

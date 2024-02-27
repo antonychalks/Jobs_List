@@ -1,5 +1,9 @@
 from main.models import UserProfile
+from django.contrib.auth.models import User
 from django import forms
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Fieldset, Submit
+from main.models import TRADES, ROLE
 
 
 class UpdateContactDetailsForm(forms.ModelForm):
@@ -12,7 +16,9 @@ class UpdateUserDetailsForm(forms.ModelForm):
         model = UserProfile
         fields = ('profile_image','role', 'trade', 'certifications', 'medical')
         
+        
 class NewUserForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('user', 'role', 'fname', 'lname', 'slug', 'email', 'phone', 'other_phone', 'street', 'town_city', 'county', 'postcode', 'medical', 'nok', 'nok_number', 'trade', 'certifications')
+        fields = '__all__'
+        

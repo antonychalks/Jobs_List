@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %} 
+
+{% url 'user_detail' as user_detail %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 d-flex align-items-center justify-content-center">
+            <button class="btn col-6 p-3 btn-primary" onclick="location.href='{% url 'user_detail' %}';"> View your profile </button>
+        </div>
+    </div>
+    <hr>
+    <div class="container-fluid">
+        <h2> Jobs </h2>
+        <div class="row">
+            {% for UserProf in UserList %}
+            <div class="col-md-3">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <a href="{% url 'job_detail' job.slug %}">
+                            <h3 class="card-title">{{job.job_number}}</h3>
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"> {{job.street}} - {{job.postcode}} </p>
+                        <p class="card-text"> {{ job.job_description }} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+</div>
+
+{% endblock content %}
