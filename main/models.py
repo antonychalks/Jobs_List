@@ -27,7 +27,7 @@ class UserProfile (models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     role = models.IntegerField(choices=ROLE, default=0)
     trade = MultiSelectField(max_length=30, choices=TRADES)
-    profile_image = CloudinaryField('image', default='placeholder')
+    profile_image = CloudinaryField('image', default='placeholder', blank=True)
     fname = models.CharField('First name', max_length=50)
     lname = models.CharField('Last name', max_length=50)
     slug = models.SlugField(max_length=200, unique=True)

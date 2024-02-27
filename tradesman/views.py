@@ -7,7 +7,6 @@ from django.contrib import messages
 # Create your views here.
 class tradesman_home(generic.ListView):
     queryset = Job.objects.all()
-    context_object_name = 'joblist'
     template_name = "planners/tradesman_home.html"
     paginate_by = 6
     

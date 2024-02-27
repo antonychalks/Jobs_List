@@ -6,10 +6,10 @@ Problem: Clicking the logo directs to /tradesman.
 Cause: I set the name for the landing page of all 3 apps to be home.
 Solution: Changed the urls to home-planners and home-tradesman respectively.
 
-Problem:Both Forms
-Cause:
-Solution:
+Problem: Both forms got sent when editing a users profile.
+Cause: The function was sending a POST request on both forms, as opposed to just the one being clicked.
+Solution: I added a name to both the submit buttons, and changed the function to include an if/elif statement which will send the correct form depending on the button.
 
 Problem: The phone numbers are displaying without the "0" as the first digit.
 Cause: Using the integerfield causes django to read it as a 10 digit number with a useless 0 at the front.
-Solution: Found a phone number field app on stack. I installed this then updated the model. https://stackoverflow.com/questions/19130942/whats-the-best-way-to-store-a-phone-number-in-django-models
+Solution: I changed the fields to CharField as this will support +44 as well.
