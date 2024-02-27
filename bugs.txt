@@ -1,3 +1,4 @@
+
 Problem:
 Cause:
 Solution:
@@ -13,3 +14,11 @@ Solution: I added a name to both the submit buttons, and changed the function to
 Problem: The phone numbers are displaying without the "0" as the first digit.
 Cause: Using the integerfield causes django to read it as a 10 digit number with a useless 0 at the front.
 Solution: I changed the fields to CharField as this will support +44 as well.
+
+Problem: When I was logged in as a planner, only the enter as tradesman button appeared.
+Cause: The UserProfile wasn't passed into the template from views.py
+Solution: I retrieved the UserProfile and passed it into views.py.
+
+Problem: The user gets logged out when going from list_tradesman to user_detail
+Cause:
+Solution:

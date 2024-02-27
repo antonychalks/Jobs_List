@@ -1,0 +1,28 @@
+
+models:
+class Task(models.Model):
+    """
+    Stores the tasks for each job
+    """
+    task = models.ForeignKey(Job, on_delete=models.CASCADE,
+                             related_name="Task", default=1 )
+    description = models.CharField(max_length=255)
+    trades_required = MultiSelectField(max_length=30, choices=TRADES, blank=True)
+    tradesman_assigned = models.ManyToManyField("main.UserProfile", blank=True)
+    time_required = models.CharField(blank=True)
+    is_completed = models.BooleanField(default=False)
+    
+class JobTask(models.Model):
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    is_completed = models.BooleanField(default=False)  # Represents completion status of task for this job
+
+    def __str__(self):
+        return f"{self.job} - {self.task}"
+    
+    
+admin:   
+from .models import Job, Task, JobTask
+
+admin.site.register(Task)
+admin.site.register(JobTask)

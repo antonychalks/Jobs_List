@@ -3,6 +3,7 @@ from django.views import generic
 from django.contrib import messages
 from main.models import UserProfile as UserProfile
 from .forms import UpdateContactDetailsForm, UpdateUserDetailsForm, NewUserForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def planner_home(request):
@@ -17,7 +18,7 @@ class UserList(generic.ListView):
     template_name = "planners/list_tradesman.html"
     paginate_by = 6
 
-
+@login_required
 def user_detail(request, slug):
     queryset = UserProfile.objects.all()
     user = get_object_or_404(queryset, slug=slug)

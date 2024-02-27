@@ -21,10 +21,10 @@ from tradesman import views as tradesman_views
 from main import views as main_views
 
 urlpatterns = [
-    path('', include("main.urls"), name='main-urls'),
-    path('planners/', include("planners.urls"), name='planners-urls'),
     path('tradesman/', include("tradesman.urls"), name='tradesman-urls'),
+    path('planners/', include("planners.urls"), name='planners-urls'),
     path("accounts/", include("allauth.urls")),
+    path('', include("main.urls"), name='main-urls'),
     path('admin/', admin.site.urls),
     path('summernote/', include('django_summernote.urls')),
 ]
