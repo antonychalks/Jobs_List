@@ -22,3 +22,7 @@ Solution: I retrieved the UserProfile and passed it into views.py.
 Problem: The user gets logged out when going from list_tradesman to user_detail
 Cause:
 Solution:
+
+Problem: When I refresh the job_detail page it resbumits the form.
+Cause: The last request sent by the page was a post request, so it send it again.
+Solution: Redirect the user back to the same page so the last request was a GET request

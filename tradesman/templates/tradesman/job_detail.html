@@ -61,11 +61,36 @@
                 <div class="row">
                     <div class="card_body"> 
                         {% if job.Tasks == null %}
-                        <p class="card-text"> There are no tasks. </p>
+                        <p class="card-text"> There are no tasks. Click add task to create a task for this Job</p>
                         {% else %}
-                            {% for task in job.Tasks.all %}
-                                <p class="card-text"> {{ task.description }}</p>
-                            {% endfor %}
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Trades Required</th>
+                                <th scope="col">Tradesman Assigned</th>
+                                <th scope="col">Time required</th>
+                                <th scope="col">Complete</th>
+                              </tr>
+                            </thead>
+                            <tbody>               
+                                {% for task in job.Tasks.all %}
+                                    <tr>
+                                        <th scope="row">{{ task.id }}</th>
+                                        <td> {{ task.description }} </td>
+                                        <td> {{ task.trades_required}} </td>
+                                        <td> {{ task.tradesman_assigned}} </td>
+                                        <td> {{ task.time_required}} </td>
+                                        <td> {{ task.is_completed}} </td>
+                                        <td> 
+                                            <button type="button" class="btn btn-primary" id="edit_task_button" name="edit_task"><i class="fa-solid fa-pen-to-square"></i></button>
+                                            <button class="btn btn-delete" id="{{ task.id }}"><i class="fa-solid fa-trash"></i></button>
+                                        </td>
+                                    </tr>  
+                                {% endfor %}
+                            </tbody>
+                        </table>
                         {% endif %}
                         <div id="add_task_div">
                             <button type="button" class="btn btn-primary edit-button" id="add_task_button">
@@ -104,5 +129,24 @@
       </div>
     </div>
 </div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete task?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this task? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a id="deleteConfirm" href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock content %}
 
