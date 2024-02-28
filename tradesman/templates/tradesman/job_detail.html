@@ -9,16 +9,10 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between"> 
                     <h2 class="card-title">Job Number: {{job.job_number}}, {{job.street}}</h2>
-                    <form method="post">
-                        {{ form.job.status }}
-                        {% csrf_token %}
-                        <button class="btn btn-secondary" name="update_job_status" type="submit">Submit</button>
-                    </div>
-                </form>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <p class="card-text"> Status: {{job.status}}</p>
+                        <p class="card-text"> Status: {{job.get_status_display}}</p>
                         <p class="card-text"> Created by: {{job.created_by}}</p>
                         <p class="card-text"> Created on: {{job.created_on}}</p>
                         <p class="card-text"> Description: {{job.job_description}} </p>   
@@ -31,29 +25,26 @@
             <div class="card">
                     <div class="card-header d-flex justify-content-between"> 
                         <h2 >Contact Details</h2> 
-                        <button type="button" class="btn btn-primary edit-button" data-bs-toggle="modal" data-bs-target="#editContactDetailModel">
+                        <button type="button" class="btn btn-primary edit-button" data-bs-toggle="modal" data-bs-target="#editJobContactDetailModel">
                             Edit
                         </button>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <h4 class="card-title"> Name: {{job.customer_name}} </h4>
+                                <p class="card-text"> Name: {{job.customer_name}} </p>
                                 <p class="card-text"> Phone number: {{job.phone}} </p>
                                 <p class="card-text"> Other phone number: {{job.other_phone}} </p>
                                 <p class="card-text"> Email: {{job.email}} </p>
                             </div>
                             <div class="col">
-                                <h4 class="card-title"> Address: </h4>
                                 <p class="card-text"> {{job.street}} </p>
                                 <p class="card-text"> {{job.town_city}} </p>
                                 <p class="card-text"> {{job.county}} </p>
-                                <p class="card-text"> Postcode: {{job.postcode}} </p>
+                                <p class="card-text"> {{job.postcode}} </p>
                             </div>
                         </div>
-                        
                     </div>
-
                 </div>
             </div>
         </div>
@@ -62,23 +53,37 @@
 <hr>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <div class="card">  
                 <div class="card-header">
                     <h2 class="card-title"> Tasks: </h1>
                 </div>
-                {% if job.task == null %}
-                <p class="card-text"> There are no tasks. </p>
-                <p class="card-text"> 
-                    {% for task in job.task.all %}
-                        <p class="card-text">{{ task.description }}</p>
-                    {% endfor %}
-                </p>
+                <div class="row">
+                    <div class="card_body"> 
+                        {% if job.Tasks == null %}
+                        <p class="card-text"> There are no tasks. </p>
+                        {% else %}
+                            {% for task in job.Tasks.all %}
+                                <p class="card-text"> {{ task.description }}</p>
+                            {% endfor %}
+                        {% endif %}
+                        <div id="add_task_div">
+                            <button type="button" class="btn btn-primary edit-button" id="add_task_button">
+                                Add Task
+                            </button>
+                            <form id="add_task_form" method="post" action="{% url 'job_detail' job.slug %}">
+                                <!-- Your form fields go here -->
+                                {% csrf_token %}
+                                {{ task_formset | crispy }}
+                                <button type="submit" class="btn btn-secondary" name="add_task">Submit</button>
+                                <button type="button" id="cancel_button" class="btn btn-secondary">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-    </div>
-    {% endif %}
+    </div> 
 </div>
 
 <div class="modal fade" id="editJobContactDetailModel" tabindex="-1" aria-labelledby="Edit Job Contact Detail Model" aria-hidden="true">
@@ -91,8 +96,6 @@
         <form method="post">
                 {{ update_job_contact_details_form | crispy }}
                 {% csrf_token %}
-                <button class="btn btn-secondary" name="update_job_contact_details" type="submit">Submit</button>
-            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <button class="btn btn-secondary" name="update_job_contact_details" type="submit">Submit</button>

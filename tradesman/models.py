@@ -42,16 +42,19 @@ class Job(models.Model):
         super(Job, self).save(*args, **kwargs)
     
     def get_status_display(self):
-        return ", ".join([dict(JOB_STATUS)[status] for status in self.status])
+        return dict(JOB_STATUS)[self.status]
 
 class Task(models.Model):
     """
     Stores the tasks for each job
     """
     job = models.ForeignKey(Job, on_delete=models.CASCADE,
-                             related_name="Task" )
+                             related_name="Tasks" )
     description = models.CharField(max_length=255)
     trades_required = MultiSelectField(max_length=30, choices=TRADES, blank=True)
     tradesman_assigned = models.ManyToManyField("main.UserProfile", blank=True)
     time_required = models.CharField(blank=True)
     is_completed = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = ["is_completed"]

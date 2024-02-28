@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
+from django.forms import modelformset_factory
 from django.views import generic
-from .models import Job
-from .forms import UpdateJobContactDetailsForm, NewJobForm
+from .models import Job, Task
+from .forms import UpdateJobContactDetailsForm, NewJobForm, AddTaskForm
 from django.contrib import messages
 from planners.views import user_detail
 
@@ -21,22 +22,33 @@ def view_job(request):
         
 def job_detail(request, slug):
     job = get_object_or_404(Job, slug=slug)
-    context_object_name = 'Job'
+    TaskFormSet = modelformset_factory(Task, form=AddTaskForm, extra=1)
+
     if request.method == "POST":
-        form = UpdateJobContactDetailsForm(request.POST, instance=job)
-        if form.is_valid():
-            form.save()
+        contactDetailsForm = UpdateJobContactDetailsForm(request.POST, instance=job)
+        task_formset = TaskFormSet(request.POST, queryset=Task.objects.filter(job=job))
+
+        if 'update_job_contact_details' in request.POST and contactDetailsForm.is_valid():
+            contactDetailsForm.save()
             messages.success(request, 'Customer details updated successfully.')
-        else:
-            messages.error(request, 'Failed to update user details. Please check the form.')
+
+        elif 'add_task' in request.POST and task_formset.is_valid():
+            instances = task_formset.save(commit=False)
+            for instance in instances:
+                instance.job = job
+                instance.save()
+            messages.success(request, 'Task(s) added successfully.')
+
     else:
-        form = UpdateJobContactDetailsForm(instance=job)
+        contactDetailsForm = UpdateJobContactDetailsForm(instance=job)
+        task_formset = TaskFormSet(queryset=Task.objects.none())
 
     return render(
         request,
         "tradesman/job_detail.html",
         {
             "job": job,
-            "update_job_contact_details_form": form,
+            "update_job_contact_details_form": contactDetailsForm,
+            "task_formset": task_formset,
         },
     )

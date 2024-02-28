@@ -1,5 +1,5 @@
 from django import forms
-from .models import Job
+from .models import Job, Task
 
 class JobAdminForm(forms.ModelForm):
     class Meta:
@@ -21,3 +21,8 @@ class NewJobForm(forms.ModelForm):
     class Meta:
         model = Job
         fields = '__all__'
+        
+class AddTaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ('description', 'trades_required', 'is_completed')
