@@ -75,5 +75,7 @@ def task_delete(request, slug, task_id):
     task_instance.delete()
     messages.success(request, 'Task deleted!')
 
+    cache.clear
+    
     # Redirect after successful deletion
     return redirect('job_detail', slug=slug)

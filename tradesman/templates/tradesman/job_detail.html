@@ -65,29 +65,37 @@
                         {% else %}
                         <table class="table">
                             <thead>
-                              <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Trades Required</th>
-                                <th scope="col">Tradesman Assigned</th>
-                                <th scope="col">Time required</th>
-                                <th scope="col">Complete</th>
-                              </tr>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Trades Required</th>
+                                    <th scope="col">Tradesman Assigned</th>
+                                    <th scope="col">Time required</th>
+                                    <th scope="col">Complete</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
                             </thead>
-                            <tbody>               
+                            <tbody>
                                 {% for task in job.Tasks.all %}
-                                    <tr>
-                                        <th scope="row">{{ task.id }}</th>
-                                        <td> {{ task.description }} </td>
-                                        <td> {{ task.trades_required}} </td>
-                                        <td> {{ task.tradesman_assigned}} </td>
-                                        <td> {{ task.time_required}} </td>
-                                        <td> {{ task.is_completed}} </td>
-                                        <td> 
-                                            <button type="button" class="btn btn-primary" id="edit_task_button" name="edit_task"><i class="fa-solid fa-pen-to-square"></i></button>
-                                            <button class="btn btn-delete" id="{{ task.id }}"><i class="fa-solid fa-trash"></i></button>
-                                        </td>
-                                    </tr>  
+                                <tr>
+                                    <th scope="row">{{ task.id }}</th>
+                                    <td> {{ task.description }} </td>
+                                    <td> {{ task.trades_required}} </td>
+                                    <td> {{ task.tradesman_assigned}} </td>
+                                    <td> {{ task.time_required}} </td>
+                                    <td> {{ task.is_completed}} </td>
+                                    <td> 
+                                        <button type="button" class="btn btn-primary edit-button"
+                                                data-description="{{ task.description }}"
+                                                data-trades-required="{{ task.trades_required }}"
+                                                data-tradesman-assigned="{{ task.tradesman_assigned }}"
+                                                data-time-required="{{ task.time_required }}"
+                                                data-is-completed="{{ task.is_completed }}">
+                                            <i class="fa-solid fa-pen-to-square"></i> Edit
+                                        </button>
+                                        <button class="btn btn-delete" id="{{ task.id }}"><i class="fa-solid fa-trash"></i></button>
+                                    </td>
+                                </tr>  
                                 {% endfor %}
                             </tbody>
                         </table>
