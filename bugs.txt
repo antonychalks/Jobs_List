@@ -26,3 +26,11 @@ Solution:
 Problem: When I refresh the job_detail page it resbumits the form.
 Cause: The last request sent by the page was a post request, so it send it again.
 Solution: Redirect the user back to the same page so the last request was a GET request
+
+Problem: The edit task submit button can't find the edit task URL
+Cause:
+Solution:
+
+Problem: The add task button auto populates with the first task on the list.
+Cause:
+Solution:

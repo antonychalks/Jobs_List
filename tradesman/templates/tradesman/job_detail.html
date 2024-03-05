@@ -53,7 +53,7 @@
 <hr>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-6">
+        <div class="col-12">
             <div class="card">  
                 <div class="card-header">
                     <h2 class="card-title"> Tasks: </h1>
@@ -81,19 +81,27 @@
                                     <th scope="row">{{ task.id }}</th>
                                     <td> {{ task.description }} </td>
                                     <td> {{ task.trades_required}} </td>
-                                    <td> {{ task.tradesman_assigned}} </td>
+                                    <td> 
+                                        {% if task.tradesman_assigned == "None" %}
+                                            No tradesman assigned
+                                        {% else %}
+                                            {{ task.tradesman_assigned }}
+                                        {% endif %}
+                                    </td>
                                     <td> {{ task.time_required}} </td>
                                     <td> {{ task.is_completed}} </td>
                                     <td> 
                                         <button type="button" class="btn btn-primary edit-button"
-                                                data-description="{{ task.description }}"
-                                                data-trades-required="{{ task.trades_required }}"
-                                                data-tradesman-assigned="{{ task.tradesman_assigned }}"
-                                                data-time-required="{{ task.time_required }}"
-                                                data-is-completed="{{ task.is_completed }}">
+                                        data-task_id="{{ task.id }}"
+                                        data-description="{{ task.description }}"
+                                        data-trades-required="{{ task.trades_required }}"
+                                        data-tradesman-assigned="{{ task.tradesman_assigned }}"
+                                        data-time-required="{{ task.time_required }}"
+                                        data-is-completed="{{ task.is_completed }}" 
+                                        data-slug="{{ task.job.slug }}"> 
                                             <i class="fa-solid fa-pen-to-square"></i> Edit
                                         </button>
-                                        <button class="btn btn-delete" id="{{ task.id }}"><i class="fa-solid fa-trash"></i></button>
+                                        <button class="btn btn-delete" data-task_id="{{task.id}}">Delete task {{task.id}}<i class="fa-solid fa-trash"></i></button>
                                     </td>
                                 </tr>  
                                 {% endfor %}
@@ -101,9 +109,10 @@
                         </table>
                         {% endif %}
                         <div id="add_task_div">
-                            <button type="button" class="btn btn-primary edit-button" id="add_task_button">
+                            <button type="button" class="btn btn-primary" id="add_task_button">
                                 Add Task
                             </button>
+                            
                             <form id="add_task_form" method="post" action="{% url 'job_detail' job.slug %}">
                                 <!-- Your form fields go here -->
                                 {% csrf_token %}

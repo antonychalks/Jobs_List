@@ -36,14 +36,16 @@ def job_detail(request, slug):
             # Redirect after successful form submission
             return HttpResponseRedirect(reverse('job_detail', args=[slug]))
 
-        elif 'add_task' in request.POST and task_formset.is_valid():
-            instances = task_formset.save(commit=False)
-            for instance in instances:
-                instance.job = job
-                instance.save()
-            messages.success(request, 'Task(s) added successfully.')
-            # Redirect after successful form submission
-            return HttpResponseRedirect(reverse('job_detail', args=[slug]))
+        elif 'add_task' in request.POST:
+            if task_formset.is_valid():
+                instances = task_formset.save(commit=False)
+                for instance in instances:
+                    instance.job = job
+                    instance.save()
+                messages.success(request, 'New task(s) added successfully.')
+                # Redirect after successful form submission
+                return HttpResponseRedirect(reverse('job_detail', args=[slug]))
+    
     else:
         contactDetailsForm = UpdateJobContactDetailsForm(instance=job)
         task_formset = TaskFormSet(queryset=Task.objects.none())
@@ -57,25 +59,55 @@ def job_detail(request, slug):
             "task_formset": task_formset,
         },
     )
-    
-def task_delete(request, slug, task_id):
+ 
+def task_edit(request, task_id):
     """
-    Delete an individual task.
+    Display an individual comment for edit.
 
     **Context**
 
-    ``job``
-        An instance of :model:`tradesman.Job`.
-    ``task``
-        A single task related to the job.
+    ``post``
+        An instance of :model:`blog.Post`.
+    ``comment``
+        A single comment related to the post.
+    ``comment_form``
+        An instance of :form:`blog.CommentForm`
     """
-    job_instance = get_object_or_404(Job, slug=slug)
-    task_instance = get_object_or_404(Task, pk=task_id)
+    job_slug = task.job.slug
+    job = get_object_or_404(Job, slug=job_slug)
+    task = get_object_or_404(Task, pk=task_id)
     
-    task_instance.delete()
-    messages.success(request, 'Task deleted!')
 
-    cache.clear
+    if request.method == "POST":
+        add_task_form = AddTaskForm(data=request.POST, instance=task)
+
+        if add_task_form.is_valid():
+            task = add_task_form.save(commit=False)
+            task.job = job
+            task.save()
+            messages.success(request, 'Task Updated!')
+            return HttpResponseRedirect(reverse('post_detail', args=[slug]))
+    else:
+        add_task_form = AddTaskForm(instance=task)
+
+    return render(request, 'your_template.html', {'add_task_form': add_task_form})
     
-    # Redirect after successful deletion
-    return redirect('job_detail', slug=slug)
+def task_delete(request, slug, task_id):
+    """
+    Delete an individual comment.
+
+    **Context**
+
+    ``post``
+        An instance of :model:`blog.Post`.
+    ``comment``
+        A single comment related to the post.
+    """
+    queryset = Job.objects.all()
+    job = get_object_or_404(queryset, slug=slug)
+    task = get_object_or_404(Task, pk=task_id)
+
+    task.delete()
+    messages.add_message(request, messages.SUCCESS, 'Task deleted!')
+
+    return HttpResponseRedirect(reverse('job_detail', args=[slug]))

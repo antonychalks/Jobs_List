@@ -1,8 +1,11 @@
-$(document).ready(function() {
-  const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
-  const deleteButtons = document.getElementsByClassName("btn-delete");
-  const deleteConfirm = document.getElementById("deleteConfirm");
-  const TRADES = [
+const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
+const deleteButtons = document.getElementsByClassName("btn-delete");
+const addTaskButton = $("#add_task_button");
+const cancelButton = $("#cancel_button");
+const editButtons = document.getElementsByClassName("btn-edit");
+const submitButton = document.getElementById("submitButton");
+const taskForm = $("#add_task_form")
+const TRADES = [
     ["0", "Carpenter"],
     ["1", "Plumber"],
     ["2", "Electrician"],
@@ -12,35 +15,46 @@ $(document).ready(function() {
     ["6", "Gas"],
     ["7", "Planner"]
 ];
+$(document).ready(function() {
 
-  // Hide the add_task_form by default
-  $("#add_task_form").hide();
+    // Hide the add_task_form by default
+    $("#add_task_form").hide();
+});
 
-  // Show the add_task_form when the "Add Task" button is clicked
-  $("#add_task_button").on("click", function() {
-      console.log("Opening Add Task");
-      $("#add_task_form").show();
-      $("#add_task_button").hide();
-  });
+// Function to handle when the add task button is clicked
+addTaskButton.on("click", function() {
+    console.log("Add Task button clicked");
 
-  // Hide the add_task_form when the "Cancel" button is clicked
-  $("#cancel_button").on("click", function() {
-      console.log("Canceling Add Task");
-      $("#add_task_form").hide();
-      $("#add_task_button").show();
-  });
+    // Show the add task form
+    $("#add_task_form").show();
+    addTaskButton.hide();
+    $("button[type='submit']").attr("name", "add_task");
+    console.log("Submit button name attribute changed to add_task");
+});
 
-  // Handle click event for edit button
-  // Handle click event for edit button
-  $(".edit-button").on("click", function() {
-    console.log("Edit Task clicked");
+    // Function to handle when the cancel button is clicked
+    cancelButton.on("click", function() {
+        console.log("Cancel button clicked");
 
-    // Retrieve task details from the clicked edit button's data attributes
+        // Hide the add task form and show the add task button
+        $("#add_task_form").hide();
+        addTaskButton.show();
+    });
+
+// Handle click event for edit button
+$(".edit-button").on("click", function() {
+    console.log("Edit Task button clicked");
+
+    var taskId = $(this).data("task_id");
+    
     var description = $(this).data("description");
     var tradesRequired = $(this).data("trades-required");
     var tradesmanAssigned = $(this).data("tradesman-assigned");
     var timeRequired = $(this).data("time-required");
     var isCompleted = $(this).data("is-completed");
+    var slug = $(this).data("slug");
+    console.log(taskId);
+    console.log(slug);
     console.log("Trades Required:", tradesRequired);
 
     // Populate the add_task_form fields with task details
@@ -52,19 +66,42 @@ $(document).ready(function() {
     // Set the is_completed checkbox based on the data
     $("#id_form-0-is_completed").prop("checked", isCompleted === "True");
 
+    // Change the submit button name to indicate editing the task
+    $("button[type='submit']").attr("name", "edit_task");
+    $("button[type='submit']").addClass( "btn-edit" );
     // Show the add_task_form
     $("#add_task_form").show();
-    $("#add_task_button").hide();
+    addTaskButton.hide();
+    editButtons.innerText = "Update";
+    var url = `/tradesman/${slug}/edit_task/${taskId}/`;
+    console.log("Edit URL:", url);
+    taskForm.attr("action", `edit_task/${taskId}/`);
 });
 
-console.log("TRADES array:", TRADES);
+/**
+* Initializes deletion functionality for the provided delete buttons.
+* 
+* For each button in the `deleteButtons` collection:
+* - Retrieves the associated comment's ID upon click.
+* - Updates the `deleteConfirm` link's href to point to the 
+* deletion endpoint for the specific comment.
+* - Displays a confirmation modal (`deleteModal`) to prompt 
+* the user for confirmation before deletion.
+*/
+for (let button of deleteButtons) {
+    button.addEventListener("click", (e) => {
+        let taskId = e.target.getAttribute("task_id");
+        console.log(taskId)
+        deleteConfirm.href = `delete_comment/${taskId}`;
+        deleteModal.show();
+    });
+}
 
-// Function to set the checkboxes for trades_required
+    // Function to set the checkboxes for trades_required
 function setTradesCheckboxes(tradesRequired) {
     console.log("Setting trades checkboxes. Trades Required:", tradesRequired);
     // Reset checkboxes first
-    $("input[name^='trades_required']").prop("checked", false);
-
+    $("input[name^='form-0-trades_required']").prop("checked", false);
     // Check if tradesRequired is a string
     if (typeof tradesRequired === 'string') {
         // Split the string into an array of trade codes
@@ -103,17 +140,3 @@ function setTradesCheckboxes(tradesRequired) {
 }
 
 
-
-
-
-
-  // Handle click event for delete button
-  for (let button of deleteButtons) {
-      button.addEventListener("click", (e) => {
-          console.log("Delete button clicked");
-          let taskId = e.target.getAttribute('data-task-id');
-          deleteConfirm.href = `/tradesman/1/delete_task/${taskId}`;
-          deleteModal.show();
-      });
-  }
-});
