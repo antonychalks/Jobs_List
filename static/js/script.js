@@ -88,14 +88,13 @@ $(".edit-button").on("click", function() {
 * - Displays a confirmation modal (`deleteModal`) to prompt 
 * the user for confirmation before deletion.
 */
-for (let button of deleteButtons) {
-    button.addEventListener("click", (e) => {
-        let taskId = e.target.getAttribute("task_id");
-        console.log(taskId)
-        deleteConfirm.href = `delete_comment/${taskId}`;
-        deleteModal.show();
-    });
-}
+$(".btn-delete").on("click", function() {
+    let taskId = $(this).data("task_id");
+    console.log(taskId)
+    deleteConfirm.href = `delete_task/${taskId}`;
+    deleteModal.show();
+});
+
 
     // Function to set the checkboxes for trades_required
 function setTradesCheckboxes(tradesRequired) {

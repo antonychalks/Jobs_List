@@ -7,6 +7,6 @@ urlpatterns = [
     path('<slug:slug>/', views.user_detail, name='user_detail'),
     path('<slug:slug>/edit_task/<int:task_id>/',
          views.task_edit, name='task_edit'),
-    path('tradesman/<slug:slug>/delete_task/<int:task_id>',
+    path('<slug:slug>/delete_task/<int:task_id>/',
          views.task_delete, name='task_delete'),
 ]
