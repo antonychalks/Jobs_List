@@ -23,7 +23,7 @@ class Job(models.Model):
     town_city = models.CharField('Town/City', blank=True)
     county = models.CharField(blank=True)
     postcode = models.CharField(blank=True)
-    job_description = models.TextField()
+    job_description = models.TextField(blank=True)
     status = models.IntegerField('Job Status', choices=JOB_STATUS)
 
     def save(self, *args, **kwargs):

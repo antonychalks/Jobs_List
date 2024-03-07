@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import UserProfile
+from tradesman.models import Job, Task
 
 # Create your views here.
 def landing_page(request):
@@ -13,5 +14,7 @@ def landing_page(request):
         "main/index.html",
         {
             "user_profile": user_profile,
+            "job": Job,
+            "task": Task,
         },
     )

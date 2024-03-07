@@ -25,4 +25,9 @@ class NewJobForm(forms.ModelForm):
 class AddTaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ('id', 'description', 'trades_required', 'is_completed')
+        fields = ('id', 'description', 'trades_required', 'time_required', 'is_completed')
+        
+class EditTaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ('description', 'trades_required', 'time_required')

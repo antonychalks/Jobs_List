@@ -113,13 +113,41 @@
                                 Add Task
                             </button>
                             
-                            <form id="add_task_form" method="post" action="{% url 'job_detail' job.slug %}">
+                            <form id="add_task_form" method="post" action="{% url 'job_detail' job.slug %}" enctype="multipart/form-data">
                                 <!-- Your form fields go here -->
                                 {% csrf_token %}
                                 {{ task_formset | crispy }}
                                 <button type="submit" class="btn btn-secondary" name="add_task">Submit</button>
                                 <button type="button" id="cancel_button" class="btn btn-secondary">Cancel</button>
                             </form>
+                            {% if add_task_form.errors %}
+                            <div class="alert alert-danger">
+                                <strong>Error!</strong> Please correct the following errors:
+                                <ul>
+                                    {% for field, error in add_task_form.errors.items %}
+                                        <li>{{ field|title }}: {{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+
+                            <form id="edit_task_form" method="post" action="{% url 'job_detail' job.slug %}" enctype="multipart/form-data">
+                                <!-- Your form fields go here -->
+                                {% csrf_token %}
+                                {{ edit_task | crispy }}
+                                <button type="submit" class="btn btn-secondary" name="edit_task">Edit</button>
+                                <button type="button" id="cancel_button" class="btn btn-secondary">Cancel</button>
+                            </form>
+                            {% if edit_task_form.errors %}
+                            <div class="alert alert-danger">
+                                <strong>Error!</strong> Please correct the following errors:
+                                <ul>
+                                    {% for field, error in edit_task_form.errors.items %}
+                                        <li>{{ field|title }}: {{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

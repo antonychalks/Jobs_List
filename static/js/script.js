@@ -4,7 +4,7 @@ const addTaskButton = $("#add_task_button");
 const cancelButton = $("#cancel_button");
 const editButtons = document.getElementsByClassName("btn-edit");
 const submitButton = document.getElementById("submitButton");
-const taskForm = $("#add_task_form")
+const editTaskForm = $("#edit_task_form")
 const TRADES = [
     ["0", "Carpenter"],
     ["1", "Plumber"],
@@ -19,6 +19,7 @@ $(document).ready(function() {
 
     // Hide the add_task_form by default
     $("#add_task_form").hide();
+    $("#edit_task_form").hide();
 });
 
 // Function to handle when the add task button is clicked
@@ -46,7 +47,6 @@ $(".edit-button").on("click", function() {
     console.log("Edit Task button clicked");
 
     var taskId = $(this).data("task_id");
-    
     var description = $(this).data("description");
     var tradesRequired = $(this).data("trades-required");
     var tradesmanAssigned = $(this).data("tradesman-assigned");
@@ -58,24 +58,24 @@ $(".edit-button").on("click", function() {
     console.log("Trades Required:", tradesRequired);
 
     // Populate the add_task_form fields with task details
-    $("#id_form-0-description").val(description);
+    $("#id_description").val(description);
     // For trades_required, set the checkboxes based on the received data
     setTradesCheckboxes(tradesRequired);
-    $("#id_form-0-tradesman_assigned").val(tradesmanAssigned);
-    $("#id_form-0-time_required").val(timeRequired);
+    $("#id_tradesman_assigned").val(tradesmanAssigned);
+    $("#id_time_required").val(timeRequired);
     // Set the is_completed checkbox based on the data
-    $("#id_form-0-is_completed").prop("checked", isCompleted === "True");
+    $("#id_is_completed").prop("checked", isCompleted === "True");
 
     // Change the submit button name to indicate editing the task
     $("button[type='submit']").attr("name", "edit_task");
     $("button[type='submit']").addClass( "btn-edit" );
     // Show the add_task_form
-    $("#add_task_form").show();
+    $("#edit_task_form").show();
     addTaskButton.hide();
     editButtons.innerText = "Update";
     var url = `/tradesman/${slug}/edit_task/${taskId}/`;
     console.log("Edit URL:", url);
-    taskForm.attr("action", `edit_task/${taskId}/`);
+    editTaskForm.attr("action", `edit_task/${taskId}/`);
 });
 
 /**
@@ -101,7 +101,7 @@ for (let button of deleteButtons) {
 function setTradesCheckboxes(tradesRequired) {
     console.log("Setting trades checkboxes. Trades Required:", tradesRequired);
     // Reset checkboxes first
-    $("input[name^='form-0-trades_required']").prop("checked", false);
+    $("input[name^='trades_required']").prop("checked", false);
     // Check if tradesRequired is a string
     if (typeof tradesRequired === 'string') {
         // Split the string into an array of trade codes
@@ -113,7 +113,7 @@ function setTradesCheckboxes(tradesRequired) {
             const tradeIndex = TRADES.findIndex(trade => trade[1] === tradeCode);
             if (tradeIndex !== -1) {
                 // Construct the ID based on the index
-                var checkboxId = "#id_form-0-trades_required_" + TRADES[tradeIndex][0];
+                var checkboxId = "#id_trades_required_" + TRADES[tradeIndex][0];
                 console.log("Setting checkbox for trade:", tradeCode, "ID:", checkboxId);
                 $(checkboxId).prop("checked", true);
             } else {
@@ -127,7 +127,7 @@ function setTradesCheckboxes(tradesRequired) {
             const tradeIndex = TRADES.findIndex(trade => trade[1] === tradeCode);
             if (tradeIndex !== -1) {
                 // Construct the ID based on the index
-                var checkboxId = "#id_form-0-trades_required_" + TRADES[tradeIndex][0];
+                var checkboxId = "#id_trades_required_" + TRADES[tradeIndex][0];
                 console.log("Setting checkbox for trade:", tradeCode, "ID:", checkboxId);
                 $(checkboxId).prop("checked", true);
             } else {

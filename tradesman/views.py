@@ -5,7 +5,7 @@ from django.views import generic
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from .models import Job, Task
-from .forms import UpdateJobContactDetailsForm, NewJobForm, AddTaskForm
+from .forms import UpdateJobContactDetailsForm, NewJobForm, AddTaskForm, EditTaskForm
 from planners.views import user_detail
 
 # Create your views here.
@@ -25,6 +25,7 @@ def view_job(request):
 def job_detail(request, slug):
     job = get_object_or_404(Job, slug=slug)
     TaskFormSet = modelformset_factory(Task, form=AddTaskForm, extra=1)
+
 
     if request.method == "POST":
         contactDetailsForm = UpdateJobContactDetailsForm(request.POST, instance=job)
@@ -49,7 +50,9 @@ def job_detail(request, slug):
     else:
         contactDetailsForm = UpdateJobContactDetailsForm(instance=job)
         task_formset = TaskFormSet(queryset=Task.objects.none())
-
+        
+    edit_task = EditTaskForm()
+    
     return render(
         request,
         "tradesman/job_detail.html",
@@ -57,40 +60,51 @@ def job_detail(request, slug):
             "job": job,
             "update_job_contact_details_form": contactDetailsForm,
             "task_formset": task_formset,
+            "edit_task": edit_task,
         },
     )
  
-def task_edit(request, task_id):
+def task_edit(request, task_id, slug):
     """
-    Display an individual comment for edit.
-
-    **Context**
-
-    ``post``
-        An instance of :model:`blog.Post`.
-    ``comment``
-        A single comment related to the post.
-    ``comment_form``
-        An instance of :form:`blog.CommentForm`
+    Display an individual task for editing.
     """
-    job_slug = task.job.slug
-    job = get_object_or_404(Job, slug=job_slug)
+    # Retrieve the task instance
     task = get_object_or_404(Task, pk=task_id)
+    # Retrieve the job instance
+    job = get_object_or_404(Job, slug=slug)
     
-
     if request.method == "POST":
+        # Print out the request.POST dictionary to inspect the data
+        print(request.POST)
+        
+        # Initialize form with task instance and data from request
         add_task_form = AddTaskForm(data=request.POST, instance=task)
-
+        
         if add_task_form.is_valid():
+            # Save the form data to the task instance
             task = add_task_form.save(commit=False)
             task.job = job
             task.save()
             messages.success(request, 'Task Updated!')
-            return HttpResponseRedirect(reverse('post_detail', args=[slug]))
+            return HttpResponseRedirect(reverse('job_detail', args=[slug]))
+        else:
+            messages.error(request, 'Error updating task!')
     else:
+        # Initialize form with task instance
         add_task_form = AddTaskForm(instance=task)
+        print(add_task_form.errors)
+        print(request.POST)
 
-    return render(request, 'your_template.html', {'add_task_form': add_task_form})
+    # If the code reaches here, it means it's a GET request or form submission failed
+    return render(
+        request,
+        "tradesman/job_detail.html",
+        {
+            "add_task_form": add_task_form,  # Pass the form to the template
+            "job": job,
+            # Other context variables you may need
+        },
+    )
     
 def task_delete(request, slug, task_id):
     """
