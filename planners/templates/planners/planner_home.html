@@ -2,8 +2,10 @@
 {% load static %} 
 
 {% url 'account_signup' as signup_url %}
+{% url 'planner_home' as planner_home%}
 {% url 'UserList' as UserList %}
 {% url 'add_user' as add_user %}
+{% url 'job_detail' as job_detail%}
 
 {% block content %}
 
@@ -16,16 +18,17 @@
             <button  class="btn col-6 p-3 btn-success" onclick="location.href='{% url 'add_user' %}';"> Click to add a user </button>
         </div>
     </div>
+    <br>
     <div class="row">
         <div class="col-12">
             <div class="card">  
                 <div class="card-header">
-                    <h2 class="card-title"> Tasks: </h1>
+                    <h2 class="card-title"> Jobs </h1>
                 </div>
                 <div class="row">
                     <div class="card_body"> 
                         {% if job == null %}
-                        <p class="card-text"> There are no Job. Click add job to create a job</p>
+                        <p class="card-text"> There are no Jobs. Click add job to create a job</p>
                         {% else %}
                         <table class="table">
                             <thead>
@@ -42,39 +45,40 @@
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                {% for job in Job.all %}
-                                <tr>
-                                    <th scope="row">{{ job.job_number }}</th>
-                                    <td> {{ job.created_on}} </td>
-                                    <td> {{ job.created_by}} </td>
-                                    <td> {{ job.job_description}} </td>
-                                    <td> {{ job.street}} </td>
-                                    <td> {{ job.postcode}} </td>
-                                    <td> {{ job.status}} </td>
-                                    <td> {{ job.task.all.trades_required}} </td>
-                                    <td> Insert time left once it is created </td>
+                            <tbody id="jobTableBody">
+                                {% for job in job %}
+                                <tr onclick="window.location='{% url 'job_detail' job.slug %}'">
+                                    <td>{{ job.job_number }}</td>
+                                    <td>{{ job.created_on }}</td>
+                                    <td>{{ job.created_by }}</td>
+                                    <td>{{ job.job_description }}</td>
+                                    <td>{{ job.street }}</td>
+                                    <td>{{ job.postcode }}</td>
+                                    <td>{{ job.status }}</td>
+                                    <td>{{ job.task.all.trades_required }}</td>
+                                    <td>Insert time left once it is created</td>
                                     <td> 
                                         <button type="button" class="btn btn-primary edit-job-button"> 
-                                            <i class="fa-solid fa-pen-to-square"></i> Edit
+                                            <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
-                                        <button class="btn btn-delete" data-job_id="{{job.id}}"><i class="fa-solid fa-trash"></i></button>
+                                        <button class="btn btn-delete" data-job_id="{{ job.id }}"><i class="fa-solid fa-trash"></i></button>
                                     </td>
-                                </tr>  
+                                </tr>
                                 {% endfor %}
-                            </tbody>
+                                </tbody>
+                                
                         </table>
                         {% endif %}
                         <div id="add_task_div">
                             <button type="button" class="btn btn-primary" id="add_task_button">
-                                Add Task
+                                Add Job
                             </button>
                             
-                            <form id="add_task_form" method="post" action="{% url 'job_detail' job.slug %}">
+                            <form id="add_job_form" method="post" action="{% url 'planner_home' %}">
                                 <!-- Your form fields go here -->
                                 {% csrf_token %}
                                 form goes here
-                                <button type="submit" class="btn btn-secondary" name="add_task">Submit</button>
+                                <button type="submit" class="btn btn-secondary" name="add_job">Submit</button>
                                 <button type="button" id="cancel_button" class="btn btn-secondary">Cancel</button>
                             </form>
                         </div>

@@ -1,3 +1,4 @@
+console.log("script_job_detail.js loaded")
 const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
 const deleteButtons = document.getElementsByClassName("btn-delete");
 const addTaskButton = $("#add_task_button");
@@ -15,6 +16,7 @@ const TRADES = [
     ["6", "Gas"],
     ["7", "Planner"]
 ];
+
 $(document).ready(function() {
 
     // Hide the add_task_form by default

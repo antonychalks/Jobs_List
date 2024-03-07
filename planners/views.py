@@ -2,14 +2,20 @@ from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.contrib import messages
 from main.models import UserProfile as UserProfile
+from tradesman.models import Job, Task
 from .forms import UpdateContactDetailsForm, UpdateUserDetailsForm, NewUserForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def planner_home(request):
+    job = Job.objects.all()
+    
     return render(
         request,
         "planners/planner_home.html",
+        {
+            "job": job,
+        }
     )
     
 class UserList(generic.ListView):
