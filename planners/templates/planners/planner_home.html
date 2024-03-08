@@ -48,18 +48,30 @@
                             </thead>
                             <tbody id="jobTableBody">
                                 {% for job in job %}
-                                <tr onclick="window.location='{% url 'job_detail' job.slug %}'">
-                                    <td>{{ job.job_number }}</td>
-                                    <td>{{ job.created_on }}</td>
-                                    <td>{{ job.created_by }}</td>
-                                    <td>{{ job.job_description }}</td>
-                                    <td>{{ job.street }}</td>
-                                    <td>{{ job.postcode }}</td>
-                                    <td>{{ job.status }}</td>
-                                    <td>{{ job.task.all.trades_required }}</td>
-                                    <td>Insert time left once it is created</td>
+                                <tr >
+                                    <div onclick="window.location='{% url 'job_detail' job.slug %}'">
+                                        <td>{{ job.job_number }}</td>
+                                        <td>{{ job.created_on }}</td>
+                                        <td>{{ job.created_by }}</td>
+                                        <td>{{ job.job_description }}</td>
+                                        <td>{{ job.street }}</td>
+                                        <td>{{ job.postcode }}</td>
+                                        <td>{{ job.status }}</td>
+                                        <td>{{ job.task.all.trades_required }}</td>
+                                        <td>Insert time left once it is created</td>
+                                    </div>
                                     <td> 
-                                        <button type="button" class="btn btn-primary edit-job-button"> 
+                                        <button type="button" class="btn btn-primary edit-job-button"
+                                        data-job_id="{{ job.id }}"
+                                        data-customer_name="{{ job.customer_name }}"
+                                        data-phone="{{ job.phone }}"
+                                        data-other_phone="{{ job.other_phone }}"
+                                        data-email="{{ job.email }}"
+                                        data-street="{{ job.street }}"
+                                        data-town_city="{{ job.town_city }}"
+                                        data-county="{{ job.county }}"
+                                        data-postcode="{{ job.postcode }}"
+                                        data-job_description="{{ job.job_description }}">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
                                         <button class="btn btn-delete" data-job_id="{{ job.id }}"><i class="fa-solid fa-trash"></i></button>
@@ -74,13 +86,29 @@
                             <button type="button" class="btn btn-primary" id="add_job_button">
                                 Add Job
                             </button>
-                            
+                            <form id="edit_job_form" method="post" action="{% url 'planner_home' %}" enctype="multipart/form-data">
+                                <!-- Your form fields go here -->
+                                {% csrf_token %}
+                                {{ edit_job_form | crispy }}
+                                <button type="submit" class="btn btn-secondary" name="edit_job">Edit</button>
+                                <button type="button" id="cancel_button" class="btn btn-secondary cancel_button">Cancel</button>
+                            </form>
+                            {% if edit_job_form.errors %}
+                            <div class="alert alert-danger">
+                                <strong>Error!</strong> Please correct the following errors:
+                                <ul>
+                                    {% for field, error in edit_job_form.errors.items %}
+                                        <li>{{ field|title }}: {{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
                             <form id="add_job_form" method="post" action="{% url 'planner_home' %}">
                                 <!-- Your form fields go here -->
                                 {% csrf_token %}
                                 {{ add_job_form | crispy}}
                                 <button type="submit" class="btn btn-secondary" name="add_job">Submit</button>
-                                <button type="button" id="cancel_button" class="btn btn-secondary">Cancel</button>
+                                <button type="button" id="cancel_button" class="btn btn-secondary cancel_button">Cancel</button>
                             </form>
                             {% if add_job_form.errors %}
                             <div class="alert alert-danger">
@@ -93,23 +121,7 @@
                             </div>
                             {% endif %}
                         </div>
-                        <form id="edit_job_form" method="post" action="{% url 'planner_home' %}" enctype="multipart/form-data">
-                            <!-- Your form fields go here -->
-                            {% csrf_token %}
-                            {{ edit_job_form | crispy }}
-                            <button type="submit" class="btn btn-secondary" name="edit_job">Edit</button>
-                            <button type="button" id="cancel_button" class="btn btn-secondary">Cancel</button>
-                        </form>
-                        {% if edit_job_form.errors %}
-                        <div class="alert alert-danger">
-                            <strong>Error!</strong> Please correct the following errors:
-                            <ul>
-                                {% for field, error in edit_job_form.errors.items %}
-                                    <li>{{ field|title }}: {{ error }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                        {% endif %}
+
                     </div>
                 </div>
             </div>

@@ -78,11 +78,11 @@ def task_edit(request, task_id, slug):
         print(request.POST)
         
         # Initialize form with task instance and data from request
-        add_task_form = AddTaskForm(data=request.POST, instance=task)
+        edit_task_form = EditTaskForm(data=request.POST, instance=task)
         
-        if add_task_form.is_valid():
+        if edit_task_form.is_valid():
             # Save the form data to the task instance
-            task = add_task_form.save(commit=False)
+            task = edit_task_form.save(commit=False)
             task.job = job
             task.save()
             messages.success(request, 'Task Updated!')
@@ -92,6 +92,7 @@ def task_edit(request, task_id, slug):
     else:
         # Initialize form with task instance
         add_task_form = AddTaskForm(instance=task)
+        edit_task_form = EditTaskForm(instance=task)
         print(add_task_form.errors)
         print(request.POST)
 
@@ -102,6 +103,7 @@ def task_edit(request, task_id, slug):
         {
             "add_task_form": add_task_form,  # Pass the form to the template
             "job": job,
+            "edit_task_form": edit_task_form
             # Other context variables you may need
         },
     )

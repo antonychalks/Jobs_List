@@ -36,6 +36,7 @@ def planner_home(request):
     
     job = Job.objects.all()
     newJob = NewJobForm()
+    editJob = EditJobForm()
     
     return render(
         request,
@@ -43,6 +44,7 @@ def planner_home(request):
         {
             "job": job,
             "add_job_form": newJob,
+            "edit_job_form": editJob
         }
     )
     
@@ -51,6 +53,41 @@ class UserList(generic.ListView):
     context_object_name = 'UserList'
     template_name = "planners/list_tradesman.html"
     paginate_by = 6
+    
+def job_edit(request, job_id, slug):
+    """
+    Display an individual task for editing.
+    """
+    # Retrieve the job instance
+    job = get_object_or_404(Job, slug=slug)
+    
+    if request.method == "POST":
+        # Print out the request.POST dictionary to inspect the data
+        print(request.POST)
+        
+        # Initialize form with task instance and data from request
+        edit_job_form = NewJobForm(data=request.POST, instance=task)
+        
+        if edit_job_form.is_valid():
+            # Save the form data to the task instance
+            job.save()
+            messages.success(request, 'Task Updated!')
+            return HttpResponseRedirect(reverse('job_detail', args=[slug]))
+        else:
+            messages.error(request, 'Error updating task!')
+    job = Job.objects.all()
+    newJob = NewJobForm()
+    editJob = EditJobForm()
+    
+    return render(
+        request,
+        "planners/planner_home.html",
+        {
+            "job": job,
+            "add_job_form": newJob,
+            "edit_job_form": editJob
+        }
+    )
 
 @login_required
 def user_detail(request, slug):
