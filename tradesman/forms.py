@@ -16,12 +16,6 @@ class UpdateJobContactDetailsForm(forms.ModelForm):
         model = Job
         fields = ('customer_name','phone', 'other_phone', 'email', 'street', 'town_city', 'county', 'postcode')
         
-        
-class NewJobForm(forms.ModelForm):
-    class Meta:
-        model = Job
-        fields = '__all__'
-        
 class AddTaskForm(forms.ModelForm):
     class Meta:
         model = Task

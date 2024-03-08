@@ -3,18 +3,22 @@ from django.views import generic
 from django.contrib import messages
 from main.models import UserProfile as UserProfile
 from tradesman.models import Job, Task
-from .forms import UpdateContactDetailsForm, UpdateUserDetailsForm, NewUserForm
+from .forms import UpdateContactDetailsForm, UpdateUserDetailsForm, NewUserForm, NewJobForm, EditJobForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def planner_home(request):
     job = Job.objects.all()
+    new_job = NewJobForm()
+    edit_job = EditJobForm()
     
     return render(
         request,
         "planners/planner_home.html",
         {
             "job": job,
+            "add_job_form": new_job,
+            "edit_job_form" : edit_job,
         }
     )
     

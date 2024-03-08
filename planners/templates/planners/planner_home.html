@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %} 
+{% load crispy_forms_tags %}
 
 {% url 'account_signup' as signup_url %}
 {% url 'planner_home' as planner_home%}
@@ -70,18 +71,45 @@
                         </table>
                         {% endif %}
                         <div id="add_task_div">
-                            <button type="button" class="btn btn-primary" id="add_task_button">
+                            <button type="button" class="btn btn-primary" id="add_job_button">
                                 Add Job
                             </button>
                             
                             <form id="add_job_form" method="post" action="{% url 'planner_home' %}">
                                 <!-- Your form fields go here -->
                                 {% csrf_token %}
-                                form goes here
+                                {{ add_job_form | crispy}}
                                 <button type="submit" class="btn btn-secondary" name="add_job">Submit</button>
                                 <button type="button" id="cancel_button" class="btn btn-secondary">Cancel</button>
                             </form>
+                            {% if add_job_form.errors %}
+                            <div class="alert alert-danger">
+                                <strong>Error!</strong> Please correct the following errors:
+                                <ul>
+                                    {% for field, error in add_job_form.errors.items %}
+                                        <li>{{ field|title }}: {{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
                         </div>
+                        <form id="edit_job_form" method="post" action="{% url 'planner_home' %}" enctype="multipart/form-data">
+                            <!-- Your form fields go here -->
+                            {% csrf_token %}
+                            {{ edit_job_form | crispy }}
+                            <button type="submit" class="btn btn-secondary" name="edit_job">Edit</button>
+                            <button type="button" id="cancel_button" class="btn btn-secondary">Cancel</button>
+                        </form>
+                        {% if edit_job_form.errors %}
+                        <div class="alert alert-danger">
+                            <strong>Error!</strong> Please correct the following errors:
+                            <ul>
+                                {% for field, error in edit_job_form.errors.items %}
+                                    <li>{{ field|title }}: {{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -90,3 +118,7 @@
 </div>
 
 {% endblock content %}
+
+{% block script %}
+    <script src="{% static  'js/script_planner_home.js' %}"> </script>
+{% endblock script %}

@@ -5,7 +5,7 @@ from django.views import generic
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from .models import Job, Task
-from .forms import UpdateJobContactDetailsForm, NewJobForm, AddTaskForm, EditTaskForm
+from .forms import UpdateJobContactDetailsForm, AddTaskForm, EditTaskForm
 from planners.views import user_detail
 
 # Create your views here.

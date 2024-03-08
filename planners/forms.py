@@ -4,6 +4,7 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit
 from main.models import TRADES, ROLE
+from tradesman.models import Job
 
 
 class UpdateContactDetailsForm(forms.ModelForm):
@@ -22,3 +23,12 @@ class NewUserForm(forms.ModelForm):
         model = UserProfile
         fields = '__all__'
         
+class NewJobForm(forms.ModelForm):
+    class Meta:
+        model = Job
+        fields = '__all__'
+        
+class EditJobForm(forms.ModelForm):
+    class Meta:
+        model = Job
+        fields = ('customer_name', 'phone', 'other_phone', 'email', 'street', 'town_city', 'county', 'postcode', 'job_description')
