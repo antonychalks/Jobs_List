@@ -55,12 +55,13 @@
                                     <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.job_description }}</td>
                                     <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.street }}</td>
                                     <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.postcode }}</td>
-                                    <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.status }}</td>
+                                    <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'"><span class="job_status">{{ job.get_status_display }}</span></td>
                                     <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.task.all.trades_required }}</td>
                                     <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">Insert time left once it is created</td>
                                     <td> 
                                         <button type="button" class="btn btn-primary edit-job-button"
                                         data-job_id="{{ job.id }}"
+                                        data-slug={{job.slug}}
                                         data-customer_name="{{ job.customer_name }}"
                                         data-phone="{{ job.phone }}"
                                         data-other_phone="{{ job.other_phone }}"

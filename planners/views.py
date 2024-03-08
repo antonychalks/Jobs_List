@@ -56,28 +56,30 @@ class UserList(generic.ListView):
     
 def job_edit(request, job_id, slug):
     """
-    Display an individual task for editing.
+    Display an individual job for editing.
     """
     # Retrieve the job instance
-    job = get_object_or_404(Job, slug=slug)
+    job = get_object_or_404(Job, pk=job_id, slug=slug)
     
     if request.method == "POST":
         # Print out the request.POST dictionary to inspect the data
         print(request.POST)
         
         # Initialize form with task instance and data from request
-        edit_job_form = NewJobForm(data=request.POST, instance=task)
+        edit_job_form = EditJobForm(data=request.POST, instance=job)
         
         if edit_job_form.is_valid():
             # Save the form data to the task instance
+            job = edit_job_form.save(commit=False)
+            job.status = job_status(job)
             job.save()
             messages.success(request, 'Task Updated!')
-            return HttpResponseRedirect(reverse('job_detail', args=[slug]))
+            return HttpResponseRedirect(reverse('planner_home'))
         else:
             messages.error(request, 'Error updating task!')
-    job = Job.objects.all()
+
     newJob = NewJobForm()
-    editJob = EditJobForm()
+    editJob = EditJobForm(instance=job)
     
     return render(
         request,
@@ -88,6 +90,45 @@ def job_edit(request, job_id, slug):
             "edit_job_form": editJob
         }
     )
+
+def job_status(job):
+    # Iterates over the tasks attached to the job and finds if they're completed or not
+    completed = 0
+    incomplete = 0
+    for task in job.Tasks.all():
+        # If a task is completed, adds a value of 1 to completed, else adds a value of 1 to incomplete
+        if task.is_completed == True:
+            completed += 1
+        else:
+            incomplete += 1
+    # if all tasks are complete, return status 3 (complete) 
+    if completed >= 1 and incomplete == 0:
+        return 3
+    # If at least one task is complete, but some are incomplete, returns status 2 (In progress)
+    elif completed >= 1 and incomplete >= 1:
+        return 2
+    #If no jobs have been completed, but there are jobs incomplete, returns status 1 (Pending Start)
+    elif completed == 0 and incomplete >= 1:
+        return 1
+    else:
+        return 0
+
+    
+def job_delete(request, slug, job_id):
+    """
+    Delete a Job.
+
+    **Context**
+
+    ``job``
+        An instance of :model:`tradesman.job`.
+    """
+    job = get_object_or_404(Job, pk=job_id)
+
+    job.delete()
+    messages.add_message(request, messages.SUCCESS, 'Job deleted!')
+
+    return HttpResponseRedirect(reverse('planner_home'))
 
 @login_required
 def user_detail(request, slug):

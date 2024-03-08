@@ -7,6 +7,8 @@ $(document).ready(function() {
     // Hide the add_task_form by default
     $("#add_job_form").hide();
     $("#edit_job_form").hide();
+
+    setStatusColor()
 });
 
 // Function to handle when the add task button is clicked
@@ -35,6 +37,7 @@ $(".edit-job-button").on("click", function() {
     console.log("Edit Job button clicked");
 
     var jobId = $(this).data("job_id");
+    var slug = $(this).data("slug");
     var customerName = $(this).data("customer_name");
     var phone = $(this).data("phone");
     var otherPhone = $(this).data("other_phone");
@@ -60,7 +63,29 @@ $(".edit-job-button").on("click", function() {
     // Show the edit_job_form
     $("#edit_job_form").show();
     addJobButton.hide();
-    var url = `/planners/edit_job/${jobId}/`;
+    var url = `/planners/${slug}/edit_job/${jobId}/`;
     console.log("Edit URL:", url);
-    editJobForm.attr("action", `edit_job/${jobId}/`);
+    editJobForm.attr("action", `/planners/${slug}/edit_job/${jobId}/`);
 });
+
+function setStatusColor() {
+    console.log("Setting status color");
+    $(".job_status").each(function() {
+        const status = $(this);
+        const statusText = status.html();
+
+        // Remove existing classes to ensure only one class is added
+        status.removeClass("bg-info bg-danger bg-warning bg-success");
+
+        // Determine which class to add based on the status text
+        if (statusText === "Unassigned") {
+            status.addClass("bg-info");
+        } else if (statusText === "Pending Start") {
+            status.addClass("bg-danger");
+        } else if (statusText === "In Progress") {
+            status.addClass("bg-warning");
+        } else if (statusText === "Complete") {
+            status.addClass("bg-success");
+        }
+    });
+}
