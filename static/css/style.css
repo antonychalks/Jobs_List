@@ -19,3 +19,7 @@ a{
 .edit-button{
     width: max-content
 }
+
+.cursor-click:hover{
+    cursor: pointer;
+}

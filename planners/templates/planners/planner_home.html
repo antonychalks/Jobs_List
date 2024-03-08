@@ -48,18 +48,16 @@
                             </thead>
                             <tbody id="jobTableBody">
                                 {% for job in job %}
-                                <tr >
-                                    <div onclick="window.location='{% url 'job_detail' job.slug %}'">
-                                        <td>{{ job.job_number }}</td>
-                                        <td>{{ job.created_on }}</td>
-                                        <td>{{ job.created_by }}</td>
-                                        <td>{{ job.job_description }}</td>
-                                        <td>{{ job.street }}</td>
-                                        <td>{{ job.postcode }}</td>
-                                        <td>{{ job.status }}</td>
-                                        <td>{{ job.task.all.trades_required }}</td>
-                                        <td>Insert time left once it is created</td>
-                                    </div>
+                                <tr>
+                                    <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.job_number }}</td>
+                                    <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.created_on }}</td>
+                                    <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.created_by }}</td>
+                                    <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.job_description }}</td>
+                                    <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.street }}</td>
+                                    <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.postcode }}</td>
+                                    <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.status }}</td>
+                                    <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.task.all.trades_required }}</td>
+                                    <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">Insert time left once it is created</td>
                                     <td> 
                                         <button type="button" class="btn btn-primary edit-job-button"
                                         data-job_id="{{ job.id }}"
