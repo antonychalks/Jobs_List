@@ -1,4 +1,5 @@
 const addJobButton = $("#add_job_button");
+const cancelButton = $("#cancel_button");
 
 $(document).ready(function() {
 

@@ -1,24 +1,48 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, reverse
+from django.forms import modelformset_factory
 from django.views import generic
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from main.models import UserProfile as UserProfile
 from tradesman.models import Job, Task
 from .forms import UpdateContactDetailsForm, UpdateUserDetailsForm, NewUserForm, NewJobForm, EditJobForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-def planner_home(request):
+def job_number():
+    # Generate job number if it's not set yet
+    job_number = 0
+    # Retrieve the latest job number from the database
+    latest_job = Job.objects.order_by('-job_number').first()
+    if latest_job:
+        job_number = latest_job.job_number + 1
+    else:
+        # If no jobs exist yet, start job numbers from 1
+        job_number = 1
+
+def planner_home(request):    
+    if request.method == "POST":
+        new_job_form = NewJobForm(data=request.POST)
+        if new_job_form.is_valid():
+            new_job = new_job_form.save(commit = False)
+            new_job.created_by = request.user
+            new_job.job_number = job_number()
+            new_job.slug = new_job.job_number
+            new_job.status = 0
+            new_job.save()
+            messages.success(request, 'Job Created!')
+            return HttpResponseRedirect(reverse('planner_home'))
+            
+    
     job = Job.objects.all()
-    new_job = NewJobForm()
-    edit_job = EditJobForm()
+    newJob = NewJobForm()
     
     return render(
         request,
         "planners/planner_home.html",
         {
             "job": job,
-            "add_job_form": new_job,
-            "edit_job_form" : edit_job,
+            "add_job_form": newJob,
         }
     )
     

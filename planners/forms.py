@@ -26,7 +26,7 @@ class NewUserForm(forms.ModelForm):
 class NewJobForm(forms.ModelForm):
     class Meta:
         model = Job
-        fields = '__all__'
+        fields = ('customer_name', 'phone', 'other_phone', 'email', 'street', 'town_city', 'county', 'postcode', 'job_description')
         
 class EditJobForm(forms.ModelForm):
     class Meta:

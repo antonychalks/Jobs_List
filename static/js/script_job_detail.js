@@ -35,14 +35,14 @@ addTaskButton.on("click", function() {
     console.log("Submit button name attribute changed to add_task");
 });
 
-    // Function to handle when the cancel button is clicked
-    cancelButton.on("click", function() {
-        console.log("Cancel button clicked");
+// Function to handle when the cancel button is clicked
+cancelButton.on("click", function() {
+    console.log("Cancel button clicked");
 
-        // Hide the add task form and show the add task button
-        $("#add_task_form").hide();
-        addTaskButton.show();
-    });
+    // Hide the add task form and show the add task button
+    $("#add_task_form").hide();
+    addTaskButton.show();
+});
 
 // Handle click event for edit button
 $(".edit-button").on("click", function() {
