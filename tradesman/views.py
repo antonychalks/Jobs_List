@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from planners.views import job_status
 from .models import Job, Task
+from main.models import UserProfile
 from .forms import UpdateJobContactDetailsForm, AddTaskForm, EditTaskForm
 from planners.views import user_detail
 
@@ -17,10 +18,15 @@ class tradesman_home(generic.ListView):
     paginate_by = 6
     
 def view_job(request):
-        return render(
-        request,
-        "tradesman/job_detail.html",
-    )
+    user = UserProfile
+    
+    return render(
+    request,
+    "tradesman/job_detail.html",
+    {
+        "user": user,
+    },
+)
         
         
 def job_detail(request, slug):
