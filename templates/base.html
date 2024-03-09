@@ -21,9 +21,9 @@
 <body class="d-flex flex-column h-100 main-bg">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <header class="container-fluid">
-            <a href="{% url 'home' %}"  class="col-4 navbar-brand" id="logo"><h1> Job List </h1></a>
+            <a href="{% url 'home' %}"  class="col-12 col-md-4 text-center text-md-left navbar-brand" id="logo"><h1> Job List </h1></a>
                 <!-- displaying Django messages -->
-                <div class="container">
+                <div class="container col-12 col-md-4 text-center order-md-last text-md-left">
                     <div class="row">
                         <div class="col-md-8 offset-md-2">
                             {% for message in messages %}
@@ -37,8 +37,8 @@
                         </div>
                     </div>
                 </div>
-            <div class="col-4 text-right">
-                <ul class="navbar-nav justify-content-end">
+            <div class="col-12 col-md-4">
+                <ul class="navbar-nav d-flex justify-content-end">
                     {% if user.is_authenticated %}
                     <li class="nav-item"><p class="nav-link"> You are logged in as {{ user }}</p> </li>
                     <li class="nav-item">
