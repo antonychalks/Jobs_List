@@ -33,15 +33,15 @@ class UserProfile (models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     medical = models.TextField('Medical Conditions', blank=True)
     nok = models.CharField('Next of Kin', max_length=50, blank=True)
-    nok_number = models.CharField('Next of Kin contact number',blank=True, default='0')
+    nok_number = models.CharField('Next of Kin contact number',blank=True, default='0', max_length=15)
     certifications = models.TextField(blank=True)
     email = models.EmailField(blank=True)
-    street = models.CharField(blank=True)
-    town_city = models.CharField('Town/City', blank=True)
-    county = models.CharField(blank=True)
-    postcode = models.CharField(blank=True)
-    phone = models.CharField(blank=True)
-    other_phone = models.CharField('Other Phone Number', blank=True)
+    street = models.CharField(blank=True , max_length=40)
+    town_city = models.CharField('Town/City', blank=True, max_length=20)
+    county = models.CharField(blank=True, max_length=25)
+    postcode = models.CharField(blank=True, max_length=15)
+    phone = models.CharField(blank=True, max_length=15)
+    other_phone = models.CharField('Other Phone Number', blank=True, max_length=15)
     
     class Meta:
         ordering = ["role"]

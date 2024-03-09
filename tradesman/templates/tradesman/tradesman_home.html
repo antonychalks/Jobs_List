@@ -30,11 +30,11 @@
                         <p class="card-text"> <span class="job_status">{{ Job.get_status_display }}</span> </p>
                         <p class="card-text"> Assigned tradesmen:
                             {% for task in Job.Task.all %}
-                                {% for tradesman in Job.Task.tradesman_assigned.all %}
-                                {{ tradesman }}{% if not forloop.last %}, {% endif %}
+                                {% for tradesman in task.tradesman_assigned.all %}
+                                    {{ tradesman }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
                             {% endfor %}
-                        {% endfor %}
-                        </p>
+                        </p>                        
                     </div>
                 </div>
             </div>
@@ -45,3 +45,6 @@
 </div>
 
 {% endblock content %}
+{% block script %}
+    <script src="{% static  'js/script_planner_home.js' %}"> </script>
+{% endblock script %}
