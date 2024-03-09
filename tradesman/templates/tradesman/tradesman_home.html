@@ -16,7 +16,7 @@
     <div class="container-fluid">
         <h2> Jobs </h2>
         <div class="row">
-            {% for Job in Job_List %}
+            {% for Job in Job_List|dictsort:"job_number" %}
             <div class="col-md-3">
                 <div class="card mb-3">
                     <div class="card-header">
@@ -27,6 +27,7 @@
                     <div class="card-body">
                         <p class="card-text"> {{ Job.street }} - {{ Job.postcode }} </p>
                         <p class="card-text"> {{ Job.job_description }} </p>
+                        <p class="card-text"> <span class="job_status">{{ Job.get_status_display }}</span> </p>
                         <p class="card-text"> Assigned tradesmen:
                             {% for task in Job.Task.all %}
                                 {% for tradesman in Job.Task.tradesman_assigned.all %}

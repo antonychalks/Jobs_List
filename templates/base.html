@@ -76,9 +76,6 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
     crossorigin="anonymous"></script>
-    {% block script %}
-
-    {% endblock script %}
     <script> 
         var message_ele = document.getElementById("msg");
 
@@ -86,5 +83,8 @@
            message_ele.style.display = "none"; 
         }, 5000);
     </script>
+    <script src="{% static  'js/script.js' %}"> </script>
+    {% block script %}
+    {% endblock script %}
 </body>
 </html>

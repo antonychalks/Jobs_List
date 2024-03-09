@@ -16,31 +16,7 @@ const TRADES = [
     ["7", "Planner"]
 ];
 
-$(document).ready(function() {
-    // Set the background color of the job status
-    setStatusColor()
-});
 
-function setStatusColor() {
-    console.log("Setting status color");
-    $(".job_status").each(function() {
-        const status = $(this);
-        const statusText = status.html();
-        // Remove existing classes to ensure only one class is added
-        status.removeClass("bg-info bg-danger bg-warning bg-success");
-
-        // Determine which class to add based on the status text
-        if (statusText === "Unassigned") {
-            status.removeClass("bg-danger bg-warning bg-success").addClass("bg-info");
-        } else if (statusText === "Pending Start") {
-            status.removeClass("bg-info bg-warning bg-success").addClass("bg-danger");
-        } else if (statusText === "In Progress") {
-            status.removeClass("bg-info bg-danger bg-success").addClass("bg-warning");
-        } else if (statusText === "Completed") {
-            status.removeClass("bg-info bg-danger bg-warning").addClass("bg-success");
-        }
-    });
-}
 
 // Function to handle when the add task button is clicked
 addTaskButton.on("click", function() {
