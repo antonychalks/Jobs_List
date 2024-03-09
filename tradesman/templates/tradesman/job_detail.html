@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <div class="card">
                 <div class="card-header d-flex justify-content-between"> 
                     <h2 class="card-title">Job Number: {{job.job_number}}, {{job.street}}</h2>
@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <div class="card">
                     <div class="card-header d-flex justify-content-between"> 
                         <h2 >Contact Details</h2> 
@@ -71,8 +71,8 @@
                                 <tr>
                                     <th scope="col">Description</th>
                                     <th scope="col">Trades Required</th>
-                                    <th scope="col">Tradesman Assigned</th>
-                                    <th scope="col">Time required</th>
+                                    <th scope="col" class="d-none d-md-table-cell">Tradesman Assigned</th>
+                                    <th scope="col" class="d-none d-md-table-cell">Time required</th>
                                     <th scope="col">Complete</th>
                                     <th scope="col">Actions</th>
                                 </tr>
@@ -82,14 +82,14 @@
                                 <tr>
                                     <td> {{ task.description }} </td>
                                     <td> {{ task.trades_required}} </td>
-                                    <td> 
+                                    <td class="d-none d-md-table-cell"> 
                                         {% if task.tradesman_assigned == "" %}
                                             No tradesman assigned
                                         {% else %}
                                             {{ task.tradesman_assigned }}
                                         {% endif %}
                                     </td>
-                                    <td> {{ task.time_required}} </td>
+                                    <td class="d-none d-md-table-cell"> {{ task.time_required}} </td>
                                     <td> {{ task.is_completed}} </td>
                                     <td> 
                                         <button type="button" class="btn btn-primary edit-button"

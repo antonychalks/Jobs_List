@@ -5,6 +5,7 @@ const cancelButton = $(".cancel_button");
 const editButtons = document.getElementsByClassName("btn-edit");
 const submitButton = document.getElementById("submitButton");
 const editTaskForm = $("#edit_task_form")
+const addTaskForm = $("#add_task_form")
 const TRADES = [
     ["0", "Carpenter"],
     ["1", "Plumber"],
@@ -34,7 +35,8 @@ cancelButton.on("click", function() {
     console.log("Cancel button clicked");
 
     // Hide the add task form and show the add task button
-    $("#add_task_form").hide();
+    addTaskForm.hide();
+    editTaskForm.hide()
     addTaskButton.show();
 });
 
