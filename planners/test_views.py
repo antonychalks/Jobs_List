@@ -33,7 +33,7 @@ class TestPlannerViews(TestCase):
         self.client.login(username='testuser', password='password')
         response = self.client.get(reverse('user_list'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'planners/list_tradesman.html')
+        self.assertTemplateUsed(response, 'planners/list_user.html')
 
     def test_job_edit_view(self):
         self.client.login(username='testuser', password='password')

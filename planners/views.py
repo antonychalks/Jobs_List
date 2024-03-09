@@ -50,7 +50,7 @@ def planner_home(request):
 class UserList(generic.ListView):
     queryset = UserProfile.objects.all()
     context_object_name = 'UserList'
-    template_name = "planners/list_tradesman.html"
+    template_name = "planners/list_user.html"
     paginate_by = 6
     
 def job_edit(request, job_id, slug):

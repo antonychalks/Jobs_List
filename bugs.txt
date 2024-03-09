@@ -19,7 +19,7 @@ Problem: When I was logged in as a planner, only the enter as tradesman button a
 Cause: The UserProfile wasn't passed into the template from views.py
 Solution: I retrieved the UserProfile and passed it into views.py.
 
-Problem: The user gets logged out when going from list_tradesman to user_detail
+Problem: The user gets logged out when going from list_user to user_detail
 Cause:
 Solution:
 

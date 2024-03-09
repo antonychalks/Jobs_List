@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <div class="card">
                 <div class="row">
                     {% if "placeholder" in user.profile_image.url %}
@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <div class="card">
                     <div class="card-header d-flex justify-content-between"> 
                         <h2 >Contact Details</h2> 
@@ -77,13 +77,6 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text"> {{ user.certifications }} 
-                </div>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="card">
-                <div class="card-header"> 
-                    <h2 class="card-title"> Job History </h1>
                 </div>
             </div>
         </div>
