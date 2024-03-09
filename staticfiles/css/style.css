@@ -19,3 +19,18 @@ a{
 .edit-button{
     width: max-content
 }
+
+.cursor-click:hover{
+    cursor: pointer;
+}
+
+.table{
+    margin-bottom: 0;
+}
+
+#add_job_form,
+#edit_job_form,
+#add_task_form,
+#edit_task_form{
+    display: none;
+}
