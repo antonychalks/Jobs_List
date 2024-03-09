@@ -38,3 +38,7 @@ Solution:
 Problem: On the planner home page, when adding a job, the fields are auto Populated with one of the jobs already in place and when I clicked edit task, the fields were blank.
 Cause: Because the add_task form was first loaded onto the page (although it was hidden), the fields were being poplated onto this form, rather than the edit task form.
 Solution: Loaded the edit_task_form first so the target is this form.
+
+Problem: When I load the planner home page or the task detail page, you can see the forms for a second before the scripts set the display to none.
+Cause: The script is the last thing to load, so the forms load as visible and then get turned off.
+Solution: Set the forms to be hidden in style.css rather than the script.

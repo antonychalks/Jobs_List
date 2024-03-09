@@ -32,7 +32,6 @@ def planner_home(request):
             new_job.save()
             messages.success(request, 'Job Created!')
             return HttpResponseRedirect(reverse('planner_home'))
-            
     
     job = Job.objects.all()
     newJob = NewJobForm()

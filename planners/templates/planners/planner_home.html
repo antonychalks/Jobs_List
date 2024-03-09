@@ -23,8 +23,11 @@
     <div class="row">
         <div class="col-12">
             <div class="card">  
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between">
                     <h2 class="card-title"> Jobs </h1>
+                    <button type="button" class="btn btn-primary" id="add_job_button">
+                        Add Job
+                    </button>
                 </div>
                 <div class="row">
                     <div class="card_body"> 
@@ -41,13 +44,11 @@
                                     <th scope="col">Street</th>
                                     <th scope="col">Postcode </th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Trades Required</th>
-                                    <th scope="col">Time Left</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="jobTableBody">
-                                {% for job in job %}
+                                {% for job in job|dictsort:"job_number" %}
                                 <tr>
                                     <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.job_number }}</td>
                                     <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.created_on }}</td>
@@ -56,8 +57,6 @@
                                     <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.street }}</td>
                                     <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.postcode }}</td>
                                     <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'"><span class="job_status">{{ job.get_status_display }}</span></td>
-                                    <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">{{ job.task.all.trades_required }}</td>
-                                    <td class="cursor-click" onclick="window.location='{% url 'job_detail' job.slug %}'">Insert time left once it is created</td>
                                     <td> 
                                         <button type="button" class="btn btn-primary edit-job-button"
                                         data-job_id="{{ job.id }}"
@@ -82,9 +81,6 @@
                         </table>
                         {% endif %}
                         <div id="add_task_div">
-                            <button type="button" class="btn btn-primary" id="add_job_button">
-                                Add Job
-                            </button>
                             <form id="edit_job_form" method="post" action="{% url 'planner_home' %}" enctype="multipart/form-data">
                                 <!-- Your form fields go here -->
                                 {% csrf_token %}

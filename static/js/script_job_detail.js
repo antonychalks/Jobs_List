@@ -1,8 +1,7 @@
-console.log("script_job_detail.js loaded")
 const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
 const deleteButtons = document.getElementsByClassName("btn-delete");
 const addTaskButton = $("#add_task_button");
-const cancelButton = $("#cancel_button");
+const cancelButton = $(".cancel_button");
 const editButtons = document.getElementsByClassName("btn-edit");
 const submitButton = document.getElementById("submitButton");
 const editTaskForm = $("#edit_task_form")
@@ -18,11 +17,30 @@ const TRADES = [
 ];
 
 $(document).ready(function() {
-
-    // Hide the add_task_form by default
-    $("#add_task_form").hide();
-    $("#edit_task_form").hide();
+    // Set the background color of the job status
+    setStatusColor()
 });
+
+function setStatusColor() {
+    console.log("Setting status color");
+    $(".job_status").each(function() {
+        const status = $(this);
+        const statusText = status.html();
+        // Remove existing classes to ensure only one class is added
+        status.removeClass("bg-info bg-danger bg-warning bg-success");
+
+        // Determine which class to add based on the status text
+        if (statusText === "Unassigned") {
+            status.removeClass("bg-danger bg-warning bg-success").addClass("bg-info");
+        } else if (statusText === "Pending Start") {
+            status.removeClass("bg-info bg-warning bg-success").addClass("bg-danger");
+        } else if (statusText === "In Progress") {
+            status.removeClass("bg-info bg-danger bg-success").addClass("bg-warning");
+        } else if (statusText === "Completed") {
+            status.removeClass("bg-info bg-danger bg-warning").addClass("bg-success");
+        }
+    });
+}
 
 // Function to handle when the add task button is clicked
 addTaskButton.on("click", function() {
@@ -61,22 +79,21 @@ $(".edit-button").on("click", function() {
 
     // Populate the add_task_form fields with task details
     $("#id_description").val(description);
+
     // For trades_required, set the checkboxes based on the received data
     setTradesCheckboxes(tradesRequired);
     $("#id_tradesman_assigned").val(tradesmanAssigned);
     $("#id_time_required").val(timeRequired);
+
     // Set the is_completed checkbox based on the data
     $("#id_is_completed").prop("checked", isCompleted === "True");
 
     // Change the submit button name to indicate editing the task
     $("button[type='submit']").attr("name", "edit_task");
     $("button[type='submit']").addClass( "btn-edit" );
+
     // Show the add_task_form
     $("#edit_task_form").show();
-    addTaskButton.hide();
-    editButtons.innerText = "Update";
-    var url = `/tradesman/${slug}/edit_task/${taskId}/`;
-    console.log("Edit URL:", url);
     editTaskForm.attr("action", `edit_task/${taskId}/`);
 });
 

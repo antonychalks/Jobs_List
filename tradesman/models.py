@@ -4,7 +4,7 @@ from multiselectfield import MultiSelectField
 from cloudinary.models import CloudinaryField
 from main.models import UserProfile, TRADES
 
-JOB_STATUS = ((0, "Unassigned"), (1, "Pending Start"), (2, "In progress"), (3, "Completed"))
+JOB_STATUS = ((0, "Unassigned"), (1, "Pending Start"), (2, "In Progress"), (3, "Completed"))
 
 PLANNERS = UserProfile.role
 # Create your models here.
@@ -43,6 +43,8 @@ class Job(models.Model):
     
     def get_status_display(self):
         return dict(JOB_STATUS)[self.status]
+                  
+            
 
 class Task(models.Model):
     """

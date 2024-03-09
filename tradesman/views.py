@@ -4,6 +4,7 @@ from django.forms import modelformset_factory
 from django.views import generic
 from django.http import HttpResponseRedirect
 from django.contrib import messages
+from planners.views import job_status
 from .models import Job, Task
 from .forms import UpdateJobContactDetailsForm, AddTaskForm, EditTaskForm
 from planners.views import user_detail
@@ -43,6 +44,7 @@ def job_detail(request, slug):
                 for instance in instances:
                     instance.job = job
                     instance.save()
+                    update_job_status(job)
                 messages.success(request, 'New task(s) added successfully.')
                 # Redirect after successful form submission
                 return HttpResponseRedirect(reverse('job_detail', args=[slug]))
@@ -79,23 +81,26 @@ def task_edit(request, task_id, slug):
         
         # Initialize form with task instance and data from request
         edit_task_form = EditTaskForm(data=request.POST, instance=task)
-        
         if edit_task_form.is_valid():
             # Save the form data to the task instance
             task = edit_task_form.save(commit=False)
             task.job = job
             task.save()
+            
+            update_job_status(job)
+            
             messages.success(request, 'Task Updated!')
             return HttpResponseRedirect(reverse('job_detail', args=[slug]))
         else:
             messages.error(request, 'Error updating task!')
     else:
         # Initialize form with task instance
-        add_task_form = AddTaskForm(instance=task)
         edit_task_form = EditTaskForm(instance=task)
-        print(add_task_form.errors)
+        print(edit_task_form.errors)
         print(request.POST)
 
+    add_task_form = AddTaskForm(instance=task)
+    
     # If the code reaches here, it means it's a GET request or form submission failed
     return render(
         request,
@@ -107,7 +112,16 @@ def task_edit(request, task_id, slug):
             # Other context variables you may need
         },
     )
+
+def update_job_status(job):
+    # Get all tasks associated with the job
+    tasks = job.Tasks.all()
     
+    job.status = job_status(job)
+    
+    # Save the updated job status
+    job.save()
+        
 def task_delete(request, slug, task_id):
     """
     Delete an individual comment.
@@ -127,3 +141,4 @@ def task_delete(request, slug, task_id):
     messages.add_message(request, messages.SUCCESS, 'Task deleted!')
 
     return HttpResponseRedirect(reverse('job_detail', args=[slug]))
+
