@@ -7,17 +7,17 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row" height="400px">
-        <div class="col-12 col-md-4 center"> placeholder for screenshot of list of jobs </div>
+        <div class="col-12 order-md-1 col-md-4 center"> placeholder for screenshot of list of jobs </div>
         {% if user.is_authenticated %}
             {% if user_profile.role == 0 %}
-                <button class="col-12 col-md-4 order-first p-20 center btn btn-primary btn-lg" onclick="location.href='{% url 'planner_home' %}';"> Click here to enter as Planner </button>
+                <button class="col-12 col-md-4 order-first order-md-1 p-20 center btn btn-primary btn-lg" onclick="location.href='{% url 'planner_home' %}';"> Click here to enter as Planner </button>
             {% else %}
-                <button class="col-12 col-md-4 order-first p-20 center btn btn-primary btn-lg" onclick="location.href='{% url 'tradesman_home' %}';"> Click here to enter as Tradesman </button>
+                <button class="col-12 col-md-4 order-first order-md-1 p-20 center btn btn-primary btn-lg" onclick="location.href='{% url 'tradesman_home' %}';"> Click here to enter as Tradesman </button>
             {% endif %}
         {% else %}
-            <button class="col-12 col-md-4 order-first center btn btn-primary btn-lg" onclick="location.href='{% url 'account_login' %}';"> Click here to login </button>
+            <button class="col-12 col-md-4 order-first order-md-1 center btn btn-primary btn-lg" onclick="location.href='{% url 'account_login' %}';"> Click here to login </button>
         {% endif %}
-        <div class="col-12 col-md-4 center"> placeholder for screenshot of job details </div>
+        <div class="col-12 col-md-4 order-md-2 center"> placeholder for screenshot of job details </div>
     </div>
 </div>
 
