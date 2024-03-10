@@ -35,6 +35,13 @@ a{
     display: none;
 }
 
+.home-img{
+    width: 70%;
+    height: auto;
+    border: gray 3px solid;
+    margin: 20px;
+}
+
 @media screen and (max-width: 992px) {
     .navbar-nav{
         flex-direction: row;
