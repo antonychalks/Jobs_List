@@ -253,7 +253,7 @@ If you're not signed in, you will have two options from the landing page.
 
 This is to ensure the data is protected from anyone who isn't authorised.
 
-Tradesman:
+#### Tradesman:
 <details>
 <summary>
     Landing
@@ -330,4 +330,339 @@ On this page you can view all the jobs data from the database, and specifically:
 On this page the tradesmen are able to edit the contact details of a job, add a task, edit a task and delete it, enabling CRUD functionality to the page. From here a tradesman will be able to view all the details they need for each job, as well as the tasks that have already been completed, and what needs to be completed. This is useful as it will prevent a tradesman going to a job, just to find out another trade needs to attend first.
 
 ![Job Detail](static/media/README/job_detail.jpg)
+![Task Edit](static/media/README/job_detail_task_edit.jpg)
 </details>
+
+#### Planner:
+<details>
+<summary>
+    Landing
+</summary>
+As a planner when you first log in there will be a call to action button prompting you to enter the website. This will then take you to the planner home page.
+
+![Landing Page](static/media/README/planner_landing.jpg)
+</details>
+
+<details>
+<summary>
+Planner Home
+</summary>
+At the top of the page there are two buttons, allowing the planner to view the users or add a new user.
+
+Underneath the planner can view all the different jobs on the database, and specifically:
+- Job Number
+- Date Created
+- Created by
+- Job Description
+- Street
+- Postcode
+- Status
+
+The planner can click on any job to get the details, or they can click the edit and delete buttons for CRUD functionality on each job
+
+![Planner home](static/media/README/planner_home.jpg)
+![Edit Job](static/media/README/planner_home_edit_job.jpg)
+</details>
+
+<details>
+<summary>
+View Users
+</summary>
+On this page the planners can view each user and the following details:
+- Picture
+- Name
+- Phone
+- Role
+- Trades (if they are a tradesman)
+
+These details were chosen as they are the details a planner might imidiately require, without having to open the full page.
+
+From here the planner can click on a user to pull up the user detail page. Here the planner can edit each user and view all the details for them.
+
+![List of users](static/media/README/list_user.jpg)
+![Detail of one user](static/media/README/user_detail.jpg)
+![Edit user model](static/media/README/user_detail_edit.jpg)
+</details>
+
+<details>
+<summary>
+Add User
+</summary>
+The add user page is for the planners to register a user from the all auth user model, with all the details the system requires for them. This page includes a crispy form with all the details from the UserProfile model.
+
+I couldn't edit the allauth models, so I used a foreign key field to link one user to one userprofile.
+
+![Add new user](static/media/README/add_user.jpg)
+</details>
+
+<details>
+<summary>
+Job Detail
+</summary>
+On this page you can view all the jobs data from the database, and specifically:
+- Status
+- Created by
+- Created on
+- Description
+- Contact Details
+- Name
+- Phone number
+- Other phone number
+- Email
+- Street
+- Town/city
+- County
+- Postcode
+- Any tasks that have been added.
+
+On this page the planners are able to edit the contact details of a job, add a task, edit a task and delete it, enabling CRUD functionality to the page. From here a tradesman will be able to view all the details they need for each job, as well as the tasks that have already been completed, and what needs to be completed.
+
+![Job Detail](static/media/README/job_detail.jpg)
+![Task Edit](static/media/README/job_detail_task_edit.jpg)
+</details>
+
+### The Surface Plane
+
+As this website is based more towards the functionality as opposed to the style, I have focused more on implementing features. This means I have kept a simple view, relying mostly on boostrap styles.
+
+#### Base colours
+I have kept a white background with light grey features on the cards and header. This is because the website is going to be used frequently, so I want to keep it simple to increase efficiency.
+
+#### Fonts
+All the fonts have been kept the same, as this font provided by bootstrap is easy to read.
+
+#### Icons
+I have used the edit icon and bin icon for the edit and delete buttons on each job and task, this allows the user a visual aid to understand the use of each button.
+
+#### Buttons
+The buttons on the page hold the most colour, this is so the user will find it easy to see what the next step in the process is, enabling them to move quickly through the website when working.
+
+[Return to contents list](#contents)
+
+## Agile Methodology
+
+During the creation of this project I have applied Agile where they fit into a solo project built purely for buisness purposes.
+
+In particular the following common Agile practices have been followed:
+user stories and product backlog, time boxing, prioritization and information radiators.
+
+### User Stories
+
+Please see the [Scope Plane](#the-scope-plane) for the user stories created for this project which breakdown the Epics which point out each feature and their functionality requirements.
+
+The issues tool on GitHub has been used to record all user stories. Acceptance criteria and tasks were added to the user stories as the project progressed.
+
+
+### Product Backlog
+
+I utilized a product backlog to house all user stories before allocating them to an iteration. Any unfinished user stories by the iteration's end were returned to the backlog. After completing the project, two user stories remained in the product backlog, which are detailed in the [future features](#future-features) section of the readme.
+
+You can access the product backlog on GitHub via a designated backlog column on the project board.
+
+#### Final Backlog
+
+<details>
+<summary>
+See details
+</summary>
+
+After the completion of the project, the following user stories remained in the backlog to be implemented in the future. Please see [Future Features](#future-features) for more details.
+
+TRADESMAN STORY: Complete the risk assessment #17
+PLANNER STORY: Add appointments #20
+
+</details>
+
+### MoSCoW Prioritisation
+
+MoSCoW prioritisation was used throughout the project. At the beginning of each new iteration the project backlog was assessed and each user story categorised for the current iteration (not the project over all), thus allowing for the correct balance of prioritisation for each iteration. This process was repeated for each new iteration, being mindful at all times of the overall remaining project time left.
+
+- **Must Have** the user stories deemed vital for this iteration of the project.
+
+- **Should Have** the user stories deemed important but not vital for this iteration of the project.
+
+- **Could Have** the user stories that will only have a small impact if left out of this iteration of the project.
+
+- **Won't Have** the user stories that won't be worked on during this iteration of the project. These weren't speicifically labelled and were simply left in the backlog.
+
+### Information Radiators
+
+GitHub projects was utilised as a kanban board for this project.
+
+![Screenshot of the projectboard at the end of this phase of the project](static/media/README/story_board.jpg)
+
+[Return to contents list](#contents)
+
+### Future Features
+#### Risk Assessment
+Further development of this project will mean that a tradesman can create, read, update and delete a risk assessment attached to each task, this allows for safe working practices for the tradesman.
+
+#### Add appointments
+This feature will allow the planners to create, read, update and delete items on a calendar that is unique to each user. This enables the jobs to be planned and for estimated completion dates added to each task and job.
+
+[Return to contents list](#contents)
+
+## Languages
+
+HTML
+CSS
+JavaScript
+Python
+
+[Return to contents list](#contents)
+
+## Frameworks and Libraries
+
+[Django 3.2](https://www.djangoproject.com) - A high-level Python web framework that encourages rapid development and clean, pragmatic design.
+
+[Gunicorn 21.2](https://gunicorn.org) - A Python WSGI HTTP Server for UNIX.
+
+[Psycopg2 2.9](https://www.psycopg.org/docs/#) - A PostgreSQL database adapter for the Python programming language.
+
+## Tools and Technologies
+
+Tools and technologies are listed in order of use during the development of this project.
+
+[Code Institute Template](https://github.com/Code-Institute-Org/ci-full-template) - Provided me with a familiar base from which to build my project.
+
+[GitHub](https://github.com/) - Stores the repository for this project so that it can be viewed by others.
+
+[git](https://git-scm.com/) - Controlled the building of this project in a series of versions which can be tracked.
+
+[Visual Studio Code](https://code.visualstudio.com/) - One of the two editors in which this project has been built. The following extentions were installed and used: Markdown Preview Enhanced, Python, Pylance, Tailwind CSS IntelliSense
+
+[Cloudinary](https://cloudinary.com) - Image and video API platform.
+
+[Heroku](https://www.heroku.com) - Used to host and deploy the project.
+
+[ElephantSQL](https://www.elephantsql.com) - Used to store the PostgreSQL database.
+
+[WebAim contrast checker](https://webaim.org/resources/contrastchecker/) - Used to test contrast between text and background.
+
+[ChatGPT](https://chat.openai.com/) - ChatGPT was used to help resolve project bugs. ChatGPT was also used on occasion when repetitive tasks are to be completed.
+
+[Jshint](https://jshint.com/) - Used to validate the JavaScript code.
+
+[W3C - CSS Validation Service](https://jigsaw.w3.org/css-validator/) - Used to validate the CSS code. Please see [TESTING.md](TESTING.md) for notes on this.
+
+[CI Python Linter](https://pep8ci.herokuapp.com/) - Used to validate the Python code.
+
+[Nu HTML Checker](https://validator.w3.org/nu/) - Used to validate the HTML code.
+
+[Return to contents list](#contents)
+
+## Bugs and Fixes
+
+See [bugs.txt](bugs.txt)
+
+[Return to contents list](#contents)
+
+## Deployment
+
+This website has been deployed using Heroku.
+
+Instructions to deploy using Heroku:
+
+1 - While in Heroku, navigate to dashboard and then click on the new button in the top right corner choosing: create new app.
+
+2 - Input a name for your app (this name will need to be unique) and choose the correct region for where you are located. Click create app.
+
+3 - Your app has been created, now click on the settings tab.
+
+4 - Click reveal config vars to add any keys the application will need. For this project I added:
+- All the key value pairs from my env.py file.
+
+5 - Click add buildpack to install any interdependecies needed. For this project I installed 'python'.
+
+6 - Click on deploy tab. Select deploy method, in this case Git Hub. Confirm connection to git hub by searching for the correct repository and then connecting to it.
+
+7 - To manually deploy project click 'Deploy Branch'. Once built a message will appear saying: Your app was successfully deployed. Click the view button to view the deployed page making a note of it's url.
+
+8 - You can also set up automatic deployment.
+
+9 - If you find your css is not showing correctly on the deployed site running the following command while in your workspace may help:
+./manage.py collectstatic
+
+10 - Don't forget to turn Debug back to False before final deployment.
+
+[Return to contents list](#contents)
+
+## Cloning this repository
+
+In order to work on this repository you will first need to clone it.
+
+**Instructions to clone the repository**:
+
+1 - While in the GitHub repository, click on the green code button.
+
+2 - Copy the link.
+
+3 - In your IDE or local coding environment use the link to open the repository. 
+
+For example: in VScode 
+- clicking on 'Clone Git Repository...' will bring up a box in which to paste the link. 
+- once vscode has the link, you will then be asked where you would like the repo saving.
+- You should now be set up ready to work on the repository.
+
+For example: in CodeAnywhere
+- Click on 'Add new workspace'
+- You will then be given the option to 'Create from your project repository' and a box in which to paste the link
+- CodeAnywhere will now open a new workspace containing the repository.
+- You should now be set up ready to work on the repository.
+
+4 - Import all dependencies. I use the command: pip3 install -r requirements.txt.
+
+5 - Create an env.py file in the main directory.
+
+6 - Enter key data, such as: DATABASE_URL, SECRET_KEY, CLOUDINARY_URL
+
+7 - Check that env.py is named in the .gitignore file.
+
+8 - In settings.py change Debug to True while developing. You make also want to change to Django's inbuilt sqlite database.
+
+
+9 - Add the following code to settings.py:
+
+COMPRESS_ROOT = BASE_DIR / 'static'
+
+COMPRESS_ENABLED = True
+
+STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
+
+9 - Check it's all working by running the program. I used the command:
+python3 manage.py runserver
+
+[Return to contents list](#contents)
+
+## Forking a branch
+
+In order to protect the main branch while you work on something new, essential when working as part of a team or when you want to experiment with a new feature, you will need to fork a branch. 
+
+**Instructions to fork the repository**:
+
+1 - While in the GitHub repository, click on the branch symbol and text indicating the number of branches.
+
+2 - This will load details on current branches. Click on the green 'New branch' button.
+
+3 - Enter a name for the new branch and then click the green 'create new branch' button.
+
+4 - Your new branch should now have appeared on the screen.
+
+5 - Clicking on the new branch and then following the steps for cloning will allow you to open up and work on this branch.
+
+**Instructions to fork directly from an issue**:
+
+1 - Click to view an issue, either from the issues list or from the project board. From the project board you will need to click once to bring up the issue and then again on the title to go into it fully.
+
+2 - Partway down the right hand side (on desktop) you should see the heading 'Development' and under this a link to 'create a branch for this issue or link a pull request'.
+
+3 - Click on the link to create a forked branch that is tied to the issue.
+
+[Return to contents list](#contents)
+
+## Credits
+
+### Code
+
+[Code Institute](https://codeinstitute.net) - "I think therefore I Blog" walkthrough followed when installing dependencies and deploying to Heroku.
+[Multi Select Field](https://pypi.org/project/django-multiselectfield/)multi select field 
