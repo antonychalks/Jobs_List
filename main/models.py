@@ -45,10 +45,12 @@ class UserProfile (models.Model):
     
     class Meta:
         ordering = ["role"]
-    
-    def __str__(self):
-        return f"{self.user} | {self.role}"
-    
+        
     def get_trade_display(self):
         return ", ".join([dict(TRADES)[trade] for trade in self.trade])
     
+    def __str__(self):
+        return f"{self.user} | {self.get_role_display()} | {self.get_trade_display()}"
+
+    
+
