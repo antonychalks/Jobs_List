@@ -24,4 +24,4 @@ class AddTaskForm(forms.ModelForm):
 class EditTaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ('description', 'trades_required', 'time_required', 'tradesman_assigned', 'is_completed')
+        fields = ('description', 'trades_required', 'time_required', 'is_completed')
