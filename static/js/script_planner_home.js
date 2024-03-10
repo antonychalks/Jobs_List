@@ -7,19 +7,14 @@ const editJobForm = $("#edit_job_form")
 
 // Function to handle when the add task button is clicked
 addJobButton.on("click", function() {
-    console.log("Add Job button clicked");
-
     // Show the add task form
     $("#add_job_form").show();
     addJobButton.hide();
     $("button[type='submit']").attr("name", "add_job");
-    console.log("Submit button name attribute changed to add_job");
 });
 
 // Function to handle when the cancel button is clicked
 cancelButton.on("click", function() {
-    console.log("Cancel button clicked");
-
     // Hide the add task form and show the add task button
     $("#add_job_form").hide();
     $("#edit_job_form").hide();
@@ -28,8 +23,6 @@ cancelButton.on("click", function() {
 
 // Handle click event for edit button
 $(".edit-job-button").on("click", function() {
-    console.log("Edit Job button clicked");
-
     var jobId = $(this).data("job_id");
     var slug = $(this).data("slug");
     var customerName = $(this).data("customer_name");
@@ -58,12 +51,10 @@ $(".edit-job-button").on("click", function() {
     $("#edit_job_form").show();
     addJobButton.hide();
     var url = `/planners/${slug}/edit_job/${jobId}/`;
-    console.log("Edit URL:", url);
     editJobForm.attr("action", `/planners/${slug}/edit_job/${jobId}/`);
 });
 
 function setStatusColor() {
-    console.log("Setting status color");
     $(".job_status").each(function() {
         const status = $(this);
         const statusText = status.html();
