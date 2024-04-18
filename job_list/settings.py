@@ -161,6 +161,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+#Implemented to allow my CV website to show this project.
 X_FRAME_OPTIONS = 'ALLOW-FROM http://127.0.0.1:8000/'
 
 XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
