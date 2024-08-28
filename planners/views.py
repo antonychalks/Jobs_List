@@ -36,11 +36,13 @@ def planner_home(request):
     job = Job.objects.all()
     newJob = NewJobForm()
     editJob = EditJobForm()
+    user_profile = UserProfile.objects.get(user=request.user)
     
     return render(
         request,
         "planners/planner_home.html",
         {
+            "user_profile": user_profile,
             "job": job,
             "add_job_form": newJob,
             "edit_job_form": editJob
