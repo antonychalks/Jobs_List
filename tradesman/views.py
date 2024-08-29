@@ -7,7 +7,7 @@ from django.contrib import messages
 from planners.views import job_status
 from .models import Job, Task
 from main.models import UserProfile
-from .forms import UpdateJobContactDetailsForm, AddTaskForm, EditTaskForm
+from .forms import UpdateJobContactDetailsForm, AddTaskForm, EditTaskForm, AssignTradesmanForm
 from planners.views import user_detail
 
 # Create your views here.
@@ -32,7 +32,6 @@ def view_job(request):
 def job_detail(request, slug):
     job = get_object_or_404(Job, slug=slug)
     TaskFormSet = modelformset_factory(Task, form=AddTaskForm, extra=1)
-
 
     if request.method == "POST":
         contactDetailsForm = UpdateJobContactDetailsForm(request.POST, instance=job)
@@ -60,6 +59,8 @@ def job_detail(request, slug):
         task_formset = TaskFormSet(queryset=Task.objects.none())
         
     edit_task = EditTaskForm()
+    assign_tradesman = AssignTradesmanForm()
+    tradesmen = UserProfile.objects.filter(role=1)
     
     return render(
         request,
@@ -69,9 +70,12 @@ def job_detail(request, slug):
             "update_job_contact_details_form": contactDetailsForm,
             "task_formset": task_formset,
             "edit_task": edit_task,
+            "assign_tradesman": assign_tradesman,
+            "tradesmen": tradesmen,
         },
     )
- 
+
+
 def task_edit(request, task_id, slug):
     """
     Display an individual task for editing.
@@ -148,3 +152,28 @@ def task_delete(request, slug, task_id):
 
     return HttpResponseRedirect(reverse('job_detail', args=[slug]))
 
+
+def assign_tradesmen(request, slug, task_id):
+    queryset = Job.objects.all()
+    task = get_object_or_404(Task, pk=task_id)
+    job = get_object_or_404(queryset, slug=slug)
+
+    if request.method == "POST":
+        tradesman_form = AssignTradesmanForm(request.POST)
+        if tradesman_form.is_valid():
+            tradesman = tradesman_form.cleaned_data['tradesman_assigned']
+            task.tradesman_assigned.set(tradesman)
+            task.save()
+            messages.success(request, 'Tradesman assigned successfully.')
+            return HttpResponseRedirect(reverse('job_detail', args=[slug]))
+    else:
+        tradesman_form = AssignTradesmanForm()
+
+    return render(
+        request,
+        "tradesman/job_detail.html",
+        {
+            "job": job,
+            "tradesman_form": tradesman_form,
+        },
+    )

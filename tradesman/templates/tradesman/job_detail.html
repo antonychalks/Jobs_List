@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% load trade_tags %}
 
 {% block content %}
 <div class="container-fluid">
@@ -56,7 +57,7 @@
         <div class="col-12">
             <div class="card">  
                 <div class="card-header d-flex justify-content-between">
-                    <h2 class="card-title"> Tasks: </h1>
+                    <h2 class="card-title"> Tasks: </h2>
                     <button type="button" class="btn btn-primary" id="add_task_button">
                         Add Task
                     </button>
@@ -71,6 +72,7 @@
                                 <tr>
                                     <th scope="col">Description</th>
                                     <th scope="col">Trades Required</th>
+                                    <th scope="col">Tradesman Assigned</th>
                                     <th scope="col" class="d-none d-md-table-cell">Time required</th>
                                     <th scope="col">Complete</th>
                                     <th scope="col">Actions</th>
@@ -81,6 +83,56 @@
                                 <tr>
                                     <td> {{ task.description }} </td>
                                     <td> {{ task.trades_required}} </td>
+                                    {% if task.tradesman_assigned|default:"No Tradesman assigned" == "No Tradesman assigned" %}
+                                    <td>
+                                        No Tradesman assigned
+                                        <div class="dropdown-center">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Assign Tradesman
+                                            </button>
+                                            <ul class="dropdown-menu">
+
+                                                {% for tradesman in tradesmen %}
+                                                    {% for trade in tradesman.trade %}
+                                                        {% if trade == task.trades_required %}
+                                                            <input type="checkbox" id="{{ tradesman.id }}" name="{{ tradesman.id }}" checked />
+                                                            <label for="{{ tradesman.id }}">{{ tradesman }}</label>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endfor %}
+                                                <button type="submit" class="btn">Submit</button>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    {% else %}
+                                    <td>
+                                        {% for tradesman in task.tradesman_assigned.all %}
+                                            <p>{{ tradesman.fname }} {{ tradesman.lname }}</p>
+                                        {% endfor %}
+                                        <div class="dropdown-center">
+                                            <form method="post" action="{% url 'assign_tradesmen' job.slug task.id %}">
+                                            {% csrf_token %}
+                                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Assign Tradesman
+                                                </button>
+                                                <ul class="dropdown-menu p-1">
+                                                    <p><label for="tradesman_assigned">Tradesmen with the correct trade:</label></p>
+                                                    <select name="tradesman_assigned" id="tradesman_assigned" multiple>
+                                                    {% for tradesman in tradesmen %}
+                                                        {% for trade in tradesman.trade %}
+                                                            {% if trade in task.trades_required %}
+                                                                <option value="{{ tradesman.id }}">{{ tradesman.fname }} {{ tradesman.lname }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% endfor %}
+                                                    </select>
+                                                    <p>Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.</p>
+                                                    <button type="submit" class="btn btn-success" name="assign_tradesmen" >Submit</button>
+                                                </ul>
+                                            </form>
+                                        </div>
+                                    </td>
+                                    {% endif %}
                                     <td class="d-none d-md-table-cell"> {{ task.time_required}} </td>
                                     <td> {{ task.is_completed}} </td>
                                     <td> 

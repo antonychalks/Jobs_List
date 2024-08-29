@@ -1,6 +1,7 @@
 from django import forms
 from .models import Job, Task
 
+
 class JobAdminForm(forms.ModelForm):
     class Meta:
         model = Job
@@ -10,18 +11,27 @@ class JobAdminForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         # Limit choices for created_by field to users with role=0
         self.fields['created_by'].queryset = self.fields['created_by'].queryset.filter(userprofile__role=0)
-        
+
+
 class UpdateJobContactDetailsForm(forms.ModelForm):
     class Meta:
         model = Job
         fields = ('customer_name','phone', 'other_phone', 'email', 'street', 'town_city', 'county', 'postcode')
-        
+
+
 class AddTaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ('id', 'description', 'trades_required', 'time_required', 'is_completed')
-        
+
+
 class EditTaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ('description', 'trades_required', 'time_required', 'is_completed')
+
+
+class AssignTradesmanForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ('tradesman_assigned',)

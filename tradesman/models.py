@@ -54,7 +54,7 @@ class Task(models.Model):
                              related_name="Tasks" )
     description = models.CharField(max_length=255)
     trades_required = MultiSelectField(max_length=30, choices=TRADES, blank=True)
-    tradesman_assigned = models.ManyToManyField("main.UserProfile", blank=True)
+    tradesman_assigned = models.ManyToManyField("main.UserProfile", related_name="tradesman", blank=True)
     time_required = models.CharField(blank=True, max_length=25)
     is_completed = models.BooleanField(default=False)
     
