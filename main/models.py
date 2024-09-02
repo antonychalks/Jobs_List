@@ -48,18 +48,30 @@ class UserProfile (models.Model):
     
     class Meta:
         ordering = ["role"]
+
+    def get_role_display(self):
+        dict_role = dict(ROLE)
+        return dict_role.get(self.role)
         
     def get_trade_display(self):
         return ", ".join([dict(TRADES)[trade] for trade in self.trade])
+
+    def generate_slug(self):
+        username = self.user.username
+        slug = username
     
     def __str__(self):
         return f"{self.user} | {self.get_role_display()} | {self.get_trade_display()}"
 
     def set_profile_complete(self):
-        if (self.role and self.trade and self.fname and self.lname and self.medical and self.nok and self.nok_number and
-                self.certifications and self.email and self.street and self.town_city and self.postcode and self.phone):
+        if (self.role and self.trade and self.fname and self.lname and self.nok and self.nok_number
+                and self.email and self.street and self.town_city and self.postcode and self.phone):
             self.profile_complete = True
             self.save()
+
+    def save(self, *args, **kwargs):
+        self.profile_complete = self.set_profile_complete()
+        super(UserProfile, self).save(*args, **kwargs)
 
 
 @receiver(post_save, sender=User)

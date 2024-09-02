@@ -22,11 +22,23 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <h4 class="card-text"> Role: <span class="{% if user.role == 0%} badge text-bg-info {% else %} badge text-bg-warning {% endif %} ">{{user.get_role_display}} </span> </h4>
+                        <h4 class="card-text">
+                            Role: <span class="{% if user.role == 0%} badge bg-info {% else %} badge bg-warning {% endif %} ">{{user.get_role_display}}
+                            {% if not user.trade %}
+                                <span class="badge bg-danger">Incomplete</span>
+                            {% endif %}</span>
+                        </h4>
                         {% if user.role == 1 %}
-                        <p class="card-text"> Trades: {{user.get_trade_display}} </p>
+                        <p class="card-text">
+                            Trades: {{user.get_trade_display}}
+                            {% if not user.trade %}
+                                <span class="badge bg-danger">Incomplete</span>
+                            {% endif %}
+                        </p>
                         {% endif %}
-                        <p class="card-text"> Medical Conditions: {{user.medical}} </p>   
+                        <p class="card-text">
+                            Medical Conditions: {{user.medical}}
+                        </p>
                     </div>
 
                 </div>
@@ -45,17 +57,51 @@
                         <div class="row">
                             <div class="col">
                                 <h4 class="card-title"> Phone numbers: </h4>
-                                <p class="card-text"> Phone number: {{user.phone}} </p>
-                                <p class="card-text"> Other phone number: {{user.other_phone}} </p>
-                                <p class="card-text"> Next Of Kin: {{user.nok}} </p>
-                                <p class="card-text"> Next Of Kin Phone: {{user.nok_phone}} </p>
+                                <p class="card-text">
+                                    Phone number: {{user.phone}}
+                                    {% if not user.phone %}
+                                        <span class="badge bg-danger">Incomplete</span>
+                                    {% endif %}
+                                </p>
+                                <p class="card-text">
+                                    Other phone number: {{user.other_phone}}
+                                </p>
+                                <p class="card-text">
+                                    Next Of Kin: {{user.nok}}
+                                    {% if not user.nok %}
+                                        <span class="badge bg-danger">Incomplete</span>
+                                    {% endif %}
+                                </p>
+                                <p class="card-text">
+                                    Next Of Kin Phone: {{user.nok_number}}
+                                    {% if not user.nok_number %}
+                                        <span class="badge bg-danger">Incomplete</span>
+                                    {% endif %}
+                                </p>
+                                <h4 class="card-title"> Email: </h4>
+                                <p class="card-text">
+                                    {{ user.email }}
+                                    {% if not user.email %}
+                                        <span class="badge bg-danger">Incomplete</span>
+                                    {% endif %}
+                                </p>
                             </div>
                             <div class="col">
                                 <h4 class="card-title"> Address: </h4>
-                                <p class="card-text"> {{user.street}} </p>
+                                <p class="card-text">
+                                    {{user.street}}
+                                    {% if not user.street or user.town_city %}
+                                        <span class="badge bg-danger">Incomplete</span>
+                                    {% endif %}
+                                </p>
                                 <p class="card-text"> {{user.town_city}} </p>
                                 <p class="card-text"> {{user.county}} </p>
-                                <p class="card-text"> Postcode: {{user.postcode}} </p>
+                                <p class="card-text">
+                                    Postcode: {{user.postcode}}
+                                    {% if not user.postcode %}
+                                        <span class="badge bg-danger">Incomplete</span>
+                                    {% endif %}
+                                </p>
                             </div>
                         </div>
                         
