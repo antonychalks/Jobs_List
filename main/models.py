@@ -56,7 +56,8 @@ class UserProfile (models.Model):
         return f"{self.user} | {self.get_role_display()} | {self.get_trade_display()}"
 
     def set_profile_complete(self):
-        if self.role and self.trade and self.fname and self.lname and self.medical and self.nok and self.nok_number and self.certifications and self.email and self.street and self.town_city and self.postcode and self.phone:
+        if (self.role and self.trade and self.fname and self.lname and self.medical and self.nok and self.nok_number and
+                self.certifications and self.email and self.street and self.town_city and self.postcode and self.phone):
             self.profile_complete = True
             self.save()
 

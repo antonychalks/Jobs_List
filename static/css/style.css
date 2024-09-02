@@ -3,6 +3,24 @@ a{
     text-decoration: none;
 }
 
+.profile-incomplete-alert{
+    z-index: 5;
+    width: 300px;
+    margin-right: 5px;
+    position: fixed;
+    right: 1px;
+    bottom: 30px;
+}
+
+.nav-item{
+    width: max-content !important;
+    white-space: nowrap;
+}
+
+.nav-item>* {
+    padding: 5px;
+}
+
 #msg{
     height: 30px;
 }

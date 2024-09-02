@@ -20,7 +20,7 @@
 
 <body class="d-flex flex-column h-100 main-bg">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <header class="container-fluid">
+        <header class="container-fluid d-flex justify-content-between">
             <a href="{% url 'home' %}"  class="col-12 col-md-4 text-center text-md-left navbar-brand" id="logo"><h1> Job List </h1></a>
                 <!-- displaying Django messages -->
                 <div class="container col-12 col-md-4 text-center order-md-last text-md-left">
@@ -38,25 +38,25 @@
                     </div>
                 </div>
             <div class="col-12 col-md-4 order-last">
-                <ul class="navbar-nav d-flex justify-content-end">
+                <ul class="navbar-nav d-flex justify-content-end me-1">
                     {% if user.is_authenticated %}
-                    <li class="nav-item"><p class="nav-link"> You are logged in as {{ user }}</p> </li>
-                    <li class="nav-item">
+                    <li class="nav-item m-1"><p class="nav-link"> {{ user.user_profile.fname }}{{ user.user_profile.lname }}</p> </li>
+                    <li class="nav-item m-1">
                         <a class="nav-link btn-secondary" aria-current="page" href="{% url 'user_detail' user.user_profile.slug %}">
                             View Profile
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item m-1">
                         <a class="nav-link btn-secondary {% if request.path == logout_url %}active{% endif %}" aria-current="page"
                             href="{% url 'account_logout' %}">Logout</a>
                     </li>
                     {% else %}
                     <li class="nav-item"><p class="nav-link">You are not logged in</p></li>
-                    <li class="nav-item">
+                    <li class="nav-item m-1">
                         <a class="nav-link {% if request.path == signup_url %}active{% endif %}" aria-current="page"
                             href="{% url 'account_signup' %}">Register</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item m-1">
                         <a class="nav-link {% if request.path == login_url %}active{% endif %}" aria-current="page"
                             href="{% url 'account_login' %}">Login</a>
                     </li>
@@ -72,6 +72,17 @@
         <!-- Content Goes here -->
     {% endblock content %}
     </main>
+
+    {% if user.is_authenticated %}
+        {% if user.user_profile.profile_complete == False %}
+            <div class="profile-incomplete-alert alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Profile not complete!</strong> Click on 'View Profile' to complete any missing details.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
+    {% endif %}
 
     <footer>
     </footer>
