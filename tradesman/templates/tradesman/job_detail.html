@@ -72,7 +72,7 @@
                                 <tr>
                                     <th scope="col">Description</th>
                                     <th scope="col">Trades Required</th>
-                                    <th scope="col">Tradesman Assigned</th>
+                                    <th scope="col" class="text-center">Tradesman Assigned</th>
                                     <th scope="col" class="d-none d-md-table-cell">Time required</th>
                                     <th scope="col">Complete</th>
                                     <th scope="col">Actions</th>
@@ -105,17 +105,19 @@
                                         </div>
                                     </td>
                                     {% else %}
-                                    <td>
-                                        {% for tradesman in task.tradesman_assigned.all %}
-                                            <p>{{ tradesman.fname }} {{ tradesman.lname }}</p>
-                                        {% endfor %}
-                                        <div class="dropdown-center">
+                                    <td class="row">
+                                        <div class="col-6">
+                                            {% for tradesman in task.tradesman_assigned.all %}
+                                                <p>{{ tradesman.fname }} {{ tradesman.lname }}</p>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="dropdown-center col-6">
                                             <form method="post" action="{% url 'assign_tradesmen' job.slug task.id %}">
                                             {% csrf_token %}
                                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                     Assign Tradesman
                                                 </button>
-                                                <ul class="dropdown-menu p-1">
+                                                <div class="dropdown-menu p-1">
                                                     <p><label for="tradesman_assigned">Tradesmen with the correct trade:</label></p>
                                                     <select name="tradesman_assigned" id="tradesman_assigned" multiple>
                                                     {% for tradesman in tradesmen %}
@@ -128,7 +130,7 @@
                                                     </select>
                                                     <p>Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.</p>
                                                     <button type="submit" class="btn btn-success" name="assign_tradesmen" >Submit</button>
-                                                </ul>
+                                                </div>
                                             </form>
                                         </div>
                                     </td>
