@@ -90,7 +90,7 @@
                                 <h4 class="card-title"> Address: </h4>
                                 <p class="card-text">
                                     {{user.street}}
-                                    {% if not user.street or user.town_city %}
+                                    {% if not user.street and user.town_city %}
                                         <span class="badge bg-danger">Incomplete</span>
                                     {% endif %}
                                 </p>
