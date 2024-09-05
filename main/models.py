@@ -37,7 +37,7 @@ class UserProfile (models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     medical = models.TextField('Medical Conditions', blank=True)
     nok = models.CharField('Next of Kin', max_length=50, blank=True)
-    nok_number = models.CharField('Next of Kin contact number',blank=True, max_length=15)
+    nok_number = models.CharField('Next of Kin contact number', blank=True, max_length=15)
     certifications = models.TextField(blank=True)
     email = models.EmailField()
     street = models.CharField(blank=True , max_length=40)

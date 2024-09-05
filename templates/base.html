@@ -40,7 +40,7 @@
             <div class="col-12 col-md-4 order-last">
                 <ul class="navbar-nav d-flex justify-content-end me-1">
                     {% if user.is_authenticated %}
-                    <li class="nav-item m-1"><p class="nav-link"> {{ user.user_profile.fname }}{{ user.user_profile.lname }}</p> </li>
+                    <li class="nav-item m-1"><p class="nav-link"> {{ user.user_profile.fname }} {{ user.user_profile.lname }}</p> </li>
                     <li class="nav-item m-1">
                         <a class="nav-link btn-secondary" aria-current="page" href="{% url 'user_detail' user.user_profile.slug %}">
                             View Profile
@@ -72,17 +72,6 @@
         <!-- Content Goes here -->
     {% endblock content %}
     </main>
-
-    {% if user.is_authenticated %}
-        {% if user.user_profile.profile_complete == False %}
-            <div class="profile-incomplete-alert alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Profile not complete!</strong> Click on 'View Profile' to complete any missing details.
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        {% endif %}
-    {% endif %}
 
     <footer>
     </footer>

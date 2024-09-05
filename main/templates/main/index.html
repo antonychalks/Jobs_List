@@ -35,4 +35,14 @@
     </div>
 </div>
 
+{% if user.is_authenticated %}
+    {% if user.user_profile.profile_complete == False %}
+        <div class="profile-incomplete-alert alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Profile not complete!</strong> Click on <a href="{% url 'user_detail' user.user_profile.slug %}">View Profile</a> to complete any missing details.
+            <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+{% endif %}
 {% endblock content %}
