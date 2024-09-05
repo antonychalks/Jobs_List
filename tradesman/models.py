@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.template import RequestContext
+from django.template.context_processors import request
 from multiselectfield import MultiSelectField
 from cloudinary.models import CloudinaryField
 from main.models import UserProfile, TRADES
@@ -43,8 +45,13 @@ class Job(models.Model):
     
     def get_status_display(self):
         return dict(JOB_STATUS)[self.status]
-                  
-            
+
+    @property
+    def is_assigned_to_current_user(self):
+        user = User.objects.get(username=RequestContext(request)['user'])
+        return any(task.tradesman_assigned.filter(user=user).exists()
+                   for task in self.Tasks.all())
+
 
 class Task(models.Model):
     """

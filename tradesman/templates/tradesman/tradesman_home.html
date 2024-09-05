@@ -8,34 +8,68 @@
 
 <div class="container-fluid">
     <div class="container-fluid">
-        <h2> Jobs </h2>
+        <h2> Jobs Assigned to you </h2>
         <div class="row">
             {% for Job in Job_List|dictsort:"job_number" %}
-            <div class="col-md-3">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <a href="{% url 'job_detail' Job.slug %}">
-                            <h3 class="card-title">{{Job.job_number}}</h3>
-                        </a>
+                {% if Job in users_jobs %}
+                    <div class="col-md-3">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <a href="{% url 'job_detail' Job.slug %}">
+                                    <h3 class="card-title">{{Job.job_number}}</h3>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text"> {{ Job.street }} - {{ Job.postcode }} </p>
+                                <p class="card-text"> {{ Job.job_description }} </p>
+                                <p class="card-text"> <span class="job_status">{{ Job.get_status_display }}</span> </p>
+                                <p class="card-text"> Assigned tradesmen:
+                                    {% for task in Job.Task.all %}
+                                        {% for tradesman in task.tradesman_assigned.all %}
+                                            {{ tradesman }}{% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <p class="card-text"> {{ Job.street }} - {{ Job.postcode }} </p>
-                        <p class="card-text"> {{ Job.job_description }} </p>
-                        <p class="card-text"> <span class="job_status">{{ Job.get_status_display }}</span> </p>
-                        <p class="card-text"> Assigned tradesmen:
-                            {% for task in Job.Task.all %}
-                                {% for tradesman in task.tradesman_assigned.all %}
-                                    {{ tradesman }}{% if not forloop.last %}, {% endif %}
-                                {% endfor %}
-                            {% endfor %}
-                        </p>                        
-                    </div>
-                </div>
-            </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
-    
+</div>
+
+<div class="container-fluid">
+    <div class="container-fluid">
+        <h2> Jobs </h2>
+        <div class="row">
+            {% for Job in Job_List|dictsort:"job_number" %}
+                {% if not Job in users_jobs %}
+                <div class="col-md-3">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <a href="{% url 'job_detail' Job.slug %}">
+                                <h3 class="card-title">{{Job.job_number}}</h3>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> {{ Job.street }} - {{ Job.postcode }} </p>
+                            <p class="card-text"> {{ Job.job_description }} </p>
+                            <p class="card-text"> <span class="job_status">{{ Job.get_status_display }}</span> </p>
+                            <p class="card-text"> Assigned tradesmen:
+                                {% for task in Job.Task.all %}
+                                    {% for tradesman in task.tradesman_assigned.all %}
+                                        {{ tradesman }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 </div>
 
 {% endblock content %}

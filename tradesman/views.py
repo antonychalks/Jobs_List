@@ -10,13 +10,21 @@ from main.models import UserProfile
 from .forms import UpdateJobContactDetailsForm, AddTaskForm, EditTaskForm, AssignTradesmanForm
 from planners.views import user_detail
 
+
 # Create your views here.
 class tradesman_home(generic.ListView):
     queryset = Job.objects.all()
     context_object_name = 'Job_List'
     template_name = "tradesman/tradesman_home.html"
     paginate_by = 6
-    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        context['users_jobs'] = Job.objects.filter(Tasks__tradesman_assigned__user=user).distinct()
+        return context
+
+
 def view_job(request):
     user = UserProfile
     

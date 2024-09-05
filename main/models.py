@@ -68,15 +68,23 @@ class UserProfile (models.Model):
     def __str__(self):
         return f"{self.user} | {self.get_role_display()} | {self.get_trade_display()}"
 
-    def set_profile_complete(self):
+    # def check_profile_complete(self):
+    #     if (self.role and self.trade and self.fname and self.lname and self.nok and self.nok_number
+    #             and self.email and self.street and self.town_city and self.postcode and self.phone):
+    #         self.profile_complete = True
+    #         self.save()
+    #     else:
+    #         self.profile_complete = False
+    #         self.save()
+
+    def save(self, *args, **kwargs):
         if (self.role and self.trade and self.fname and self.lname and self.nok and self.nok_number
                 and self.email and self.street and self.town_city and self.postcode and self.phone):
             self.profile_complete = True
-            self.save()
-
-    def save(self, *args, **kwargs):
-        self.set_profile_complete()
-        self.generate_slug()
+        else:
+            self.profile_complete = False
+        if not self.slug:
+            self.generate_slug()
         super(UserProfile, self).save(*args, **kwargs)
 
 

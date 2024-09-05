@@ -20,7 +20,8 @@ Cause: The UserProfile wasn't passed into the template from views.py
 Solution: I retrieved the UserProfile and passed it into views.py.
 
 Problem: The user gets logged out when going from list_user to user_detail
-Cause: On the User_detail page, I had passed the context: "user": user. This conflicts with the site wide user context created by all auth, so when the template tag {% if user.is_authenticated %} was used, the user_profile instance was checked for authentication, rather than the user instance.
+Cause: On the User_detail page, I had passed the context: "user": user. This conflicts with the site wide user context created by all auth,
+    so when the template tag {% if user.is_authenticated %} was used, the user_profile instance was checked for authentication, rather than the user instance.
 Solution: Changed the context to "user_profile" : user, and replaced the template tags.
 
 Problem: When I refresh the job_detail page it resubmits the form.
@@ -38,3 +39,11 @@ Solution: Loaded the edit_task_form first so the target is this form.
 Problem: When I load the planner home page or the task detail page, you can see the forms for a second before the scripts set the display to none.
 Cause: The script is the last thing to load, so the forms load as visible and then get turned off.
 Solution: Set the forms to be hidden in style.css rather than the script.
+
+Problem: When I saved the contact details form on the user_detail page, I was shown a RecursionError.
+Cause: This was caused by the set_profile_complete calling the save function, and the save function calls set_profile_complete, which creates a loop.
+Solution: I put an if statement in the save method, to only call set_profile_complete, if the profile is not already complete.
+Following Problem: If the user was to clear one of the fields required to be completed to satisfy a complete profile, the profile_complete field wouldn't update.
+Cause: If the profile_complete field is set to True, the set_profile_complete function was not called.
+Solution: I attempted to call the function in the view when receiving the POST request once the form was submitted. This threw another RecursionError.
+    So instead I applied the set_profile_complete functions logic to the save method, which checks each field every time the model instance is saved.
