@@ -173,7 +173,7 @@ def user_detail(request, slug):
         request,
         "planners/user_detail.html",
         {
-            "user": user,
+            "user_profile": user,
             "contact_form": update_contact_details_form,
             "user_details_form": update_user_details_form,
         },

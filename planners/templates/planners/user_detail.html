@@ -8,36 +8,36 @@
         <div class="col-12 col-md-6">
             <div class="card">
                 <div class="row">
-                    {% if "placeholder" in user.profile_image.url %}
+                    {% if "placeholder" in user_profile.profile_image.url %}
                     <img class="card-img-top profile_image" src="{% static 'media/nobody.jpg' %}" alt="placeholder image">
                     {% else %}
-                    <img class="card-img-top profile_image" src="{{ user.profile_image.url }}" alt="{{ UserProf.slug }}">
+                    <img class="card-img-top profile_image" src="{{ user_profile.profile_image.url }}" alt="{{ user_profileProf.slug }}">
                     {% endif %}
                 </div>
                 <div class="card-header d-flex justify-content-between"> 
-                    <h2 class="card-title">{{user.fname}} {{user.lname}}</h2>
-                    <button type="button" class="btn btn-primary justify-content-end edit-button" data-bs-toggle="modal" data-bs-target="#editUserDetailModel">
+                    <h2 class="card-title">{{user_profile.fname}} {{user_profile.lname}}</h2>
+                    <button type="button" class="btn btn-primary justify-content-end edit-button" data-bs-toggle="modal" data-bs-target="#edituser_profileDetailModel">
                         Edit
                     </button>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <h4 class="card-text">
-                            Role: <span class="{% if user.role == 0%} badge bg-info {% else %} badge bg-warning {% endif %} ">{{user.get_role_display}}
-                            {% if not user.trade %}
+                            Role: <span class="{% if user_profile.role == 0%} badge bg-info {% else %} badge bg-warning {% endif %} ">{{user_profile.get_role_display}}
+                            {% if not user_profile.trade %}
                                 <span class="badge bg-danger">Incomplete</span>
                             {% endif %}</span>
                         </h4>
-                        {% if user.role == 1 %}
+                        {% if user_profile.role == 1 %}
                         <p class="card-text">
-                            Trades: {{user.get_trade_display}}
-                            {% if not user.trade %}
+                            Trades: {{user_profile.get_trade_display}}
+                            {% if not user_profile.trade %}
                                 <span class="badge bg-danger">Incomplete</span>
                             {% endif %}
                         </p>
                         {% endif %}
                         <p class="card-text">
-                            Medical Conditions: {{user.medical}}
+                            Medical Conditions: {{user_profile.medical}}
                         </p>
                         {%  if user.is_authenticated %}
                         <p>User Authenticated</p>
@@ -63,30 +63,30 @@
                             <div class="col">
                                 <h4 class="card-title"> Phone numbers: </h4>
                                 <p class="card-text">
-                                    Phone number: {{user.phone}}
-                                    {% if not user.phone %}
+                                    Phone number: {{user_profile.phone}}
+                                    {% if not user_profile.phone %}
                                         <span class="badge bg-danger">Incomplete</span>
                                     {% endif %}
                                 </p>
                                 <p class="card-text">
-                                    Other phone number: {{user.other_phone}}
+                                    Other phone number: {{user_profile.other_phone}}
                                 </p>
                                 <p class="card-text">
-                                    Next Of Kin: {{user.nok}}
-                                    {% if not user.nok %}
+                                    Next Of Kin: {{user_profile.nok}}
+                                    {% if not user_profile.nok %}
                                         <span class="badge bg-danger">Incomplete</span>
                                     {% endif %}
                                 </p>
                                 <p class="card-text">
-                                    Next Of Kin Phone: {{user.nok_number}}
-                                    {% if not user.nok_number %}
+                                    Next Of Kin Phone: {{user_profile.nok_number}}
+                                    {% if not user_profile.nok_number %}
                                         <span class="badge bg-danger">Incomplete</span>
                                     {% endif %}
                                 </p>
                                 <h4 class="card-title"> Email: </h4>
                                 <p class="card-text">
-                                    {{ user.email }}
-                                    {% if not user.email %}
+                                    {{ user_profile.email }}
+                                    {% if not user_profile.email %}
                                         <span class="badge bg-danger">Incomplete</span>
                                     {% endif %}
                                 </p>
@@ -94,16 +94,16 @@
                             <div class="col">
                                 <h4 class="card-title"> Address: </h4>
                                 <p class="card-text">
-                                    {{user.street}}
-                                    {% if not user.street and user.town_city %}
+                                    {{user_profile.street}}
+                                    {% if not user_profile.street and not user_profile.town_city %}
                                         <span class="badge bg-danger">Incomplete</span>
                                     {% endif %}
                                 </p>
-                                <p class="card-text"> {{user.town_city}} </p>
-                                <p class="card-text"> {{user.county}} </p>
+                                <p class="card-text"> {{user_profile.town_city}} </p>
+                                <p class="card-text"> {{user_profile.county}} </p>
                                 <p class="card-text">
-                                    Postcode: {{user.postcode}}
-                                    {% if not user.postcode %}
+                                    Postcode: {{user_profile.postcode}}
+                                    {% if not user_profile.postcode %}
                                         <span class="badge bg-danger">Incomplete</span>
                                     {% endif %}
                                 </p>
@@ -115,7 +115,7 @@
         </div>
     </div>
 </div>
-    {% if user.role == 1 %}
+    {% if user_profile.role == 1 %}
     <hr>
 <div class="container-fluid">
     <div class="row">
@@ -125,7 +125,7 @@
                     <h2 class="card-title"> Certifications </h1>
                 </div>
                 <div class="card-body">
-                    <p class="card-text"> {{ user.certifications }} 
+                    <p class="card-text"> {{ user_profile.certifications }}
                 </div>
             </div>
         </div>

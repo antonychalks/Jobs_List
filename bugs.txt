@@ -20,8 +20,8 @@ Cause: The UserProfile wasn't passed into the template from views.py
 Solution: I retrieved the UserProfile and passed it into views.py.
 
 Problem: The user gets logged out when going from list_user to user_detail
-Cause:
-Solution:
+Cause: On the User_detail page, I had passed the context: "user": user. This conflicts with the site wide user context created by all auth, so when the template tag {% if user.is_authenticated %} was used, the user_profile instance was checked for authentication, rather than the user instance.
+Solution: Changed the context to "user_profile" : user, and replaced the template tags.
 
 Problem: When I refresh the job_detail page it resubmits the form.
 Cause: The last request sent by the page was a post request, so it send it again.
