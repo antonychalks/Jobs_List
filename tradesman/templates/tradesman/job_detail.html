@@ -105,11 +105,16 @@
                                     </td>
                                     {% else %}
                                     <td class="row">
-                                        <div class="col-6">
-                                            {% for tradesman in task.tradesman_assigned.all %}
-                                                <p>{{ tradesman.fname }} {{ tradesman.lname }}</p>
-                                            {% endfor %}
+                                        <div class="{% if user.user_profile.role == 0 %}col-6{% else %} col-12 {% endif %} text-center ">
+                                            {% if task.tradesman_assigned_boolean %}
+                                                {% for tradesman in task.tradesman_assigned.all %}
+                                                    <p {% if tradesman.id == user.id %} class="badge bg-primary" {% else %} class="badge bg-secondary" {% endif %}>{{ tradesman.fname }} {{ tradesman.lname }}</p>
+                                                {% endfor %}
+                                            {% else %}
+                                                <p class="badge bg-warning">No Tradesman assigned.</p>
+                                            {% endif %}
                                         </div>
+                                        {% if user.user_profile.role == 0 %}
                                         <div class="dropdown-center col-6">
                                             <form method="post" action="{% url 'assign_tradesmen' job.slug task.id %}">
                                             {% csrf_token %}
@@ -132,6 +137,7 @@
                                                 </div>
                                             </form>
                                         </div>
+                                        {% endif %}
                                     </td>
                                     {% endif %}
                                     <td class="d-none d-md-table-cell"> {{ task.time_required}} </td>

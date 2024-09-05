@@ -67,3 +67,13 @@ class Task(models.Model):
     
     class Meta:
         ordering = ["is_completed"]
+
+    def tradesman_assigned_boolean(self):
+        tradesman_count = 0
+        for tradesman in self.tradesman_assigned.all():
+            tradesman_count += 1
+
+        if tradesman_count == 0:
+            return False
+        else:
+            return True
