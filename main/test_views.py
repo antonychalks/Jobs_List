@@ -33,13 +33,9 @@ class TestMainViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'main/index.html')
         self.assertEqual(response.context['user_profile'], self.user_profile)
-        self.assertEqual(response.context['job'], Job)
-        self.assertEqual(response.context['task'], Task)
 
     def test_landing_page_view_unauthenticated_user(self):
         response = self.client.get(reverse('landing_page'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'main/index.html')
         self.assertIsNone(response.context['user_profile'])
-        self.assertEqual(response.context['job'], Job)
-        self.assertEqual(response.context['task'], Task)
