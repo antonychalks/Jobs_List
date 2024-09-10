@@ -60,6 +60,7 @@ class TestMainViews(TestCase):
 
     def test_user_profile_signup_view_submit_form(self):
         self.client.login(username='testUser', password='password')
+        user_profile = UserProfile.objects.get(user=self.user)
         response = self.client.post(reverse('user_profile_signup'), data={
             'fname': 'testFName',
             'lname': 'testLName',
@@ -70,3 +71,4 @@ class TestMainViews(TestCase):
         })
 
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(user_profile.fname, 'testFName')
