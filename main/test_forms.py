@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from .forms import InitialSignUpForm
 from tradesman.models import Job
 
+
 class TestForms(TestCase):
 
     def test_initial_signUp_form_valid(self):

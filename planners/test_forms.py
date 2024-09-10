@@ -1,7 +1,7 @@
 from django.test import TestCase
 from main.models import UserProfile
 from django.contrib.auth.models import User
-from main.forms import UpdateContactDetailsForm, UpdateUserDetailsForm, NewUserForm, NewJobForm, EditJobForm
+from .forms import UpdateContactDetailsForm, UpdateUserDetailsForm, NewUserForm, NewJobForm, EditJobForm
 from tradesman.models import Job
 
 class TestForms(TestCase):
@@ -23,7 +23,6 @@ class TestForms(TestCase):
 
     def test_update_user_details_form_valid(self):
         form_data = {
-            'profile_image': 'test.jpg',
             'role': 0,
             'trade': ['Plumber'],
             'certifications': 'Certified',
@@ -59,9 +58,10 @@ class TestForms(TestCase):
         self.assertTrue(form.is_valid())
 
     def test_edit_job_form_valid(self):
-        job = Job.objects.create(customer_name='Test Customer', phone='1234567890', other_phone='0987654321',
+        self.user = User.objects.create_user(username='testUser', password='password')
+        job = Job.objects.create(created_by=self.user, customer_name='Test Customer', phone='1234567890', other_phone='0987654321',
                                  email='test@example.com', street='Test Street', town_city='Test City',
-                                 county='Test County', postcode='12345', job_description='Test Job Description')
+                                 county='Test County', postcode='12345', job_description='Test Job Description', status=0)
         form_data = {
             'customer_name': 'Updated Test Customer',
             'phone': '0987654321',
@@ -72,6 +72,7 @@ class TestForms(TestCase):
             'county': 'Updated Test County',
             'postcode': '54321',
             'job_description': 'Updated Test Job Description',
+            'status': 0
         }
         form = EditJobForm(data=form_data, instance=job)
         self.assertTrue(form.is_valid())

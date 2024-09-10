@@ -179,6 +179,7 @@ def user_detail(request, slug):
         },
     )
 
+
 def add_user(request):
     if request.method == "POST":
         new_user_form = NewUserForm(data=request.POST)

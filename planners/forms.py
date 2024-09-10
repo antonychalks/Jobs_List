@@ -15,13 +15,14 @@ class UpdateContactDetailsForm(forms.ModelForm):
 class UpdateUserDetailsForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('profile_image','role', 'trade', 'certifications', 'medical')
+        fields = ('profile_image', 'role', 'trade', 'certifications', 'medical')
         
         
 class NewUserForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = '__all__'
+        exclude = ['slug', 'profile_complete', 'is_initial_signup']
         
 class NewJobForm(forms.ModelForm):
     class Meta:
