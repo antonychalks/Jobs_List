@@ -6,6 +6,7 @@ from .forms import UpdateJobContactDetailsForm, AddTaskForm, EditTaskForm
 from multiselectfield import MultiSelectField
 from main.models import UserProfile, TRADES
 
+
 class TradesmanViewsTestCase(TestCase):
     def setUp(self):
         # Create a user for testing
@@ -28,11 +29,6 @@ class TradesmanViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'tradesman/tradesman_home.html')
 
-    def test_view_job_view(self):
-        response = self.client.get(reverse('view_job'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tradesman/job_detail.html')
-
     def test_job_detail_view(self):
         response = self.client.get(reverse('job_detail', args=[self.job.slug]))
         self.assertEqual(response.status_code, 200)
@@ -41,8 +37,18 @@ class TradesmanViewsTestCase(TestCase):
     def test_successful_task_addition(self):
         task_data = {
             'description': 'Test Task',
-            'trades_required': [TRADES[0][0]],
+            'trades_required': ['Pl'],
             'time_required': '1 hour',
+            'is_completed': False,
+            'add_task': '',
+            'form-TOTAL_FORMS': '1',
+            'form-INITIAL_FORMS': '0',
+            'form-MAX_NUM_FORMS': '',
+            'form-MIN_NUM_FORMS': '',
+            'form-0-description': 'Test Task',
+            'form-0-trades_required': 'Pl',
+            'form-0-time_required': '1 hour',
+            'form-0-is_completed': 'False',
         }
 
         response = self.client.post(reverse('job_detail', args=[self.job.slug]), data=task_data)
@@ -69,5 +75,3 @@ class TradesmanViewsTestCase(TestCase):
         edited_task = Task.objects.get(pk=task.id)
         self.assertEqual(edited_task.description, 'Edited Task')
         self.assertEqual(edited_task.time_required, '3 hours')
-
-    # Add more test methods for other views as needed

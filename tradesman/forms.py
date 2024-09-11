@@ -16,7 +16,7 @@ class JobAdminForm(forms.ModelForm):
 class UpdateJobContactDetailsForm(forms.ModelForm):
     class Meta:
         model = Job
-        fields = ('customer_name','phone', 'other_phone', 'email', 'street', 'town_city', 'county', 'postcode')
+        fields = ('customer_name', 'phone', 'other_phone', 'email', 'street', 'town_city', 'county', 'postcode')
 
 
 class AddTaskForm(forms.ModelForm):

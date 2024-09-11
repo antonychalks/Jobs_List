@@ -61,6 +61,8 @@ def job_detail(request, slug):
                 messages.success(request, 'New task(s) added successfully.')
                 # Redirect after successful form submission
                 return HttpResponseRedirect(reverse('job_detail', args=[slug]))
+            else:
+                messages.error(request, 'There was an error adding task(s).')
     
     else:
         contactDetailsForm = UpdateJobContactDetailsForm(instance=job)
@@ -94,9 +96,6 @@ def task_edit(request, task_id, slug):
     job = get_object_or_404(Job, slug=slug)
     
     if request.method == "POST":
-        # Print out the request.POST dictionary to inspect the data
-        print(request.POST)
-        
         # Initialize form with task instance and data from request
         edit_task_form = EditTaskForm(data=request.POST, instance=task)
         if edit_task_form.is_valid():
