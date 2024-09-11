@@ -11,7 +11,8 @@ class UpdateContactDetailsForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('email', 'phone', 'other_phone', 'street', 'town_city', 'county', 'postcode', 'nok', 'nok_number', )
-        
+
+
 class UpdateUserDetailsForm(forms.ModelForm):
     class Meta:
         model = UserProfile
@@ -23,12 +24,14 @@ class NewUserForm(forms.ModelForm):
         model = UserProfile
         fields = '__all__'
         exclude = ['slug', 'profile_complete', 'is_initial_signup']
-        
+
+
 class NewJobForm(forms.ModelForm):
     class Meta:
         model = Job
         fields = ('customer_name', 'phone', 'other_phone', 'email', 'street', 'town_city', 'county', 'postcode', 'job_description')
-        
+
+
 class EditJobForm(forms.ModelForm):
     class Meta:
         model = Job

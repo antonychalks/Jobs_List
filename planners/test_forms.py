@@ -4,7 +4,11 @@ from django.contrib.auth.models import User
 from .forms import UpdateContactDetailsForm, UpdateUserDetailsForm, NewUserForm, NewJobForm, EditJobForm
 from tradesman.models import Job
 
+
 class TestForms(TestCase):
+
+    def setUp(self):
+        self.new_user = User.objects.create(username='testUser123')
 
     def test_update_contact_details_form_valid(self):
         form_data = {
@@ -23,8 +27,9 @@ class TestForms(TestCase):
 
     def test_update_user_details_form_valid(self):
         form_data = {
+            'profile_image': "",
             'role': 0,
-            'trade': ['Plumber'],
+            'trade': ['Pl'],
             'certifications': 'Certified',
             'medical': 'None',
         }
@@ -32,14 +37,28 @@ class TestForms(TestCase):
         self.assertTrue(form.is_valid())
 
     def test_new_user_form_valid(self):
+        UserProfile.objects.filter(user=self.new_user).delete()
+        # Deletes the new_user UserProfile that was created automatically
         form_data = {
-            'user': User.objects.create(username='testuser'),
+            'user': self.new_user.id,
             'role': 0,
-            'trade': ['Plumber'],
+            'profile_image': "",
+            'trade': ['Pl'],
             'certifications': 'Certified',
             'medical': 'None',
+            'fname': 'testFName',
+            'lname': 'testLName',
+            'nok': 'testNok',
+            'nok_number': 'testNok_number',
+            'email': 'testEmail@example.com',
+            'street': 'testStreet',
+            'town_city': 'testTownCity',
+            'county': 'testCounty',
+            'postcode': 'testPostcode',
+            'phone': 'testPhone'
         }
         form = NewUserForm(data=form_data)
+        print(form.errors)
         self.assertTrue(form.is_valid())
 
     def test_new_job_form_valid(self):

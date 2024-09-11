@@ -34,8 +34,8 @@ def planner_home(request):
             return HttpResponseRedirect(reverse('planner_home'))
     
     job = Job.objects.all()
-    newJob = NewJobForm()
-    editJob = EditJobForm()
+    new_job = NewJobForm()
+    edit_job = EditJobForm()
     user_profile = UserProfile.objects.get(user=request.user)
     
     return render(
@@ -44,17 +44,19 @@ def planner_home(request):
         {
             "user_profile": user_profile,
             "job": job,
-            "add_job_form": newJob,
-            "edit_job_form": editJob
+            "add_job_form": new_job,
+            "edit_job_form": edit_job
         }
     )
-    
+
+
 class UserList(generic.ListView):
     queryset = UserProfile.objects.all()
     context_object_name = 'UserList'
     template_name = "planners/list_user.html"
     paginate_by = 6
-    
+
+
 def job_edit(request, job_id, slug):
     """
     Display an individual job for editing.
@@ -63,9 +65,6 @@ def job_edit(request, job_id, slug):
     job = get_object_or_404(Job, pk=job_id, slug=slug)
     
     if request.method == "POST":
-        # Print out the request.POST dictionary to inspect the data
-        print(request.POST)
-        
         # Initialize form with task instance and data from request
         edit_job_form = EditJobForm(data=request.POST, instance=job)
         
@@ -79,16 +78,16 @@ def job_edit(request, job_id, slug):
         else:
             messages.error(request, 'Error updating task!')
 
-    newJob = NewJobForm()
-    editJob = EditJobForm(instance=job)
+    new_job = NewJobForm()
+    edit_job = EditJobForm(instance=job)
     
     return render(
         request,
         "planners/planner_home.html",
         {
             "job": job,
-            "add_job_form": newJob,
-            "edit_job_form": editJob
+            "add_job_form": new_job,
+            "edit_job_form": edit_job
         }
     )
 
@@ -182,11 +181,26 @@ def user_detail(request, slug):
 
 def add_user(request):
     if request.method == "POST":
-        new_user_form = NewUserForm(data=request.POST)
-        if new_user_form.is_valid():
-            new_user_form.save()
-            messages.success(request, 'New User Added!')
-            return
+        user = request.user
+        if hasattr(user, 'userprofile'):
+            form = NewUserForm(instance=user.user_profile)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'New User Added!')
+                # You could return a redirect to a success page
+                return HttpResponseRedirect(reverse('planner_home'))
+            else:
+                messages.error(request, 'Failed to add new user. Please check the form.')
+        else:
+            new_user_form = NewUserForm(data=request.POST)
+            if new_user_form.is_valid():
+                new_user_form.save(commit=False)
+                new_user_form.instance.slug = UserProfile.generate_slug(new_user_form.instance)
+                new_user_form.save()
+                messages.success(request, 'New User Added!')
+                # You could return a redirect to a success page
+                return HttpResponseRedirect(reverse('planner_home'))
+
     else:
         new_user_form = NewUserForm()
 

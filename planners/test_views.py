@@ -44,7 +44,6 @@ class TestPlannerViews(TestCase):
         )
         self.job.status = Job.set_job_status(self.job)
 
-
     def test_planner_home_view(self):
         self.client.login(username='testUser', password='password')
         response = self.client.get(reverse('planner_home'))
@@ -59,9 +58,21 @@ class TestPlannerViews(TestCase):
 
     def test_job_edit_view(self):
         self.client.login(username='testUser', password='password')
-        response = self.client.post(reverse('job_edit', args=[self.job.slug, self.job.id]), {'email': 'test@test.com'})
+        job = Job.objects.get(pk=self.job.id)
+        response = self.client.post(reverse('job_edit', args=[job.slug, job.id]), {
+            'customer_name': "Test Customer",
+            'email': "test@test.com",
+            'phone': "07123456789",
+            'other_phone': "",
+            'street': "testStreet",
+            'town_city': "testTownCity",
+            'county': "testCounty",
+            'postcode': "TE57ING",
+            'job_description': "testDescription",
+        })
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(self.job.email, 'test@test.com')
+        job = Job.objects.get(pk=self.job.id)
+        self.assertEqual(job.email, 'test@test.com')
 
     def test_job_delete_view(self):
         self.client.login(username='testUser', password='password')
@@ -96,4 +107,4 @@ class TestPlannerViews(TestCase):
             'trade': 'pl',
         })
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(User.objects.filter(username='newUser').exists())  # Check if new user is created
+        self.assertTrue(User.objects.filter(username='newUser').exists())

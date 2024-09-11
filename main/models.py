@@ -1,9 +1,11 @@
 import random
+import uuid
 
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils.text import slugify
 from multiselectfield import MultiSelectField
 from cloudinary.models import CloudinaryField
 
@@ -52,6 +54,11 @@ class UserProfile (models.Model):
     class Meta:
         ordering = ["role"]
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self.generate_slug()
+        super(UserProfile, self).save(*args, **kwargs)
+
     def get_role_display(self):
         dict_role = dict(ROLE)
         return dict_role.get(self.role)
@@ -60,22 +67,10 @@ class UserProfile (models.Model):
         return ", ".join([dict(TRADES)[trade] for trade in self.trade])
 
     def generate_slug(self):
-        if self.slug is None:
-            username = self.user.username
-            slug = username + str(random.randint(100, 999))
-            self.slug = slug
+        return slugify(self.user.username + "-" + str(uuid.uuid4()))
     
     def __str__(self):
         return f"{self.user} | {self.get_role_display()} | {self.get_trade_display()}"
-
-    # def check_profile_complete(self):
-    #     if (self.role and self.trade and self.fname and self.lname and self.nok and self.nok_number
-    #             and self.email and self.street and self.town_city and self.postcode and self.phone):
-    #         self.profile_complete = True
-    #         self.save()
-    #     else:
-    #         self.profile_complete = False
-    #         self.save()
 
     def save(self, *args, **kwargs):
         if (self.role and self.trade and self.fname and self.lname and self.nok and self.nok_number
