@@ -258,9 +258,12 @@ This is to ensure the data is protected from anyone who isn't authorised.
 <summary>
     Landing
 </summary>
-As a tradesman when you first log in there will be a call to action button prompting you to enter the website. This will then take you to the tradesman home page.
+As a tradesman when you first log in there will be a call-to-action button prompting you to enter the website. This will then take you to the tradesman home page.
 
 ![Landing Page](static/media/README/tradesman_landing.jpg)
+#### Wireframes
+![Landing Page.jpg](static/media/README/full screen wireframes/Landing Page.jpg)
+![landingPageMob.jpg](static/media/README/mobileWireframes/landingPageMob.jpg)
 </details>
 
 <details>
@@ -273,13 +276,16 @@ On this page you can view all the different jobs on the database, and specifical
 - The job description
 - The status
 
-This information was chosen to be displayed on each card as its the information the other tradesman and I would always need to see first when I worked as a carpenter. 
+This information was chosen to be displayed on each card as it's the information the other tradesman and I would always need to see first when I worked as a carpenter. 
 - The job number - For any materials being ordered on accounts.
 - The first line of address and postcode - So we knew where to go.
 - The job description - We know what we're doing.
 - The status - So we know if the job has been started yet.
 
 ![Tradesman home](static/media/README/tradesman_home.jpg)
+#### Wireframes
+![tradesmanHome.jpg](static/media/README/full screen wireframes/tradesmanHome.jpg)
+![tradesmanHomeMob.jpg](static/media/README/mobileWireframes/tradesmanHomeMob.jpg)
 </details>
 
 <details>
@@ -303,34 +309,15 @@ On this page you can view all the jobs data from the database, and specifically:
 - Any tasks that have been added.
 
 On this page the tradesmen are able to edit the contact details of a job, add a task, edit a task and delete it, enabling CRUD functionality to the page. From here a tradesman will be able to view all the details they need for each job, as well as the tasks that have already been completed, and what needs to be completed. This is useful as it will prevent a tradesman going to a job, just to find out another trade needs to attend first.
-
-![Job Detail](static/media/README/job_detail.jpg)
-</details>
-
-<details>
-<summary>
-Job Detail
-</summary>
-On this page you can view all the jobs data from the database, and specifically:
-- Status
-- Created by
-- Created on
-- Description
-- Contact Details
-- Name
-- Phone number
-- Other phone number
-- Email
-- Street
-- Town/city
-- County
-- Postcode
-- Any tasks that have been added.
-
-On this page the tradesmen are able to edit the contact details of a job, add a task, edit a task and delete it, enabling CRUD functionality to the page. From here a tradesman will be able to view all the details they need for each job, as well as the tasks that have already been completed, and what needs to be completed. This is useful as it will prevent a tradesman going to a job, just to find out another trade needs to attend first.
-
+![jobDetail.jpg](static/media/README/full screen wireframes/jobDetail.jpg)
 ![Job Detail](static/media/README/job_detail.jpg)
 ![Task Edit](static/media/README/job_detail_task_edit.jpg)
+
+#### Wireframes
+![jobDetail.jpg](static/media/README/full screen wireframes/jobDetail.jpg)
+![jobDetailMob.jpg](static/media/README/mobileWireframes/jobDetailMob.jpg)
+
+
 </details>
 
 #### Planner:
@@ -338,9 +325,13 @@ On this page the tradesmen are able to edit the contact details of a job, add a 
 <summary>
     Landing
 </summary>
-As a planner when you first log in there will be a call to action button prompting you to enter the website. This will then take you to the planner home page.
+As a planner when you first log in there will be a call-to-action button prompting you to enter the website. This will then take you to the planner home page.
 
 ![Landing Page](static/media/README/planner_landing.jpg)
+
+#### Wireframes
+![Landing Page.jpg](static/media/README/full screen wireframes/Landing Page.jpg)
+![landingPageMob.jpg](static/media/README/mobileWireframes/landingPageMob.jpg)
 </details>
 
 <details>
@@ -362,6 +353,10 @@ The planner can click on any job to get the details, or they can click the edit 
 
 ![Planner home](static/media/README/planner_home.jpg)
 ![Edit Job](static/media/README/planner_home_edit_job.jpg)
+#### Wireframes
+![plannerHome.jpg](static/media/README/full screen wireframes/plannerHome.jpg)
+![plannerHomeMob.jpg](static/media/README/mobileWireframes/plannerHomeMob.jpg)
+
 </details>
 
 <details>
@@ -382,6 +377,10 @@ From here the planner can click on a user to pull up the user detail page. Here 
 ![List of users](static/media/README/list_user.jpg)
 ![Detail of one user](static/media/README/user_detail.jpg)
 ![Edit user model](static/media/README/user_detail_edit.jpg)
+
+#### Wireframes
+![userList.jpg](static/media/README/full screen wireframes/userList.jpg)
+![userListMob.jpg](static/media/README/mobileWireframes/userListMob.jpg)
 </details>
 
 <details>
@@ -393,6 +392,9 @@ The add user page is for the planners to register a user from the all auth user 
 I couldn't edit the allauth models, so I used a foreign key field to link one user to one userprofile.
 
 ![Add new user](static/media/README/add_user.jpg)
+
+#### Wireframe
+![addNewUserForm.jpg](static/media/README/full screen wireframes/addNewUserForm.jpg)
 </details>
 
 <details>
@@ -419,6 +421,11 @@ On this page the planners are able to edit the contact details of a job, add a t
 
 ![Job Detail](static/media/README/job_detail.jpg)
 ![Task Edit](static/media/README/job_detail_task_edit.jpg)
+
+#### Wireframes
+![jobDetail.jpg](static/media/README/full screen wireframes/jobDetail.jpg)
+![jobDetailMob.jpg](static/media/README/mobileWireframes/jobDetailMob.jpg)
+
 </details>
 
 ### The Surface Plane
@@ -557,6 +564,102 @@ See [bugs.txt](bugs.txt)
 
 [Return to contents list](#contents)
 
+## Testing
+
+### Manual testing
+The website was manually tested on the front-end by myself, and a group composed of my family and friends for the following categories.
+
+1. **Browser compatibility**: Manually test the website on multiple browsers (Chrome, Firefox, Safari, Edge etc.) to ensure compatibility.
+
+2. **Responsiveness**: Check the website's responsiveness on different device resolutions. Ensure elements resize and reposition correctly when the browser is resized.
+
+3. **Forms**: Test all forms by filling out the inputs and submitting them. Check validation for each input, including tests for incorrect input.
+
+4. **Navigation**: Ensure that all navigation links direct to the correct page. Manually click on each link and button to confirm.
+
+5. **Performance**: Manually measure load times and latency.
+
+7. **User Authentication**: Validate the login and sign-up functionalities to work properly, including error messages for incorrect replies.
+
+8. **Error Messages**: Check if appropriate error messages are displayed for different scenarios.
+
+9. **Data Integrity**: If data manipulation operations are performed, ensure the database is accurately updated.
+
+#### As a User
+| What was tested                                       | Expected Result                                                       | Outcome |
+|:------------------------------------------------------|:----------------------------------------------------------------------|:-------:|
+| Click on the "login" button.                          | Redirect to the login page                                            | Passed  |
+| Click on the "sign-up" button.                        | Redirect to the sign up page                                          | Passed  |
+| Click on the "sign-out" button.                       | Redirect to the sign out page, followed by the user being signed out. | Passed  |
+| Click view profile                                    | Redirected to a page showing the user's details.                      | Passed  |
+| Click edit button on either card on the profile page. | Should open a model which will have the current details prefilled.    | Passed  |
+
+#### As a Tradesman
+| What was tested                                       | Expected Result                                                    | Outcome |
+|:------------------------------------------------------|:-------------------------------------------------------------------|:-------:|
+| Click on the "Enter as Tradesman" button.             | Redirect to the Tradesman home page.                               | Passed  |
+| Click on a job card.                                  | Redirect to the Job Detail page.                                   | Passed  |
+| Click on the edit task button.                        | The form should appear with the task details already inputted.     | Passed  |
+| Click on the edit button to submit the form.          | The task data will update as per changes on the form.              | Passed  |
+| Click the cancel button. (For add and edit task)      | The form should close, with no details being changed.              | Passed  |
+| Click the delete task button.                         | The task should be removed from the list.                          | Passed  |
+| Click the add task button.                            | The form to add a new task should appear.                          | Passed  |
+| Click the submit button.                              | The new task should display on the tasks section.                  | Passed  |
+| Click edit on the contact details.                    | A form should appear with the customers contact details prefilled. | Passed  |
+
+#### As a Planner
+| What was tested                                  | Expected Result                                                             | Outcome |
+|:-------------------------------------------------|:----------------------------------------------------------------------------|:-------:|
+| Click on the "Enter as Planner" button.          | Redirect to the planner home page                                           | Passed  |
+| Click on a job entry on the jobs table.          | Redirect to the Job Detail page.                                            | Passed  |
+| Click on the edit task button.                   | The form should appear with the task details already inputted.              | Passed  |
+| Click on the edit button to submit the form.     | The task data will update as per changes on the form.                       | Passed  |
+| Click the cancel button. (For add and edit task) | The form should close, with no details being changed.                       | Passed  |
+| Click the delete task button.                    | The task should be removed from the list.                                   | Passed  |
+| Click the add task button.                       | The form to add a new task should appear.                                   | Passed  |
+| Click the submit button.                         | The new task should display on the tasks section.                           | Passed  |
+| Assign a tradesman through the drop down.        | The drop down should display, showing the tradesmen with the correct trade. | Passed  |
+| Click submit to assign tradesman.                | The tradesman should appear to the right of the drop down.                  | Passed  |
+| Click edit on the contact details.               | A form should appear with the customers contact details prefilled.          | Passed  |
+| Clicking add user button on the Planner Home.    | Redirect to the add_user page.                                              | Passed  |
+| Submitting the add user form.                    | Redirect to planners home, and add a new user to the user list.             | Passed  |
+| Incorrectly filling out any form.                | Should mark the failed field and tell the user what needs to be corrected.  | Passed  |
+| Click Edit Job or Add job button.                | Should open the form, prefilled if the edit button was clicked.             | Passed  |
+| Clicking add or edit button on the Job form.     | Should update the database and the changes or addition should be displayed. | Passed  |
+
+### Automated testing
+When automating testing, I used a Python standard library module: unittest.
+
+This was done by creating a test file for each file that was being tested within each app. For example, in the products app, a test case was created to test the views and forms used within the app.
+
+Within each file there is a test case, which runs all the test within the case. Each test case has a set up function, which creates a test instance of any model the test might need. This prevents the database actually being manipulated whilst running tests.
+
+Throughout this project I ran the tests multiple times as I went, fixing all the errors and failures whenever they present themselves. This helped to ensure nothing was missed in the functionality of the website.
+
+#### Testing views
+When creating a views test, I would first check the correct status code was returned which shows the page is being loaded correctly.
+
+After this I will look at each view, and what the aim of the view was.
+
+For example, on the user_detail view, the aim was to display a page that shows all of the chosen users' details, as well as being able to edit the users details if required.
+
+To test this example, I first created a test user in the test case setup. Then I tested if the page would render, if the correct template was used, and if the test users first name was contained in the responses content.
+
+#### Testing Forms
+
+All form validations are thoroughly tested to verify correct error messages are displayed for invalid user inputs.
+
+#### Running Tests
+You can run the test suite with the following command in your terminal:
+_python3 manage.py test_
+
+You can also run tests on specific apps on:
+_python3 manage.py test <APP NAME>_
+
+The last time tests were run, there were no errors or fails.
+
+![test result](static/media/README/test.jpg)
+
 ## Deployment
 
 This website has been deployed using Heroku.
@@ -623,7 +726,7 @@ For example: in CodeAnywhere
 
 9 - Add the following code to settings.py:
 
-COMPRESS_ROOT = BASE_DIR / 'static'
+COMPRESS_ROOT = BASE_DIR/ 'static'
 
 COMPRESS_ENABLED = True
 
