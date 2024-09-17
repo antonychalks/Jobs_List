@@ -2,7 +2,7 @@ from main.models import UserProfile
 from django.contrib.auth.models import User
 from django import forms
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Submit
+from crispy_forms.layout import Layout, Fieldset, Submit, Div, Field
 from main.models import TRADES, ROLE
 from tradesman.models import Job
 

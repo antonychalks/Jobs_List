@@ -3,6 +3,24 @@ a{
     text-decoration: none;
 }
 
+.profile-incomplete-alert{
+    z-index: 5;
+    width: 300px;
+    margin-right: 5px;
+    position: fixed;
+    right: 1px;
+    bottom: 30px;
+}
+
+.nav-item{
+    width: max-content !important;
+    white-space: nowrap;
+}
+
+.nav-item>* {
+    padding: 5px;
+}
+
 #msg{
     height: 30px;
 }
@@ -17,7 +35,7 @@ a{
 }
 
 .edit-button{
-    width: max-content
+    width: max-content;
 }
 
 .cursor-click:hover{
@@ -33,4 +51,56 @@ a{
 #add_task_form,
 #edit_task_form{
     display: none;
+}
+
+.home-img{
+    width: 70%;
+    height: auto;
+    border: gray 3px solid;
+    margin: 20px;
+}
+
+#add_user_form select,
+#add_user_form label,
+#add_user_form input[type=text]{
+    box-sizing: border-box;
+    margin: 5px;
+}
+
+#add_user_form div{
+    width: 45%
+}
+
+#add_user_form{
+    display: flex;
+    flex: 0 0 auto auto;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+#add_user_form div:has(.form-check){
+    width: 50%;
+    display: flex;
+    flex: 0 0 auto auto;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+#add_user_form div:has(.form-check) label{
+    width: 100%;
+}
+
+#add_user_submit_button{
+    width: 45%;
+}
+
+@media screen and (max-width: 992px) {
+    .navbar-nav{
+        flex-direction: row;
+        justify-content: space-around!important;
+    }
+
+    #add_user_form div{
+        width: 100%
+    }
 }

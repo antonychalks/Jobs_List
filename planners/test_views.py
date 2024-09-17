@@ -83,10 +83,12 @@ class TestPlannerViews(TestCase):
     def test_user_detail_view(self):
         self.client.login(username='testUser', password='password')
         self.profile.slug = "exampleSlug"
+        self.profile.fname = "testFirstName"
         self.profile.save()
         response = self.client.get(reverse('user_detail', args=[self.profile.slug]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'planners/user_detail.html')
+        self.assertIn(b"testFirstName", response.content)
 
     def test_add_user_view(self):
         self.client.login(username='testUser', password='password')
