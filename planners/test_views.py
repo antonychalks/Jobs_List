@@ -8,8 +8,9 @@ from django.contrib.messages import get_messages
 
 
 class TestPlannerViews(TestCase):
-
+    """ A test case for testing the views in the planners app."""
     def setUp(self):
+        """ Sets up the test case with a test user and profile, as well as a test job."""
         self.user = User.objects.create_user(username='testUser', password='password')
         self.profile = UserProfile.objects.get(
             user=self.user,
@@ -45,18 +46,21 @@ class TestPlannerViews(TestCase):
         self.job.status = Job.set_job_status(self.job)
 
     def test_planner_home_view(self):
+        """ Tests the planner home view renders correctly and with the correct template."""
         self.client.login(username='testUser', password='password')
         response = self.client.get(reverse('planner_home'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'planners/planner_home.html')
 
     def test_user_list_view(self):
+        """ Tests the user list view renders correctly and with the correct template."""
         self.client.login(username='testUser', password='password')
         response = self.client.get(reverse('UserList'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'planners/list_user.html')
 
     def test_job_edit_view(self):
+        """ Tests the job edit view changes the details of the job and the user is redirected."""
         self.client.login(username='testUser', password='password')
         job = Job.objects.get(pk=self.job.id)
         response = self.client.post(reverse('job_edit', args=[job.slug, job.id]), {
@@ -75,12 +79,14 @@ class TestPlannerViews(TestCase):
         self.assertEqual(job.email, 'test@test.com')
 
     def test_job_delete_view(self):
+        """ Tests the job is deleted correctly and the user is redirected."""
         self.client.login(username='testUser', password='password')
         response = self.client.post(reverse('job_delete', args=[self.job.slug, self.job.id]))
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Job.objects.filter(id=self.job.id).exists())
 
     def test_user_detail_view(self):
+        """ Tests the user details view renders correctly, with the correct template and the correct user is loaded. """
         self.client.login(username='testUser', password='password')
         self.profile.slug = "exampleSlug"
         self.profile.fname = "testFirstName"
@@ -91,12 +97,14 @@ class TestPlannerViews(TestCase):
         self.assertIn(b"testFirstName", response.content)
 
     def test_add_user_view(self):
+        """ Tests the add user view renders correctly and with the correct template."""
         self.client.login(username='testUser', password='password')
         response = self.client.get(reverse('add_user'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'planners/add_user.html')
 
     def test_add_new_user(self):
+        """ Tests a new user is added."""
         self.user = User.objects.create_user(username='newUser', password='password')
         self.client.login(username='testUser', password='password')
         response = self.client.post(reverse('add_user'), data={

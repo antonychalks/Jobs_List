@@ -8,21 +8,27 @@ from tradesman.models import Job, Task
 from .forms import UpdateContactDetailsForm, UpdateUserDetailsForm, NewUserForm, NewJobForm, EditJobForm
 from django.contrib.auth.decorators import login_required
 
+
 # Create your views here.
 def job_number():
+    """ Generates a random job number if the job doesn't have a number."""
     # Generate job number if it's not set yet
-    job_number = 0
+    job_num = 0
     # Retrieve the latest job number from the database
     latest_job = Job.objects.order_by('-job_number').first()
     if latest_job:
-        job_number = latest_job.job_number + 1
+        job_num = latest_job.job_number + 1
     else:
         # If no jobs exist yet, start job numbers from 1
-        job_number = 1
+        job_num = 1
+    return job_num
 
-def planner_home(request):    
+
+def planner_home(request):
+    """ Renders the planner home page and deals with POST requests from the NewJobForm """
     if request.method == "POST":
         new_job_form = NewJobForm(data=request.POST)
+        # If the form is valid, the created_by, job_number, slug and status all get added to the instance.
         if new_job_form.is_valid():
             new_job = new_job_form.save(commit = False)
             new_job.created_by = request.user
@@ -51,6 +57,7 @@ def planner_home(request):
 
 
 class UserList(generic.ListView):
+    """ Renders the user list page """
     queryset = UserProfile.objects.all()
     context_object_name = 'UserList'
     template_name = "planners/list_user.html"
@@ -59,7 +66,7 @@ class UserList(generic.ListView):
 
 def job_edit(request, job_id, slug):
     """
-    Display an individual job for editing.
+    Handles the POST requests from the edit job form.
     """
     # Retrieve the job instance
     job = get_object_or_404(Job, pk=job_id, slug=slug)
@@ -67,7 +74,7 @@ def job_edit(request, job_id, slug):
     if request.method == "POST":
         # Initialize form with task instance and data from request
         edit_job_form = EditJobForm(data=request.POST, instance=job)
-        
+        # Saves the instance of the Job and works out the job status.
         if edit_job_form.is_valid():
             # Save the form data to the task instance
             job = edit_job_form.save(commit=False)
@@ -92,12 +99,13 @@ def job_edit(request, job_id, slug):
     )
 
 def job_status(job):
+    """ Sets the status field on a Job instance by looking at the status of the tasks."""
     # Iterates over the tasks attached to the job and finds if they're completed or not
     completed = 0
     incomplete = 0
     for task in job.Tasks.all():
         # If a task is completed, adds a value of 1 to completed, else adds a value of 1 to incomplete
-        if task.is_completed == True:
+        if task.is_completed:
             completed += 1
         else:
             incomplete += 1
@@ -107,7 +115,7 @@ def job_status(job):
     # If at least one task is complete, but some are incomplete, returns status 2 (In progress)
     elif completed >= 1 and incomplete >= 1:
         return 2
-    #If no jobs have been completed, but there are jobs incomplete, returns status 1 (Pending Start)
+    # If no jobs have been completed, but there are jobs incomplete, returns status 1 (Pending Start)
     elif completed == 0 and incomplete >= 1:
         return 1
     else:
@@ -116,7 +124,7 @@ def job_status(job):
     
 def job_delete(request, slug, job_id):
     """
-    Delete a Job.
+    Deletes a Job.
 
     **Context**
 
@@ -132,12 +140,16 @@ def job_delete(request, slug, job_id):
 
 @login_required
 def user_detail(request, slug):
+    """ Renders the user detail page
+    and handles any POST requests from the forms used to updating the UserProfile page."""
     queryset = UserProfile.objects.all()
     user = get_object_or_404(queryset, slug=slug)
 
     if request.method == "POST":
+        # Checks if the form submitted is the contact details or user details forms.
         if 'update_contact_details' in request.POST:
             update_contact_details_form = UpdateContactDetailsForm(request.POST, instance=user)
+            # Saves the form if it is valid.
             if update_contact_details_form.is_valid():
                 update_contact_details_form.save()
                 messages.add_message(
@@ -152,6 +164,7 @@ def user_detail(request, slug):
             update_user_details_form = UpdateUserDetailsForm(instance=user)
         elif 'update_user_details' in request.POST:
             update_user_details_form = UpdateUserDetailsForm(request.POST, instance=user)
+            # Saves the form if it is valid.
             if update_user_details_form.is_valid():
                 update_user_details_form.save()
                 messages.add_message(
@@ -180,8 +193,10 @@ def user_detail(request, slug):
 
 
 def add_user(request):
+    """ Renders the add user page and handles the POST requests from new user form."""
     if request.method == "POST":
         user = request.user
+        # Checks if the user had a userprofile.
         if hasattr(user, 'userprofile'):
             form = NewUserForm(instance=user.user_profile)
             if form.is_valid():

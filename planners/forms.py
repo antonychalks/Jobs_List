@@ -1,25 +1,26 @@
 from main.models import UserProfile
 from django.contrib.auth.models import User
 from django import forms
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Submit, Div, Field
 from main.models import TRADES, ROLE
 from tradesman.models import Job
 
 
 class UpdateContactDetailsForm(forms.ModelForm):
+    """ Form for updating contact details """
     class Meta:
         model = UserProfile
         fields = ('email', 'phone', 'other_phone', 'street', 'town_city', 'county', 'postcode', 'nok', 'nok_number', )
 
 
 class UpdateUserDetailsForm(forms.ModelForm):
+    """ Form for updating user details """
     class Meta:
         model = UserProfile
         fields = ('profile_image', 'role', 'trade', 'certifications', 'medical')
         
         
 class NewUserForm(forms.ModelForm):
+    """ Form for creating new user """
     class Meta:
         model = UserProfile
         fields = '__all__'
@@ -27,12 +28,14 @@ class NewUserForm(forms.ModelForm):
 
 
 class NewJobForm(forms.ModelForm):
+    """ Form for creating new job """
     class Meta:
         model = Job
         fields = ('customer_name', 'phone', 'other_phone', 'email', 'street', 'town_city', 'county', 'postcode', 'job_description')
 
 
 class EditJobForm(forms.ModelForm):
+    """ Form for editing job details """
     class Meta:
         model = Job
         fields = ('customer_name', 'phone', 'other_phone', 'email', 'street', 'town_city', 'county', 'postcode', 'job_description')
