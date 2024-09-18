@@ -54,25 +54,25 @@ class UserProfile (models.Model):
     class Meta:
         ordering = ["role"]
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = self.generate_slug()
-        super(UserProfile, self).save(*args, **kwargs)
-
     def get_role_display(self):
+        """ When called, displays the user-friendly role name rather than the integer."""
         dict_role = dict(ROLE)
         return dict_role.get(self.role)
         
     def get_trade_display(self):
+        """ When called, displays the trade name rather than the code."""
         return ", ".join([dict(TRADES)[trade] for trade in self.trade])
 
     def generate_slug(self):
+        """ Generates the slug by attaching a random string of numbers to the users' username """
         return slugify(self.user.username + "-" + str(uuid.uuid4()))
     
     def __str__(self):
         return f"{self.user} | {self.get_role_display()} | {self.get_trade_display()}"
 
     def save(self, *args, **kwargs):
+        """ Rewrites the save function to generate the slug if there isn't one.
+        Also checks if the profile is complete."""
         if (self.role and self.trade and self.fname and self.lname and self.nok and self.nok_number
                 and self.email and self.street and self.town_city and self.postcode and self.phone):
             self.profile_complete = True
