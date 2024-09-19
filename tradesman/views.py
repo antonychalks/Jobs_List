@@ -13,12 +13,14 @@ from planners.views import user_detail
 
 # Create your views here.
 class tradesman_home(generic.ListView):
+    """ Renders the tradesman's home page. '"""
     queryset = Job.objects.all()
     context_object_name = 'Job_List'
     template_name = "tradesman/tradesman_home.html"
     paginate_by = 6
 
     def get_context_data(self, **kwargs):
+        """ Applys the context to the tradesman's home page. '"""
         context = super().get_context_data(**kwargs)
         user = self.request.user
         context['users_jobs'] = Job.objects.filter(Tasks__tradesman_assigned__user=user).distinct()
@@ -26,6 +28,7 @@ class tradesman_home(generic.ListView):
 
 
 def view_job(request):
+    """ Renders the view for each job. """
     user = UserProfile
     
     return render(
@@ -38,19 +41,20 @@ def view_job(request):
         
         
 def job_detail(request, slug):
+    """ Renders the job's details page. '"""
     job = get_object_or_404(Job, slug=slug)
     TaskFormSet = modelformset_factory(Task, form=AddTaskForm, extra=1)
 
     if request.method == "POST":
         contactDetailsForm = UpdateJobContactDetailsForm(request.POST, instance=job)
         task_formset = TaskFormSet(request.POST, queryset=Task.objects.filter(job=job))
-
+        # Handles the form for updating the job details.
         if 'update_job_contact_details' in request.POST and contactDetailsForm.is_valid():
             contactDetailsForm.save()
             messages.success(request, 'Customer details updated successfully.')
             # Redirect after successful form submission
             return HttpResponseRedirect(reverse('job_detail', args=[slug]))
-
+        # Handles the form for adding a new task to a Job
         elif 'add_task' in request.POST:
             if task_formset.is_valid():
                 instances = task_formset.save(commit=False)
@@ -65,7 +69,7 @@ def job_detail(request, slug):
                 messages.error(request, 'There was an error adding task(s).')
     
     else:
-        contactDetailsForm = UpdateJobContactDetailsForm(instance=job)
+        contact_details_form = UpdateJobContactDetailsForm(instance=job)
         task_formset = TaskFormSet(queryset=Task.objects.none())
         
     edit_task = EditTaskForm()
@@ -77,7 +81,7 @@ def job_detail(request, slug):
         "tradesman/job_detail.html",
         {
             "job": job,
-            "update_job_contact_details_form": contactDetailsForm,
+            "update_job_contact_details_form": contact_details_form,
             "task_formset": task_formset,
             "edit_task": edit_task,
             "assign_tradesman": assign_tradesman,
@@ -131,6 +135,7 @@ def task_edit(request, task_id, slug):
     )
 
 def update_job_status(job):
+    """ Update the job status of a job."""
     # Get all tasks associated with the job
     tasks = job.Tasks.all()
     
@@ -161,10 +166,12 @@ def task_delete(request, slug, task_id):
 
 
 def assign_tradesmen(request, slug, task_id):
+    """ A view to assign tradesman to an individual task. """
     queryset = Job.objects.all()
     task = get_object_or_404(Task, pk=task_id)
     job = get_object_or_404(queryset, slug=slug)
 
+    # Handles the POST request when assigning a tradesman.
     if request.method == "POST":
         tradesman_form = AssignTradesmanForm(request.POST)
         if tradesman_form.is_valid():

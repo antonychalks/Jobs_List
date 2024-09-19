@@ -13,6 +13,7 @@ PLANNERS = UserProfile.role
 
 
 class Job(models.Model):
+    """ A model representing a job."""
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=200, unique=True)
@@ -29,6 +30,7 @@ class Job(models.Model):
     status = models.IntegerField('Job Status', choices=JOB_STATUS)
 
     def save(self, *args, **kwargs):
+        """ Rewrites the save function to add a job number and slug if not already present. """
         # Generate job number if it's not set yet
         if not self.job_number:
             # Retrieve the latest job number from the database
@@ -44,6 +46,7 @@ class Job(models.Model):
         super(Job, self).save(*args, **kwargs)
 
     def set_job_status(self):
+        """ Sets the status of the job based on the task status. """
         if self.Tasks.all().count() == 0:
             self.status = 4
         else:
@@ -63,10 +66,12 @@ class Job(models.Model):
                         self.status = 1
     
     def get_status_display(self):
+        """ Displays the status of the job as a user friendly output. """
         return dict(JOB_STATUS)[self.status]
 
     @property
     def is_assigned_to_current_user(self):
+        """ Checks if the job is assinged to the current user. """
         user = User.objects.get(username=RequestContext(request)['user'])
         return any(task.tradesman_assigned.filter(user=user).exists()
                    for task in self.Tasks.all())
@@ -88,6 +93,7 @@ class Task(models.Model):
         ordering = ["is_completed"]
 
     def tradesman_assigned_boolean(self):
+        """ Returns true if a tradesman is assigned to the task."""
         tradesman_count = 0
         for tradesman in self.tradesman_assigned.all():
             tradesman_count += 1
