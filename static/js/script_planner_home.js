@@ -1,3 +1,4 @@
+const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
 
 const addJobButton = $("#add_job_button");
 const cancelButton = $(".cancel_button");
@@ -52,6 +53,15 @@ $(".edit-job-button").on("click", function() {
     addJobButton.hide();
     var url = `/planners/${slug}/edit_job/${jobId}/`;
     editJobForm.attr("action", `/planners/${slug}/edit_job/${jobId}/`);
+});
+
+$(".btn-delete").on("click", function() {
+    console.log("Delete button clicked.")
+    let jobId = $(this).data("job_id");
+    console.log(jobId)
+    deleteConfirm.href = `delete_job/${jobId}`;
+    console.log($("#deleteConfirm").href);
+    deleteModal.show();
 });
 
 function setStatusColor() {

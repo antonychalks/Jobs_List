@@ -2,12 +2,6 @@
 {% load static %} 
 {% load crispy_forms_tags %}
 
-{% url 'account_signup' as signup_url %}
-{% url 'planner_home' as planner_home%}
-{% url 'UserList' as UserList %}
-{% url 'add_user' as add_user %}
-{% url 'job_detail' as job_detail%}
-
 {% block content %}
 
 <div class="container-fluid">
@@ -116,12 +110,29 @@
                             </div>
                             {% endif %}
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div> 
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete task?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this task? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a id="deleteConfirm" href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock content %}
