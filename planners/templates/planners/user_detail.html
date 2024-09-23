@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
 {% load static %}
 {% load crispy_forms_tags %}
 
@@ -16,7 +17,7 @@
                 </div>
                 <div class="card-header d-flex justify-content-between"> 
                     <h2 class="card-title">{{user_profile.fname}} {{user_profile.lname}}</h2>
-                    <button type="button" class="btn btn-primary justify-content-end edit-button" data-bs-toggle="modal" data-bs-target="#edituser_profileDetailModel">
+                    <button type="button" class="btn btn-primary justify-content-end edit-button" data-bs-toggle="modal" data-bs-target="#editUserDetailModel">
                         Edit
                     </button>
                 </div>
@@ -52,62 +53,61 @@
 
         <div class="col-12 col-md-6">
             <div class="card">
-                    <div class="card-header d-flex justify-content-between"> 
-                        <h2 >Contact Details</h2> 
-                        <button type="button" class="btn btn-primary edit-button" data-bs-toggle="modal" data-bs-target="#editContactDetailModel">
-                            Edit
-                        </button>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h4 class="card-title"> Phone numbers: </h4>
-                                <p class="card-text">
-                                    Phone number: {{user_profile.phone}}
-                                    {% if not user_profile.phone %}
-                                        <span class="badge bg-danger">Incomplete</span>
-                                    {% endif %}
-                                </p>
-                                <p class="card-text">
-                                    Other phone number: {{user_profile.other_phone}}
-                                </p>
-                                <p class="card-text">
-                                    Next Of Kin: {{user_profile.nok}}
-                                    {% if not user_profile.nok %}
-                                        <span class="badge bg-danger">Incomplete</span>
-                                    {% endif %}
-                                </p>
-                                <p class="card-text">
-                                    Next Of Kin Phone: {{user_profile.nok_number}}
-                                    {% if not user_profile.nok_number %}
-                                        <span class="badge bg-danger">Incomplete</span>
-                                    {% endif %}
-                                </p>
-                                <h4 class="card-title"> Email: </h4>
-                                <p class="card-text">
-                                    {{ user_profile.email }}
-                                    {% if not user_profile.email %}
-                                        <span class="badge bg-danger">Incomplete</span>
-                                    {% endif %}
-                                </p>
-                            </div>
-                            <div class="col">
-                                <h4 class="card-title"> Address: </h4>
-                                <p class="card-text">
-                                    {{user_profile.street}}
-                                    {% if not user_profile.street and not user_profile.town_city %}
-                                        <span class="badge bg-danger">Incomplete</span>
-                                    {% endif %}
-                                </p>
-                                <p class="card-text"> {{user_profile.town_city}} </p>
-                                <p class="card-text"> {{user_profile.county}} </p>
-                                <p class="card-text">
-                                    Postcode: {{user_profile.postcode}}
-                                    {% if not user_profile.postcode %}
-                                        <span class="badge bg-danger">Incomplete</span>
-                                    {% endif %}
-                                </p>
-                            </div>
+                <div class="card-header d-flex justify-content-between">
+                    <h2 >Contact Details</h2>
+                    <button type="button" class="btn btn-primary edit-button" data-bs-toggle="modal" data-bs-target="#editContactDetailModel">
+                        Edit
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="card-title"> Phone numbers: </h4>
+                            <p class="card-text">
+                                Phone number: {{user_profile.phone}}
+                                {% if not user_profile.phone %}
+                                    <span class="badge bg-danger">Incomplete</span>
+                                {% endif %}
+                            </p>
+                            <p class="card-text">
+                                Other phone number: {{user_profile.other_phone}}
+                            </p>
+                            <p class="card-text">
+                                Next Of Kin: {{user_profile.nok}}
+                                {% if not user_profile.nok %}
+                                    <span class="badge bg-danger">Incomplete</span>
+                                {% endif %}
+                            </p>
+                            <p class="card-text">
+                                Next Of Kin Phone: {{user_profile.nok_number}}
+                                {% if not user_profile.nok_number %}
+                                    <span class="badge bg-danger">Incomplete</span>
+                                {% endif %}
+                            </p>
+                            <h4 class="card-title"> Email: </h4>
+                            <p class="card-text">
+                                {{ user_profile.email }}
+                                {% if not user_profile.email %}
+                                    <span class="badge bg-danger">Incomplete</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="col">
+                            <h4 class="card-title"> Address: </h4>
+                            <p class="card-text">
+                                {{user_profile.street}}
+                                {% if not user_profile.street and not user_profile.town_city %}
+                                    <span class="badge bg-danger">Incomplete</span>
+                                {% endif %}
+                            </p>
+                            <p class="card-text"> {{user_profile.town_city}} </p>
+                            <p class="card-text"> {{user_profile.county}} </p>
+                            <p class="card-text">
+                                Postcode: {{user_profile.postcode}}
+                                {% if not user_profile.postcode %}
+                                    <span class="badge bg-danger">Incomplete</span>
+                                {% endif %}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -115,6 +115,7 @@
         </div>
     </div>
 </div>
+
     {% if user_profile.role == 1 %}
     <hr>
 <div class="container-fluid">
@@ -122,7 +123,7 @@
         <div class="col-6">
             <div class="card">  
                 <div class="card-header">
-                    <h2 class="card-title"> Certifications </h1>
+                    <h2 class="card-title"> Certifications </h2>
                 </div>
                 <div class="card-body">
                     <p class="card-text"> {{ user_profile.certifications }}
