@@ -1,4 +1,3 @@
-import random
 import uuid
 
 from django.db import models
@@ -42,7 +41,7 @@ class UserProfile (models.Model):
     nok = models.CharField('Next of Kin', max_length=50, blank=True)
     nok_number = models.CharField('Next of Kin contact number', blank=True, max_length=15)
     email = models.EmailField()
-    street = models.CharField(blank=True , max_length=40)
+    street = models.CharField(blank=True, max_length=40)
     town_city = models.CharField('Town/City', blank=True, max_length=20)
     county = models.CharField(blank=True, max_length=25)
     postcode = models.CharField(blank=True, max_length=15)
@@ -96,4 +95,3 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
         # Existing users: just save the profile
         instance.user_profile.slug = instance.user_profile.generate_slug()
         instance.user_profile.save()
-

@@ -1,7 +1,5 @@
 from main.models import UserProfile
-from django.contrib.auth.models import User
 from django import forms
-from main.models import TRADES, ROLE
 from tradesman.models import Job
 
 
@@ -31,11 +29,13 @@ class NewJobForm(forms.ModelForm):
     """ Form for creating new job """
     class Meta:
         model = Job
-        fields = ('customer_name', 'phone', 'other_phone', 'email', 'street', 'town_city', 'county', 'postcode', 'job_description')
+        fields = ('customer_name', 'phone', 'other_phone', 'email', 'street',
+                  'town_city', 'county', 'postcode', 'job_description')
 
 
 class EditJobForm(forms.ModelForm):
     """ Form for editing job details """
     class Meta:
         model = Job
-        fields = ('customer_name', 'phone', 'other_phone', 'email', 'street', 'town_city', 'county', 'postcode', 'job_description')
+        fields = ('customer_name', 'phone', 'other_phone', 'email', 'street',
+                  'town_city', 'county', 'postcode', 'job_description')

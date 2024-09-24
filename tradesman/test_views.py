@@ -2,9 +2,6 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 from .models import Job, Task
-from .forms import UpdateJobContactDetailsForm, AddTaskForm, EditTaskForm
-from multiselectfield import MultiSelectField
-from main.models import UserProfile, TRADES
 
 
 class TradesmanViewsTestCase(TestCase):

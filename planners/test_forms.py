@@ -84,9 +84,10 @@ class TestForms(TestCase):
     def test_edit_job_form_valid(self):
         """ Tests the edit job form validation passes when the form is valid."""
         self.user = User.objects.create_user(username='testUser', password='password')
-        job = Job.objects.create(created_by=self.user, customer_name='Test Customer', phone='1234567890', other_phone='0987654321',
-                                 email='test@example.com', street='Test Street', town_city='Test City',
-                                 county='Test County', postcode='12345', job_description='Test Job Description', status=0)
+        job = Job.objects.create(created_by=self.user, customer_name='Test Customer', phone='1234567890',
+                                 other_phone='0987654321', email='test@example.com', street='Test Street',
+                                 town_city='Test City', county='Test County', postcode='12345',
+                                 job_description='Test Job Description', status=0)
         form_data = {
             'customer_name': 'Updated Test Customer',
             'phone': '0987654321',

@@ -1,9 +1,6 @@
 const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
-const deleteButtons = document.getElementsByClassName("btn-delete");
 const addTaskButton = $("#add_task_button");
 const cancelButton = $(".cancel_button");
-const editButtons = document.getElementsByClassName("btn-edit");
-const submitButton = document.getElementById("submitButton");
 const editTaskForm = $("#edit_task_form")
 const addTaskForm = $("#add_task_form")
 const TRADES = [
@@ -38,13 +35,12 @@ cancelButton.on("click", function() {
 
 // Handle click event for edit button
 $(".edit-button").on("click", function() {
-    var taskId = $(this).data("task_id");
-    var description = $(this).data("description");
-    var tradesRequired = $(this).data("trades-required");
-    var tradesmanAssigned = $(this).data("tradesman-assigned");
-    var timeRequired = $(this).data("time-required");
-    var isCompleted = $(this).data("is-completed");
-    var slug = $(this).data("slug");
+    const taskId = $(this).data("task_id");
+    const description = $(this).data("description");
+    const tradesRequired = $(this).data("trades-required");
+    const tradesmanAssigned = $(this).data("tradesman-assigned");
+    const timeRequired = $(this).data("time-required");
+    const isCompleted = $(this).data("is-completed");
 
     // Populate the add_task_form fields with task details
     $("#id_description").val(description);
@@ -58,8 +54,7 @@ $(".edit-button").on("click", function() {
     $("#id_is_completed").prop("checked", isCompleted === "True");
 
     // Change the submit button name to indicate editing the task
-    $("button[type='submit']").attr("name", "edit_task");
-    $("button[type='submit']").addClass( "btn-edit" );
+    $("button[type='submit']").attr("name", "edit_task").addClass( "btn-edit" );
 
     // Show the add_task_form
     $("#edit_task_form").show();
@@ -91,14 +86,14 @@ function setTradesCheckboxes(tradesRequired) {
     // Check if tradesRequired is a string
     if (typeof tradesRequired === 'string') {
         // Split the string into an array of trade codes
-        var tradeCodes = tradesRequired.split(", ");
+        const tradeCodes = tradesRequired.split(", ");
         // Set checkboxes for each trade code
         tradeCodes.forEach(tradeCode => {
             // Find the trade in the TRADES array
             const tradeIndex = TRADES.findIndex(trade => trade[1] === tradeCode);
             if (tradeIndex !== -1) {
                 // Construct the ID based on the index
-                var checkboxId = "#id_trades_required_" + TRADES[tradeIndex][0];
+                const checkboxId = "#id_trades_required_" + TRADES[tradeIndex][0];
                 $(checkboxId).prop("checked", true);
             } else {
                 console.error("Trade code not found:", tradeCode);
@@ -111,7 +106,7 @@ function setTradesCheckboxes(tradesRequired) {
             const tradeIndex = TRADES.findIndex(trade => trade[1] === tradeCode);
             if (tradeIndex !== -1) {
                 // Construct the ID based on the index
-                var checkboxId = "#id_trades_required_" + TRADES[tradeIndex][0];
+                const checkboxId = "#id_trades_required_" + TRADES[tradeIndex][0];
                 $(checkboxId).prop("checked", true);
             } else {
                 console.error("Trade code not found:", tradeCode);

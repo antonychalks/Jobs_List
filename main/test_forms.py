@@ -1,8 +1,5 @@
 from django.test import TestCase
-from main.models import UserProfile
-from django.contrib.auth.models import User
 from .forms import InitialSignUpForm
-from tradesman.models import Job
 
 
 class TestForms(TestCase):

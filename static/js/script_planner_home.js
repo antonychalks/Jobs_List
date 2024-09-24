@@ -1,5 +1,4 @@
 const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
-
 const addJobButton = $("#add_job_button");
 const cancelButton = $(".cancel_button");
 const editJobForm = $("#edit_job_form")
@@ -24,17 +23,17 @@ cancelButton.on("click", function() {
 
 // Handle click event for edit button
 $(".edit-job-button").on("click", function() {
-    var jobId = $(this).data("job_id");
-    var slug = $(this).data("slug");
-    var customerName = $(this).data("customer_name");
-    var phone = $(this).data("phone");
-    var otherPhone = $(this).data("other_phone");
-    var email = $(this).data("email");
-    var street = $(this).data("street");
-    var townCity = $(this).data("town_city");
-    var county = $(this).data("county");
-    var postcode = $(this).data("postcode");
-    var jobDescription = $(this).data("job_description");
+    const jobId = $(this).data("job_id");
+    const slug = $(this).data("slug");
+    const customerName = $(this).data("customer_name");
+    const phone = $(this).data("phone");
+    const otherPhone = $(this).data("other_phone");
+    const email = $(this).data("email");
+    const street = $(this).data("street");
+    const townCity = $(this).data("town_city");
+    const county = $(this).data("county");
+    const postcode = $(this).data("postcode");
+    const jobDescription = $(this).data("job_description");
 
 
     // Populate the add_task_form fields with task details
@@ -51,7 +50,6 @@ $(".edit-job-button").on("click", function() {
     // Show the edit_job_form
     $("#edit_job_form").show();
     addJobButton.hide();
-    var url = `/planners/${slug}/edit_job/${jobId}/`;
     editJobForm.attr("action", `/planners/${slug}/edit_job/${jobId}/`);
 });
 
@@ -63,24 +61,3 @@ $(".btn-delete").on("click", function() {
     console.log($("#deleteConfirm").href);
     deleteModal.show();
 });
-
-function setStatusColor() {
-    $(".job_status").each(function() {
-        const status = $(this);
-        const statusText = status.html();
-
-        // Remove existing classes to ensure only one class is added
-        status.removeClass("bg-info bg-danger bg-warning bg-success");
-
-        // Determine which class to add based on the status text
-        if (statusText === "Unassigned") {
-            status.addClass("bg-info");
-        } else if (statusText === "Pending Start") {
-            status.addClass("bg-danger");
-        } else if (statusText === "In Progress") {
-            status.addClass("bg-warning");
-        } else if (statusText === "Complete") {
-            status.addClass("bg-success");
-        }
-    });
-}

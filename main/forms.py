@@ -1,10 +1,5 @@
 from main.models import UserProfile
-from django.contrib.auth.models import User
 from django import forms
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Submit
-from main.models import TRADES, ROLE
-from tradesman.models import Job
 
 
 class InitialSignUpForm(forms.ModelForm):

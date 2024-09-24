@@ -1,12 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% url 'planner_home' as 'planner_home' %}
-{% url 'tradesman_home' as 'tradesman_home' %}
-
 {% block content %}
 <div class="container-fluid">
-    <div class="row" height="400px">
+    <div class="row">
         <div class=" col-12 d-flex justify-content-center"> 
             {% if user.is_authenticated %}
                 {% if user_profile.role == 0 %}

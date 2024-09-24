@@ -7,7 +7,7 @@ urlpatterns = [
     path('user_list', views.UserList.as_view(), name='UserList'),
     path('<slug:slug>/edit_job/<int:job_id>/',
          views.job_edit, name='job_edit'),
-    path('<slug:slug>/delete_job/<int:job_id>/',
+    path('delete_job/<int:job_id>/',
          views.job_delete, name='job_delete'),
     path('', views.planner_home, name='planner_home'),
 ]

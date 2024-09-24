@@ -660,6 +660,28 @@ The last time tests were run, there were no errors or fails.
 
 ![test result](static/media/README/test.jpg)
 
+## Validation
+### HTML
+
+### CSS
+
+### JS
+
+### Python
+When using PyCharm's built in Problem identifier the following warnings were found which can be ignored:
+
+| File                                          | Warning                                                                                                       |                                                Reason for ignoring                                                |
+|:----------------------------------------------|:--------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------:|
+| planners/view.py                              | Local variable 'new_user_form' might be referenced before assignment.                                         |                  This warning can be ignored as the form variable is set within an if statement.                  | 
+| static/css/style.css                          | Duplicated code fragment (106 lines long)                                                                     | The duplicated code is the file that is stored in the staticfiles directory, which is used for the deployed site. |
+| static/js/script_job_detail.js (3 Warnings)   | Unresolved variable or type bootstrap and Unresolved type Modal and Unresolved variable or type deleteConfirm |            These warnings can be ignored as PyCharm just doesn't recognise what the instances are for.            |
+| static/js/script_planner_home.js (3 Warnings) | Unresolved variable or type bootstrap and Unresolved type Modal and Unresolved variable or type deleteConfirm |            These warnings can be ignored as PyCharm just doesn't recognise what the instances are for.            |
+| static/js/script_planner_home.js              | Duplicated code fragment (13 lines long)                                                                      | The duplicated code is the file that is stored in the staticfiles directory, which is used for the deployed site. |
+| templates/base.html (3 Warnings)              | Missed locally stored library for HTTP link                                                                   |             The warnings are not applicable because the files are not required to be locally stored.              |
+| tradesman/models.py                           | Local variable 'tradesman' value is not used                                                                  |              This warning can be ignored as the tradesman variable doesn't require being referenced.              |
+| tradesman/views.py                            | Local variable 'contact_details_form' might be referenced before assignment                                   |                  This warning can be ignored as the form variable is set within an if statement.                  |                                                        
+
+
 ## Deployment
 
 This website has been deployed using Heroku.
@@ -769,3 +791,6 @@ In order to protect the main branch while you work on something new, essential w
 
 [Code Institute](https://codeinstitute.net) - "I think therefore I Blog" walkthrough followed when installing dependencies and deploying to Heroku.
 [Multi Select Field](https://pypi.org/project/django-multiselectfield/)multi select field 
+
+### Wireframes
+[Visily](https://www.visily.ai/) The wireframes were created on Visily.

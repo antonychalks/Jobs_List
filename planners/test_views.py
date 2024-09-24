@@ -2,9 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 from main.models import UserProfile
-from tradesman.models import Job, Task
-from .forms import UpdateContactDetailsForm, UpdateUserDetailsForm, NewUserForm, NewJobForm, EditJobForm
-from django.contrib.messages import get_messages
+from tradesman.models import Job
 
 
 class TestPlannerViews(TestCase):
