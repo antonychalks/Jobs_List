@@ -1,10 +1,9 @@
 from django.shortcuts import render, get_object_or_404, reverse
-from django.forms import modelformset_factory
 from django.views import generic
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from main.models import UserProfile as UserProfile
-from tradesman.models import Job, Task
+from tradesman.models import Job
 from .forms import UpdateContactDetailsForm, UpdateUserDetailsForm, NewUserForm, NewJobForm, EditJobForm
 from django.contrib.auth.decorators import login_required
 
@@ -12,8 +11,6 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def job_number():
     """ Generates a random job number if the job doesn't have a number."""
-    # Generate job number if it's not set yet
-    job_num = 0
     # Retrieve the latest job number from the database
     latest_job = Job.objects.order_by('-job_number').first()
     if latest_job:
@@ -30,7 +27,7 @@ def planner_home(request):
         new_job_form = NewJobForm(data=request.POST)
         # If the form is valid, the created_by, job_number, slug and status all get added to the instance.
         if new_job_form.is_valid():
-            new_job = new_job_form.save(commit = False)
+            new_job = new_job_form.save(commit=False)
             new_job.created_by = request.user
             new_job.job_number = job_number()
             new_job.slug = new_job.job_number
@@ -78,7 +75,6 @@ def job_edit(request, job_id, slug):
         if edit_job_form.is_valid():
             # Save the form data to the task instance
             job = edit_job_form.save(commit=False)
-            job.status = job_status(job)
             job.save()
             messages.success(request, 'Task Updated!')
             return HttpResponseRedirect(reverse('planner_home'))
@@ -98,31 +94,8 @@ def job_edit(request, job_id, slug):
         }
     )
 
-def job_status(job):
-    """ Sets the status field on a Job instance by looking at the status of the tasks."""
-    # Iterates over the tasks attached to the job and finds if they're completed or not
-    completed = 0
-    incomplete = 0
-    for task in job.Tasks.all():
-        # If a task is completed, adds a value of 1 to completed, else adds a value of 1 to incomplete
-        if task.is_completed:
-            completed += 1
-        else:
-            incomplete += 1
-    # if all tasks are complete, return status 3 (complete) 
-    if completed >= 1 and incomplete == 0:
-        return 3
-    # If at least one task is complete, but some are incomplete, returns status 2 (In progress)
-    elif completed >= 1 and incomplete >= 1:
-        return 2
-    # If no jobs have been completed, but there are jobs incomplete, returns status 1 (Pending Start)
-    elif completed == 0 and incomplete >= 1:
-        return 1
-    else:
-        return 0
-
     
-def job_delete(request, slug, job_id):
+def job_delete(request, job_id):
     """
     Deletes a Job.
 
@@ -137,6 +110,7 @@ def job_delete(request, slug, job_id):
     messages.add_message(request, messages.SUCCESS, 'Job deleted!')
 
     return HttpResponseRedirect(reverse('planner_home'))
+
 
 @login_required
 def user_detail(request, slug):
@@ -161,7 +135,6 @@ def user_detail(request, slug):
                     request, messages.ERROR,
                     'Failed to update contact details. Please check the form.'
                 )
-            update_user_details_form = UpdateUserDetailsForm(instance=user)
         elif 'update_user_details' in request.POST:
             update_user_details_form = UpdateUserDetailsForm(request.POST, instance=user)
             # Saves the form if it is valid.
@@ -176,7 +149,6 @@ def user_detail(request, slug):
                     request, messages.ERROR,
                     'Failed to update user details. Please check the form.'
                 )
-            update_contact_details_form = UpdateContactDetailsForm(instance=user)
     
     update_contact_details_form = UpdateContactDetailsForm(instance=user)
     update_user_details_form = UpdateUserDetailsForm(instance=user)

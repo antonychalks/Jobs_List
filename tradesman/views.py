@@ -1,18 +1,15 @@
-from django.core.cache import cache
-from django.shortcuts import render, get_object_or_404, reverse, redirect
+from django.shortcuts import render, get_object_or_404, reverse
 from django.forms import modelformset_factory
 from django.views import generic
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from planners.views import job_status
 from .models import Job, Task
 from main.models import UserProfile
 from .forms import UpdateJobContactDetailsForm, AddTaskForm, EditTaskForm, AssignTradesmanForm
-from planners.views import user_detail
 
 
 # Create your views here.
-class tradesman_home(generic.ListView):
+class Tradesman_Home(generic.ListView):
     """ Renders the tradesman's home page. '"""
     queryset = Job.objects.all()
     context_object_name = 'Job_List'
@@ -32,12 +29,12 @@ def view_job(request):
     user = UserProfile
     
     return render(
-    request,
-    "tradesman/job_detail.html",
-    {
-        "user": user,
-    },
-)
+        request,
+        "tradesman/job_detail.html",
+        {
+            "user": user,
+        },
+    )
         
         
 def job_detail(request, slug):
@@ -61,7 +58,6 @@ def job_detail(request, slug):
                 for instance in instances:
                     instance.job = job
                     instance.save()
-                    update_job_status(job)
                 messages.success(request, 'New task(s) added successfully.')
                 # Redirect after successful form submission
                 return HttpResponseRedirect(reverse('job_detail', args=[slug]))
@@ -108,8 +104,6 @@ def task_edit(request, task_id, slug):
             task.job = job
             task.save()
             
-            update_job_status(job)
-            
             messages.success(request, 'Task Updated!')
             return HttpResponseRedirect(reverse('job_detail', args=[slug]))
         else:
@@ -134,16 +128,7 @@ def task_edit(request, task_id, slug):
         },
     )
 
-def update_job_status(job):
-    """ Update the job status of a job."""
-    # Get all tasks associated with the job
-    tasks = job.Tasks.all()
-    
-    job.status = job_status(job)
-    
-    # Save the updated job status
-    job.save()
-        
+
 def task_delete(request, slug, task_id):
     """
     Delete an individual comment.

@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.template.context_processors import request
 from multiselectfield import MultiSelectField
-from cloudinary.models import CloudinaryField
 from main.models import UserProfile, TRADES
 
 JOB_STATUS = ((0, "Unassigned"), (1, "Pending Start"), (2, "In Progress"), (3, "Completed"), (4, "No Tasks"))
@@ -42,7 +41,7 @@ class Job(models.Model):
                 self.job_number = 1
         if not self.slug:
             self.slug = self.job_number
-
+        self.set_job_status()
         super(Job, self).save(*args, **kwargs)
 
     def set_job_status(self):
@@ -52,7 +51,7 @@ class Job(models.Model):
         else:
             task_count = 0
             task_complete_count = 0
-            for task in self.Tasks.all:
+            for task in self.Tasks.all():
                 task_count += 1
                 if task.is_completed:
                     task_complete_count += 1
@@ -61,9 +60,11 @@ class Job(models.Model):
             elif task_complete_count >= 1:
                 self.status = 2
             else:
-                for task in self.Tasks.all:
-                    if task.tradesman_assigned:
+                for task in self.Tasks.all():
+                    if task.tradesman_assigned_boolean():
                         self.status = 1
+                    else:
+                        self.status = 0
     
     def get_status_display(self):
         """ Displays the status of the job as a user friendly output. """
@@ -82,7 +83,7 @@ class Task(models.Model):
     Stores the tasks for each job
     """
     job = models.ForeignKey(Job, on_delete=models.CASCADE,
-                             related_name="Tasks" )
+                            related_name="Tasks")
     description = models.CharField(max_length=255)
     trades_required = MultiSelectField(max_length=30, choices=TRADES, blank=True)
     tradesman_assigned = models.ManyToManyField("main.UserProfile", related_name="tradesman", blank=True)
@@ -91,6 +92,12 @@ class Task(models.Model):
     
     class Meta:
         ordering = ["is_completed"]
+
+    def save(self, *args, **kwargs):
+        """ Rewrites the save function to save the tasks Job instance to set the status of the job. """
+        self.job.save()
+
+        super(Task, self).save(*args, **kwargs)
 
     def tradesman_assigned_boolean(self):
         """ Returns true if a tradesman is assigned to the task."""
