@@ -664,8 +664,6 @@ The last time tests were run, there were no errors or fails.
 The validators I used for this project are all referenced in the [Tools and Technologies](#tools-and-technologies) section above.
 For each validator, I corrected any error or warning that was returned, unless stated below in the ignored warnings section.
 
-
-
 ### Ignored warnings
 #### PyCharm's built in Problem identifier:
 
@@ -691,7 +689,7 @@ All of these warnings and errors were ignored, and no further warnings were pres
 No errors were found.
 
 #### CI Python Linter
-
+No errors were found.
 
 ## Deployment
 
