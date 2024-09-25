@@ -7,16 +7,32 @@ class UpdateContactDetailsForm(forms.ModelForm):
     """ Form for updating contact details """
     class Meta:
         model = UserProfile
-        fields = ('email', 'phone', 'other_phone', 'street', 'town_city', 'county', 'postcode', 'nok', 'nok_number', )
+        fields = (
+            'email',
+            'phone',
+            'other_phone',
+            'street',
+            'town_city',
+            'county',
+            'postcode',
+            'nok',
+            'nok_number',
+        )
 
 
 class UpdateUserDetailsForm(forms.ModelForm):
     """ Form for updating user details """
     class Meta:
         model = UserProfile
-        fields = ('profile_image', 'role', 'trade', 'certifications', 'medical')
-        
-        
+        fields = (
+            'profile_image',
+            'role',
+            'trade',
+            'certifications',
+            'medical'
+        )
+
+
 class NewUserForm(forms.ModelForm):
     """ Form for creating new user """
     class Meta:

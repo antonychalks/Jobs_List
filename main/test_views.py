@@ -8,7 +8,10 @@ class TestMainViews(TestCase):
 
     def setUp(self):
         """ Sets up a test user, with profile and test data inputted."""
-        self.user = User.objects.create_user(username='testUser', password='password')
+        self.user = User.objects.create_user(
+            username='testUser',
+            password='password'
+        )
         self.profile = UserProfile.objects.get(
             user=self.user,
         )
@@ -31,7 +34,9 @@ class TestMainViews(TestCase):
         self.profile.save()
 
     def test_landing_page_view_authenticated_user(self):
-        """ Test the landing page loads correctly if a user is authenticated."""
+        """
+        Test the landing page loads correctly if a user is authenticated.
+        """
         self.client.login(username='testUser', password='password')
         response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
@@ -39,19 +44,29 @@ class TestMainViews(TestCase):
         self.assertEqual(response.context['user_profile'], self.profile)
 
     def test_landing_page_view_unauthenticated_user(self):
-        """ Test the landing page loads correctly if a user is not authenticated."""
+        """
+        Test the landing page loads correctly if a user is not authenticated.
+        """
         response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'main/index.html')
         self.assertIsNone(response.context['user_profile'])
 
     def test_landing_page_view_initial_signup(self):
-        """Tests the user gets redirected to the initial sign-up page if they have not completed the initial sign-up."""
+        """
+        Tests the user gets redirected to the initial sign-up page
+        if they have not completed the initial sign-up.
+        """
         self.client.login(username='testUser', password='password')
         self.profile.is_initial_signup = True
         self.profile.save()
         response = self.client.get(reverse('home'))
-        self.assertRedirects(response, reverse('user_profile_signup'), status_code=302, target_status_code=200)
+        self.assertRedirects(
+            response,
+            reverse('user_profile_signup'),
+            status_code=302,
+            target_status_code=200
+        )
 
     def test_user_profile_signup_view(self):
         """ Tests the initial signup page."""

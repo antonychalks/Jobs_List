@@ -29,7 +29,11 @@ class UserProfile (models.Model):
     Stores the profile of a user
 
     """
-    user = models.OneToOneField(User, related_name='user_profile', on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User,
+        related_name='user_profile',
+        on_delete=models.CASCADE
+    )
     role = models.IntegerField(choices=ROLE, default=0)
     trade = MultiSelectField(max_length=30, choices=TRADES)
     profile_image = CloudinaryField('image', default='placeholder', blank=True)
@@ -39,41 +43,57 @@ class UserProfile (models.Model):
     medical = models.TextField('Medical Conditions', blank=True)
     certifications = models.TextField(blank=True)
     nok = models.CharField('Next of Kin', max_length=50, blank=True)
-    nok_number = models.CharField('Next of Kin contact number', blank=True, max_length=15)
+    nok_number = models.CharField(
+        'Next of Kin contact number',
+        blank=True,
+        max_length=15
+    )
     email = models.EmailField()
     street = models.CharField(blank=True, max_length=40)
     town_city = models.CharField('Town/City', blank=True, max_length=20)
     county = models.CharField(blank=True, max_length=25)
     postcode = models.CharField(blank=True, max_length=15)
     phone = models.CharField(max_length=15)
-    other_phone = models.CharField('Other Phone Number', blank=True, max_length=15)
+    other_phone = models.CharField(
+        'Other Phone Number',
+        blank=True,
+        max_length=15)
     profile_complete = models.BooleanField(default=False)
     is_initial_signup = models.BooleanField(default=True)
-    
+
     class Meta:
         ordering = ["role"]
 
     def get_role_display(self):
-        """ When called, displays the user-friendly role name rather than the integer."""
+        """
+        When called, displays the user-friendly role name
+        rather than the integer.
+        """
         dict_role = dict(ROLE)
         return dict_role.get(self.role)
-        
+
     def get_trade_display(self):
         """ When called, displays the trade name rather than the code."""
         return ", ".join([dict(TRADES)[trade] for trade in self.trade])
 
     def generate_slug(self):
-        """ Generates the slug by attaching a random string of numbers to the users' username """
+        """
+        Generates the slug by appending a random string of numbers
+        to the users' username
+        """
         return slugify(self.user.username + "-" + str(uuid.uuid4()))
-    
+
     def __str__(self):
-        return f"{self.user} | {self.get_role_display()} | {self.get_trade_display()}"
+        return (f"{self.user} | {self.get_role_display()} "
+                f"| {self.get_trade_display()}")
 
     def save(self, *args, **kwargs):
         """ Rewrites the save function to generate the slug if there isn't one.
         Also checks if the profile is complete."""
-        if (self.role and self.trade and self.fname and self.lname and self.nok and self.nok_number
-                and self.email and self.street and self.town_city and self.postcode and self.phone):
+        if (self.role and self.trade and self.fname and self.lname and
+                self.nok and self.nok_number and self.email and
+                self.street and self.town_city and self.postcode
+                and self.phone):
             self.profile_complete = True
         else:
             self.profile_complete = False

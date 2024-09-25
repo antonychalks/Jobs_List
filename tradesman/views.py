@@ -5,7 +5,12 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from .models import Job, Task
 from main.models import UserProfile
-from .forms import UpdateJobContactDetailsForm, AddTaskForm, EditTaskForm, AssignTradesmanForm
+from .forms import (
+    UpdateJobContactDetailsForm,
+    AddTaskForm,
+    EditTaskForm,
+    AssignTradesmanForm
+)
 
 
 # Create your views here.
@@ -20,14 +25,16 @@ class Tradesman_Home(generic.ListView):
         """ Applys the context to the tradesman's home page. '"""
         context = super().get_context_data(**kwargs)
         user = self.request.user
-        context['users_jobs'] = Job.objects.filter(Tasks__tradesman_assigned__user=user).distinct()
+        context['users_jobs'] = (
+            Job.objects.filter(Tasks__tradesman_assigned__user=user).distinct()
+        )
         return context
 
 
 def view_job(request):
     """ Renders the view for each job. """
     user = UserProfile
-    
+
     return render(
         request,
         "tradesman/job_detail.html",
@@ -35,18 +42,25 @@ def view_job(request):
             "user": user,
         },
     )
-        
-        
+
+
 def job_detail(request, slug):
     """ Renders the job's details page. '"""
     job = get_object_or_404(Job, slug=slug)
     TaskFormSet = modelformset_factory(Task, form=AddTaskForm, extra=1)
 
     if request.method == "POST":
-        contactDetailsForm = UpdateJobContactDetailsForm(request.POST, instance=job)
-        task_formset = TaskFormSet(request.POST, queryset=Task.objects.filter(job=job))
+        contactDetailsForm = (
+            UpdateJobContactDetailsForm(request.POST, instance=job)
+        )
+        task_formset = TaskFormSet(
+            request.POST,
+            queryset=Task.objects.filter(job=job)
+        )
         # Handles the form for updating the job details.
-        if 'update_job_contact_details' in request.POST and contactDetailsForm.is_valid():
+        if ('update_job_contact_details'
+                in request.POST
+                and contactDetailsForm.is_valid()):
             contactDetailsForm.save()
             messages.success(request, 'Customer details updated successfully.')
             # Redirect after successful form submission
@@ -63,15 +77,15 @@ def job_detail(request, slug):
                 return HttpResponseRedirect(reverse('job_detail', args=[slug]))
             else:
                 messages.error(request, 'There was an error adding task(s).')
-    
+
     else:
         contact_details_form = UpdateJobContactDetailsForm(instance=job)
         task_formset = TaskFormSet(queryset=Task.objects.none())
-        
+
     edit_task = EditTaskForm()
     assign_tradesman = AssignTradesmanForm()
     tradesmen = UserProfile.objects.filter(role=1)
-    
+
     return render(
         request,
         "tradesman/job_detail.html",
@@ -94,7 +108,7 @@ def task_edit(request, task_id, slug):
     task = get_object_or_404(Task, pk=task_id)
     # Retrieve the job instance
     job = get_object_or_404(Job, slug=slug)
-    
+
     if request.method == "POST":
         # Initialize form with task instance and data from request
         edit_task_form = EditTaskForm(data=request.POST, instance=task)
@@ -103,7 +117,7 @@ def task_edit(request, task_id, slug):
             task = edit_task_form.save(commit=False)
             task.job = job
             task.save()
-            
+
             messages.success(request, 'Task Updated!')
             return HttpResponseRedirect(reverse('job_detail', args=[slug]))
         else:
@@ -115,8 +129,6 @@ def task_edit(request, task_id, slug):
         print(request.POST)
 
     add_task_form = AddTaskForm(instance=task)
-    
-    # If the code reaches here, it means it's a GET request or form submission failed
     return render(
         request,
         "tradesman/job_detail.html",

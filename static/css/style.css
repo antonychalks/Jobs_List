@@ -73,7 +73,7 @@ a{
 
 #add_user_form{
     display: flex;
-    flex: 0 0 auto auto;
+    flex: 0 auto;
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
@@ -81,7 +81,7 @@ a{
 #add_user_form div:has(.form-check){
     width: 50%;
     display: flex;
-    flex: 0 0 auto auto;
+    flex: 0 auto;
     justify-content: space-evenly;
     flex-wrap: wrap;
 }

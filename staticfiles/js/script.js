@@ -3,11 +3,10 @@ $(document).ready(function() {
 });
 
 function setStatusColor() {
-    console.log("Setting status color");
     $(".job_status").each(function() {
         const status = $(this);
-        const statusText = status.text().trim(); // Use .text() to retrieve text content and trim whitespace
-        console.log("Status Text:", statusText); // Log status text for debugging
+        const statusText = status.text().trim();
+        
         // Remove existing classes to ensure only one class is added
         status.removeClass("bg-info bg-danger bg-warning bg-success");
 

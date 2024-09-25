@@ -550,7 +550,7 @@ Tools and technologies are listed in order of use during the development of this
 
 [Jshint](https://jshint.com/) - Used to validate the JavaScript code.
 
-[W3C - CSS Validation Service](https://jigsaw.w3.org/css-validator/) - Used to validate the CSS code. Please see [TESTING.md](TESTING.md) for notes on this.
+[W3C - CSS Validation Service](https://jigsaw.w3.org/css-validator/) - Used to validate the CSS code.
 
 [CI Python Linter](https://pep8ci.herokuapp.com/) - Used to validate the Python code.
 
@@ -579,11 +579,11 @@ The website was manually tested on the front-end by myself, and a group composed
 
 5. **Performance**: Manually measure load times and latency.
 
-7. **User Authentication**: Validate the login and sign-up functionalities to work properly, including error messages for incorrect replies.
+6. **User Authentication**: Validate the login and sign-up functionalities to work properly, including error messages for incorrect replies.
 
-8. **Error Messages**: Check if appropriate error messages are displayed for different scenarios.
+7. **Error Messages**: Check if appropriate error messages are displayed for different scenarios.
 
-9. **Data Integrity**: If data manipulation operations are performed, ensure the database is accurately updated.
+8. **Data Integrity**: If data manipulation operations are performed, ensure the database is accurately updated.
 
 #### As a User
 | What was tested                                       | Expected Result                                                       | Outcome |
@@ -661,25 +661,36 @@ The last time tests were run, there were no errors or fails.
 ![test result](static/media/README/test.jpg)
 
 ## Validation
-### HTML
+The validators I used for this project are all referenced in the [Tools and Technologies](#tools-and-technologies) section above.
+For each validator, I corrected any error or warning that was returned, unless stated below in the ignored warnings section.
 
-### CSS
 
-### JS
 
-### Python
-When using PyCharm's built in Problem identifier the following warnings were found which can be ignored:
+### Ignored warnings
+#### PyCharm's built in Problem identifier:
 
-| File                                          | Warning                                                                                                       |                                                Reason for ignoring                                                |
-|:----------------------------------------------|:--------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------:|
-| planners/view.py                              | Local variable 'new_user_form' might be referenced before assignment.                                         |                  This warning can be ignored as the form variable is set within an if statement.                  | 
-| static/css/style.css                          | Duplicated code fragment (106 lines long)                                                                     | The duplicated code is the file that is stored in the staticfiles directory, which is used for the deployed site. |
-| static/js/script_job_detail.js (3 Warnings)   | Unresolved variable or type bootstrap and Unresolved type Modal and Unresolved variable or type deleteConfirm |            These warnings can be ignored as PyCharm just doesn't recognise what the instances are for.            |
-| static/js/script_planner_home.js (3 Warnings) | Unresolved variable or type bootstrap and Unresolved type Modal and Unresolved variable or type deleteConfirm |            These warnings can be ignored as PyCharm just doesn't recognise what the instances are for.            |
-| static/js/script_planner_home.js              | Duplicated code fragment (13 lines long)                                                                      | The duplicated code is the file that is stored in the staticfiles directory, which is used for the deployed site. |
-| templates/base.html (3 Warnings)              | Missed locally stored library for HTTP link                                                                   |             The warnings are not applicable because the files are not required to be locally stored.              |
-| tradesman/models.py                           | Local variable 'tradesman' value is not used                                                                  |              This warning can be ignored as the tradesman variable doesn't require being referenced.              |
-| tradesman/views.py                            | Local variable 'contact_details_form' might be referenced before assignment                                   |                  This warning can be ignored as the form variable is set within an if statement.                  |                                                        
+| File                                          | Warning                                                                                                       |                                                                                     Reason for ignoring                                                                                      |
+|:----------------------------------------------|:--------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| planners/view.py                              | Local variable 'new_user_form' might be referenced before assignment.                                         |                                                       This warning can be ignored as the form variable is set within an if statement.                                                        | 
+| static/css/style.css                          | Duplicated code fragment (106 lines long)                                                                     |                                      The duplicated code is the file that is stored in the staticfiles directory, which is used for the deployed site.                                       |
+| static/js/script_job_detail.js (3 Warnings)   | Unresolved variable or type bootstrap and Unresolved type Modal and Unresolved variable or type deleteConfirm |                                                 These warnings can be ignored as PyCharm just doesn't recognise what the instances are for.                                                  |
+| static/js/script_planner_home.js (3 Warnings) | Unresolved variable or type bootstrap and Unresolved type Modal and Unresolved variable or type deleteConfirm |                                                 These warnings can be ignored as PyCharm just doesn't recognise what the instances are for.                                                  |
+| static/js/script_planner_home.js              | Duplicated code fragment (13 lines long)                                                                      |                                      The duplicated code is the file that is stored in the staticfiles directory, which is used for the deployed site.                                       |
+| templates/base.html (3 Warnings)              | Missed locally stored library for HTTP link                                                                   |                                                   The warnings are not applicable because the files are not required to be locally stored.                                                   |
+| tradesman/models.py                           | Local variable 'tradesman' value is not used                                                                  |                                                   This warning can be ignored as the tradesman variable doesn't require being referenced.                                                    |
+| tradesman/views.py                            | Local variable 'contact_details_form' might be referenced before assignment                                   |                                                       This warning can be ignored as the form variable is set within an if statement.                                                        |
+| main/models.py                                | Parameter 'sender' value is not used                                                                          |                         The sender parameter is needed because the post_save signal will be sent by the User model itself after a save occurs on an instance of it.                          |
+| main/models.py                                | Parameter '**kwargs' value is not used                                                                        | The **kwargs parameter is used to capture all other keyword arguments that are not explicitly defined in the function, preventing a TypeError if an unexpected keyword argument is received. |
+
+#### W3C Nu Html Checker:
+Due to the requirement for the user to be logged into the website for it to load, I had to copy and paste each file into the validator as text.
+This returned multiple errors that only related to the lack of support for DJango by the validators. For example, each template tag returned an error when used in an HREF.
+All of these warnings and errors were ignored, and no further warnings were presented.
+
+#### W3C CSS Validation Service
+No errors were found.
+
+#### CI Python Linter
 
 
 ## Deployment

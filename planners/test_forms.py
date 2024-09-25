@@ -1,7 +1,11 @@
 from django.test import TestCase
 from main.models import UserProfile
 from django.contrib.auth.models import User
-from .forms import UpdateContactDetailsForm, UpdateUserDetailsForm, NewUserForm, NewJobForm, EditJobForm
+from .forms import (UpdateContactDetailsForm,
+                    UpdateUserDetailsForm,
+                    NewUserForm,
+                    NewJobForm,
+                    EditJobForm)
 from tradesman.models import Job
 
 
@@ -12,7 +16,10 @@ class TestForms(TestCase):
         self.new_user = User.objects.create(username='testUser123')
 
     def test_update_contact_details_form_valid(self):
-        """ Tests the update contact details form validation passes when the form is valid."""
+        """
+        Tests the update contact details form
+        validation passes when the form is valid.
+        """
         form_data = {
             'email': 'test@example.com',
             'phone': '1234567890',
@@ -28,7 +35,10 @@ class TestForms(TestCase):
         self.assertTrue(form.is_valid())
 
     def test_update_user_details_form_valid(self):
-        """ Tests the update user details form validation passes when the form is valid."""
+        """
+        Tests the update user details form
+        validation passes when the form is valid.
+        """
         form_data = {
             'profile_image': "",
             'role': 0,
@@ -40,7 +50,9 @@ class TestForms(TestCase):
         self.assertTrue(form.is_valid())
 
     def test_new_user_form_valid(self):
-        """ Tests the new user form validation passes when the form is valid."""
+        """
+        Tests the new user form validation passes when the form is valid.
+        """
         UserProfile.objects.filter(user=self.new_user).delete()
         # Deletes the new_user UserProfile that was created automatically
         form_data = {
@@ -82,12 +94,26 @@ class TestForms(TestCase):
         self.assertTrue(form.is_valid())
 
     def test_edit_job_form_valid(self):
-        """ Tests the edit job form validation passes when the form is valid."""
-        self.user = User.objects.create_user(username='testUser', password='password')
-        job = Job.objects.create(created_by=self.user, customer_name='Test Customer', phone='1234567890',
-                                 other_phone='0987654321', email='test@example.com', street='Test Street',
-                                 town_city='Test City', county='Test County', postcode='12345',
-                                 job_description='Test Job Description', status=0)
+        """
+        Tests the edit job form validation passes when the form is valid.
+        """
+        self.user = User.objects.create_user(
+            username='testUser',
+            password='password'
+        )
+        job = Job.objects.create(
+            created_by=self.user,
+            customer_name='Test Customer',
+            phone='1234567890',
+            other_phone='0987654321',
+            email='test@example.com',
+            street='Test Street',
+            town_city='Test City',
+            county='Test County',
+            postcode='12345',
+            job_description='Test Job Description',
+            status=0
+        )
         form_data = {
             'customer_name': 'Updated Test Customer',
             'phone': '0987654321',

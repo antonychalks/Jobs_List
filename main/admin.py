@@ -11,7 +11,8 @@ class PostAdmin(SummernoteModelAdmin):
     field filters, fields to prepopulate and rich-text editor.
     """
 
-    list_display = ('user', 'role', 'get_trade_display', 'fname', 'lname', 'slug')
+    list_display = ('user', 'role', 'get_trade_display',
+                    'fname', 'lname', 'slug')
     search_fields = ['user', 'fname', 'lname']
     list_filter = ('role', 'trade', )
     prepopulated_fields = {'slug': ('fname', 'lname',)}

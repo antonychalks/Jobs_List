@@ -5,7 +5,13 @@ from django.template.context_processors import request
 from multiselectfield import MultiSelectField
 from main.models import UserProfile, TRADES
 
-JOB_STATUS = ((0, "Unassigned"), (1, "Pending Start"), (2, "In Progress"), (3, "Completed"), (4, "No Tasks"))
+JOB_STATUS = (
+    (0, "Unassigned"),
+    (1, "Pending Start"),
+    (2, "In Progress"),
+    (3, "Completed"),
+    (4, "No Tasks")
+)
 
 PLANNERS = UserProfile.role
 # Create your models here.
@@ -19,7 +25,11 @@ class Job(models.Model):
     job_number = models.IntegerField()
     customer_name = models.CharField(max_length=30)
     phone = models.CharField(max_length=15)
-    other_phone = models.CharField('Other Phone Number', blank=True, max_length=15)
+    other_phone = models.CharField(
+        'Other Phone Number',
+        blank=True,
+        max_length=15
+    )
     email = models.EmailField()
     street = models.CharField(max_length=40)
     town_city = models.CharField('Town/City', blank=True, max_length=20)
@@ -29,7 +39,10 @@ class Job(models.Model):
     status = models.IntegerField('Job Status', choices=JOB_STATUS)
 
     def save(self, *args, **kwargs):
-        """ Rewrites the save function to add a job number and slug if not already present. """
+        """
+        Rewrites the save function to add a
+        job number and slug if not already present.
+        """
         # Generate job number if it's not set yet
         if not self.job_number:
             # Retrieve the latest job number from the database
@@ -65,9 +78,9 @@ class Job(models.Model):
                         self.status = 1
                     else:
                         self.status = 0
-    
+
     def get_status_display(self):
-        """ Displays the status of the job as a user friendly output. """
+        """ Displays the status of the job as a user-friendly output. """
         return dict(JOB_STATUS)[self.status]
 
     @property
@@ -85,16 +98,27 @@ class Task(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE,
                             related_name="Tasks")
     description = models.CharField(max_length=255)
-    trades_required = MultiSelectField(max_length=30, choices=TRADES, blank=True)
-    tradesman_assigned = models.ManyToManyField("main.UserProfile", related_name="tradesman", blank=True)
+    trades_required = MultiSelectField(
+        max_length=30,
+        choices=TRADES,
+        blank=True
+    )
+    tradesman_assigned = models.ManyToManyField(
+        "main.UserProfile",
+        related_name="tradesman",
+        blank=True
+    )
     time_required = models.CharField(blank=True, max_length=25)
     is_completed = models.BooleanField(default=False)
-    
+
     class Meta:
         ordering = ["is_completed"]
 
     def save(self, *args, **kwargs):
-        """ Rewrites the save function to save the tasks Job instance to set the status of the job. """
+        """
+        Rewrites the save function to save the tasks
+        Job instance to set the status of the job.
+        """
         self.job.save()
 
         super(Task, self).save(*args, **kwargs)

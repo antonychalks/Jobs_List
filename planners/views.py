@@ -4,13 +4,21 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from main.models import UserProfile as UserProfile
 from tradesman.models import Job
-from .forms import UpdateContactDetailsForm, UpdateUserDetailsForm, NewUserForm, NewJobForm, EditJobForm
+from .forms import (
+    UpdateContactDetailsForm,
+    UpdateUserDetailsForm,
+    NewUserForm, NewJobForm,
+    EditJobForm
+)
 from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
 def job_number():
-    """ Generates a random job number if the job doesn't have a number."""
+    """
+    Generates a random job number
+    if the job doesn't have a number.
+    """
     # Retrieve the latest job number from the database
     latest_job = Job.objects.order_by('-job_number').first()
     if latest_job:
@@ -22,10 +30,14 @@ def job_number():
 
 
 def planner_home(request):
-    """ Renders the planner home page and deals with POST requests from the NewJobForm """
+    """
+    Renders the planner home page and deals
+    with POST requests from the NewJobForm
+    """
     if request.method == "POST":
         new_job_form = NewJobForm(data=request.POST)
-        # If the form is valid, the created_by, job_number, slug and status all get added to the instance.
+        # If the form is valid, the created_by, job_number,
+        # slug and status all get added to the instance.
         if new_job_form.is_valid():
             new_job = new_job_form.save(commit=False)
             new_job.created_by = request.user
@@ -35,12 +47,12 @@ def planner_home(request):
             new_job.save()
             messages.success(request, 'Job Created!')
             return HttpResponseRedirect(reverse('planner_home'))
-    
+
     job = Job.objects.all()
     new_job = NewJobForm()
     edit_job = EditJobForm()
     user_profile = UserProfile.objects.get(user=request.user)
-    
+
     return render(
         request,
         "planners/planner_home.html",
@@ -67,7 +79,7 @@ def job_edit(request, job_id, slug):
     """
     # Retrieve the job instance
     job = get_object_or_404(Job, pk=job_id, slug=slug)
-    
+
     if request.method == "POST":
         # Initialize form with task instance and data from request
         edit_job_form = EditJobForm(data=request.POST, instance=job)
@@ -83,7 +95,7 @@ def job_edit(request, job_id, slug):
 
     new_job = NewJobForm()
     edit_job = EditJobForm(instance=job)
-    
+
     return render(
         request,
         "planners/planner_home.html",
@@ -94,7 +106,7 @@ def job_edit(request, job_id, slug):
         }
     )
 
-    
+
 def job_delete(request, job_id):
     """
     Deletes a Job.
@@ -107,22 +119,31 @@ def job_delete(request, job_id):
     job = get_object_or_404(Job, pk=job_id)
 
     job.delete()
-    messages.add_message(request, messages.SUCCESS, 'Job deleted!')
+    messages.add_message(
+        request,
+        messages.SUCCESS,
+        'Job deleted!'
+    )
 
     return HttpResponseRedirect(reverse('planner_home'))
 
 
 @login_required
 def user_detail(request, slug):
-    """ Renders the user detail page
-    and handles any POST requests from the forms used to updating the UserProfile page."""
+    """
+    Renders the user detail page
+    and handles any POST requests from the
+    forms used to updating the UserProfile page.
+    """
     queryset = UserProfile.objects.all()
     user = get_object_or_404(queryset, slug=slug)
 
     if request.method == "POST":
-        # Checks if the form submitted is the contact details or user details forms.
+        # Checks if the form submitted
+        # is the contact details or user details forms.
         if 'update_contact_details' in request.POST:
-            update_contact_details_form = UpdateContactDetailsForm(request.POST, instance=user)
+            update_contact_details_form = (
+                UpdateContactDetailsForm(request.POST, instance=user))
             # Saves the form if it is valid.
             if update_contact_details_form.is_valid():
                 update_contact_details_form.save()
@@ -133,10 +154,12 @@ def user_detail(request, slug):
             else:
                 messages.add_message(
                     request, messages.ERROR,
-                    'Failed to update contact details. Please check the form.'
+                    'Failed to update contact details.'
+                    'Please check the form.'
                 )
         elif 'update_user_details' in request.POST:
-            update_user_details_form = UpdateUserDetailsForm(request.POST, instance=user)
+            update_user_details_form = (
+                UpdateUserDetailsForm(request.POST, instance=user))
             # Saves the form if it is valid.
             if update_user_details_form.is_valid():
                 update_user_details_form.save()
@@ -147,11 +170,14 @@ def user_detail(request, slug):
             else:
                 messages.add_message(
                     request, messages.ERROR,
-                    'Failed to update user details. Please check the form.'
+                    'Failed to update user details.'
+                    'Please check the form.'
                 )
-    
-    update_contact_details_form = UpdateContactDetailsForm(instance=user)
-    update_user_details_form = UpdateUserDetailsForm(instance=user)
+
+    update_contact_details_form = (
+        UpdateContactDetailsForm(instance=user))
+    update_user_details_form = (
+        UpdateUserDetailsForm(instance=user))
 
     return render(
         request,
@@ -165,7 +191,10 @@ def user_detail(request, slug):
 
 
 def add_user(request):
-    """ Renders the add user page and handles the POST requests from new user form."""
+    """
+    Renders the add user page and handles the
+    POST requests from new user form.
+    """
     if request.method == "POST":
         user = request.user
         # Checks if the user had a userprofile.
@@ -177,12 +206,16 @@ def add_user(request):
                 # You could return a redirect to a success page
                 return HttpResponseRedirect(reverse('planner_home'))
             else:
-                messages.error(request, 'Failed to add new user. Please check the form.')
+                messages.error(
+                    request,
+                    'Failed to add new user. Please check the form.'
+                )
         else:
             new_user_form = NewUserForm(data=request.POST)
             if new_user_form.is_valid():
                 new_user_form.save(commit=False)
-                new_user_form.instance.slug = UserProfile.generate_slug(new_user_form.instance)
+                new_user_form.instance.slug = UserProfile.generate_slug(
+                    new_user_form.instance)
                 new_user_form.save()
                 messages.success(request, 'New User Added!')
                 # You could return a redirect to a success page

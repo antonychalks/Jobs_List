@@ -41,12 +41,17 @@ def user_profile_signup(request):
             user_profile.is_initial_signup = False
             user_profile.save()
             messages.success(request, 'New User Added!')
-            # If the user selects "Continue Later", they will be redirected to the home page.
+            # If the user selects "Continue Later",
+            # they will be redirected to the home page.
             if "continue_later" in request.POST:
                 return redirect(reverse('home'))
-            # If the user selects "Add More Details", they will be redirected to the user detail page.
+            # If the user selects "Add More Details",
+            # they will be redirected to the user detail page.
             elif "more_details" in request.POST:
-                return redirect(reverse('user_detail', kwargs={'slug': user.user_profile.slug}))
+                return redirect(reverse(
+                    'user_detail',
+                    kwargs={'slug': user.user_profile.slug}
+                ))
 
     return render(
         request,
