@@ -59,25 +59,28 @@ class Job(models.Model):
 
     def set_job_status(self):
         """ Sets the status of the job based on the task status. """
-        if self.Tasks.all().count() == 0:
-            self.status = 4
+        if self.pk is None:
+            self.status = 0
         else:
-            task_count = 0
-            task_complete_count = 0
-            for task in self.Tasks.all():
-                task_count += 1
-                if task.is_completed:
-                    task_complete_count += 1
-            if task_complete_count == task_count:
-                self.status = 3
-            elif task_complete_count >= 1:
-                self.status = 2
+            if self.Tasks.all().count() == 0:
+                self.status = 4
             else:
+                task_count = 0
+                task_complete_count = 0
                 for task in self.Tasks.all():
-                    if task.tradesman_assigned_boolean():
-                        self.status = 1
-                    else:
-                        self.status = 0
+                    task_count += 1
+                    if task.is_completed:
+                        task_complete_count += 1
+                if task_complete_count == task_count:
+                    self.status = 3
+                elif task_complete_count >= 1:
+                    self.status = 2
+                else:
+                    for task in self.Tasks.all():
+                        if task.tradesman_assigned_boolean():
+                            self.status = 1
+                        else:
+                            self.status = 0
 
     def get_status_display(self):
         """ Displays the status of the job as a user-friendly output. """

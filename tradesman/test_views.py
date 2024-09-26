@@ -30,6 +30,7 @@ class TradesmanViewsTestCase(TestCase):
             postcode='12345',
             status=0  # Unassigned
         )
+        self.job.save()
 
     def test_tradesman_home_view(self):
         """
