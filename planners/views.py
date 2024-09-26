@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic
 from django.contrib import messages
@@ -13,7 +14,7 @@ from .forms import (
 from django.contrib.auth.decorators import login_required
 
 
-# Create your views here.
+@login_required
 def job_number():
     """
     Generates a random job number
@@ -29,6 +30,7 @@ def job_number():
     return job_num
 
 
+@login_required
 def planner_home(request):
     """
     Renders the planner home page and deals
@@ -65,7 +67,7 @@ def planner_home(request):
     )
 
 
-class UserList(generic.ListView):
+class UserList(LoginRequiredMixin, generic.ListView):
     """ Renders the user list page """
     queryset = UserProfile.objects.all()
     context_object_name = 'UserList'
@@ -73,6 +75,7 @@ class UserList(generic.ListView):
     paginate_by = 6
 
 
+@login_required
 def job_edit(request, job_id, slug):
     """
     Handles the POST requests from the edit job form.
@@ -107,6 +110,7 @@ def job_edit(request, job_id, slug):
     )
 
 
+@login_required
 def job_delete(request, job_id):
     """
     Deletes a Job.
@@ -190,6 +194,7 @@ def user_detail(request, slug):
     )
 
 
+@login_required
 def add_user(request):
     """
     Renders the add user page and handles the

@@ -1,3 +1,6 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, reverse
 from django.forms import modelformset_factory
 from django.views import generic
@@ -14,7 +17,7 @@ from .forms import (
 
 
 # Create your views here.
-class Tradesman_Home(generic.ListView):
+class Tradesman_Home(LoginRequiredMixin, generic.ListView):
     """ Renders the tradesman's home page. '"""
     queryset = Job.objects.all()
     context_object_name = 'Job_List'
@@ -22,7 +25,7 @@ class Tradesman_Home(generic.ListView):
     paginate_by = 6
 
     def get_context_data(self, **kwargs):
-        """ Applys the context to the tradesman's home page. '"""
+        """ Apply the context to the tradesman's home page. '"""
         context = super().get_context_data(**kwargs)
         user = self.request.user
         context['users_jobs'] = (
@@ -31,6 +34,7 @@ class Tradesman_Home(generic.ListView):
         return context
 
 
+@login_required
 def view_job(request):
     """ Renders the view for each job. """
     user = UserProfile
@@ -44,6 +48,7 @@ def view_job(request):
     )
 
 
+@login_required
 def job_detail(request, slug):
     """ Renders the job's details page. '"""
     job = get_object_or_404(Job, slug=slug)
@@ -100,6 +105,7 @@ def job_detail(request, slug):
     )
 
 
+@login_required
 def task_edit(request, task_id, slug):
     """
     Display an individual task for editing.
@@ -141,6 +147,7 @@ def task_edit(request, task_id, slug):
     )
 
 
+@login_required
 def task_delete(request, slug, task_id):
     """
     Delete an individual comment.
@@ -162,6 +169,7 @@ def task_delete(request, slug, task_id):
     return HttpResponseRedirect(reverse('job_detail', args=[slug]))
 
 
+@login_required
 def assign_tradesmen(request, slug, task_id):
     """ A view to assign tradesman to an individual task. """
     queryset = Job.objects.all()
