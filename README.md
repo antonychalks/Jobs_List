@@ -542,18 +542,6 @@ Tools and technologies are listed in order of use during the development of this
 
 [ElephantSQL](https://www.elephantsql.com) - Used to store the PostgreSQL database.
 
-[WebAim contrast checker](https://webaim.org/resources/contrastchecker/) - Used to test contrast between text and background.
-
-[ChatGPT](https://chat.openai.com/) - ChatGPT was used to help resolve project bugs. ChatGPT was also used on occasion when repetitive tasks are to be completed.
-
-[Jshint](https://jshint.com/) - Used to validate the JavaScript code.
-
-[W3C - CSS Validation Service](https://jigsaw.w3.org/css-validator/) - Used to validate the CSS code.
-
-[CI Python Linter](https://pep8ci.herokuapp.com/) - Used to validate the Python code.
-
-[Nu HTML Checker](https://validator.w3.org/nu/) - Used to validate the HTML code.
-
 [Graphviz](https://graphviz.gitlab.io/) - Used to generate the ERD.
 
 [Return to contents list](#contents)
@@ -626,6 +614,9 @@ The website was manually tested on the front-end by myself, and a group composed
 | Incorrectly filling out any form.                | Should mark the failed field and tell the user what needs to be corrected.  | Passed  |
 | Click Edit Job or Add job button.                | Should open the form, prefilled if the edit button was clicked.             | Passed  |
 | Clicking add or edit button on the Job form.     | Should update the database and the changes or addition should be displayed. | Passed  |
+
+
+I checked all pages for responsiveness on [Responsive design checker](https://responsivedesignchecker.com/) and every page worked correctly, without any formatting errors.
 
 ### Automated testing
 When automating testing, I used a Python standard library module: unittest.
@@ -806,3 +797,18 @@ In order to protect the main branch while you work on something new, essential w
 
 ### Wireframes
 [Visily](https://www.visily.ai/) The wireframes were created on Visily.
+
+### Testing and validation
+[WebAim contrast checker](https://webaim.org/resources/contrastchecker/) - Used to test contrast between text and background.
+
+[ChatGPT](https://chat.openai.com/) - ChatGPT was used to help resolve project bugs. ChatGPT was also used on occasion when repetitive tasks are to be completed.
+
+[Jshint](https://jshint.com/) - Used to validate the JavaScript code.
+
+[W3C - CSS Validation Service](https://jigsaw.w3.org/css-validator/) - Used to validate the CSS code.
+
+[CI Python Linter](https://pep8ci.herokuapp.com/) - Used to validate the Python code.
+
+[Nu HTML Checker](https://validator.w3.org/nu/) - Used to validate the HTML code.
+
+[Responsive design checker](https://responsivedesignchecker.com/) - Used to check the websites responsiveness on different devices.
