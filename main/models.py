@@ -108,10 +108,10 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     Create or update the user profile
     """
     if created:
-        user_profile = UserProfile.objects.create(user=instance)
-        user_profile.slug = user_profile.generate_slug()
-        user_profile.save()
+        slug = UserProfile().generate_slug()
+        user_profile = UserProfile.objects.create(user=instance, slug=slug)
     else:
         # Existing users: just save the profile
-        instance.user_profile.slug = instance.user_profile.generate_slug()
+        slug = instance.user_profile.generate_slug()
+        instance.user_profile.slug = slug
         instance.user_profile.save()
