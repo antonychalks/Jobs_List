@@ -131,8 +131,6 @@ def task_edit(request, task_id, slug):
     else:
         # Initialize form with task instance
         edit_task_form = EditTaskForm(instance=task)
-        print(edit_task_form.errors)
-        print(request.POST)
 
     add_task_form = AddTaskForm(instance=task)
     return render(
@@ -182,6 +180,7 @@ def assign_tradesmen(request, slug, task_id):
         if tradesman_form.is_valid():
             tradesman = tradesman_form.cleaned_data['tradesman_assigned']
             task.tradesman_assigned.set(tradesman)
+            task.job.status = Job.set_job_status(task.job)
             task.save()
             messages.success(request, 'Tradesman assigned successfully.')
             return HttpResponseRedirect(reverse('job_detail', args=[slug]))

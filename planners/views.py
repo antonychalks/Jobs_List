@@ -43,8 +43,6 @@ def planner_home(request):
         if new_job_form.is_valid():
             new_job = new_job_form.save(commit=False)
             new_job.created_by = request.user
-            new_job.job_number = job_number()
-            new_job.slug = new_job.job_number
             new_job.status = 0
             new_job.save()
             messages.success(request, 'Job Created!')
