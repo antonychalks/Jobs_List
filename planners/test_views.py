@@ -102,8 +102,7 @@ class TestPlannerViews(TestCase):
         self.client.login(username='testUser', password='password')
         response = self.client.post(reverse(
             'job_delete',
-            args=[self.job.slug,
-                  self.job.id]
+            args=[self.job.id]
         ))
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Job.objects.filter(id=self.job.id).exists())
