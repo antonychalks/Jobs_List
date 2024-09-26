@@ -76,12 +76,12 @@ class UserProfile (models.Model):
         """ When called, displays the trade name rather than the code."""
         return ", ".join([dict(TRADES)[trade] for trade in self.trade])
 
-    def generate_slug(self):
+    def generate_slug(self, user):
         """
         Generates the slug by appending a random string of numbers
         to the users' username
         """
-        return slugify(self.user.username + "-" + str(uuid.uuid4()))
+        return slugify(user.username + "-" + str(uuid.uuid4()))
 
     def __str__(self):
         return (f"{self.user} | {self.get_role_display()} "
@@ -108,10 +108,10 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     Create or update the user profile
     """
     if created:
-        slug = UserProfile().generate_slug()
+        slug = UserProfile().generate_slug(instance)
         user_profile = UserProfile.objects.create(user=instance, slug=slug)
     else:
         # Existing users: just save the profile
-        slug = instance.user_profile.generate_slug()
+        slug = instance.user_profile.generate_slug(instance)
         instance.user_profile.slug = slug
         instance.user_profile.save()
